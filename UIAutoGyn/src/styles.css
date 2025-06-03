@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --vermelho: #FF1820;
+    --branco: #ffffff;
+    --preto: #000000;
+    --pretoHover: #2F2B2B;
+    --borda: #AAAAAA;
+    --cinza: #969595;
+    --meioBranco: #F2F1F1;
+
+    --teste: #141414;
+}
+
+a{
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: var(--branco);
+    cursor: pointer;
+}
+
+h1, label, input, p, h2, h3, select{
+    font-family: "Poppins", sans-serif;
+}
+
+h2, h3{
+    font-size: 18px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    margin: 0;
+}

@@ -1,0 +1,33 @@
+.pai{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 1fr;
+    gap: 20px;
+}
+
+.conteudo{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    &>div, &>div>div{
+        display: flex;
+        flex-direction: column;
+    }
+    &>div{
+        gap: 20px;
+    }
+    
+    & .juntos{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+.linha{
+    justify-self: center;
+    height: auto;
+    width: 1px;
+    background-color: var(--borda);
+}

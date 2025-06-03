@@ -1,0 +1,29 @@
+<main>
+    <aside>
+        <div>
+            <img src="logo.png" alt="" width="80%">
+            <span class="linha"></span>
+        </div>
+        <nav>
+            <a (click)="opcoesVeiculo = !opcoesVeiculo"><img src="veiculo.svg" alt="" width="20"> Veiculos</a>
+            <ul *ngIf="opcoesVeiculo">
+                <li><a routerLink="/veiculoCadAt" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Cadastrar | Atualizar</a></li>
+                <li><a routerLink="/veiculoMarMo" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Marca | Modelo</a></li>
+                <li><a routerLink="/acessorios" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Acessórios</a></li>
+                <li><a routerLink="/veiculos" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Listar Veiculos</a></li>
+            </ul>
+            <a routerLink="/clientes" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><img src="cliente.svg" alt="" width="20"> Clientes</a>
+            <a (click)="opcoesOS = !opcoesOS"><img src="ordem.svg" alt="" width="20"> Ordem de Serviço</a>
+            <ul *ngIf="opcoesOS">
+                <li><a routerLink="/cadastroSerPe" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Serviços | Peças</a></li>
+                <li><a routerLink="/cadastroColab" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Colaborador</a></li>             
+                <li><a routerLink="/gerencOs" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Gerenciamento de OS</a></li>
+            </ul>
+            <a routerLink="/estoque" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><img src="estoque.svg" alt="" width="20">Estoque</a>
+        </nav>
+    </aside>
+
+    <section>
+        <ng-content></ng-content>
+    </section>
+</main>

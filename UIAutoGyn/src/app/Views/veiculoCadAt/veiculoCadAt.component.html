@@ -1,0 +1,43 @@
+<BaseLayout [opcoesVeiculo]="true">
+    <div class="pai">
+        <BlocoComponent titulo="Cadastro de veiculo" descricao="Preencha os dados do veículo para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarVeiculo()">
+            <div class="conteudo">
+                <!-- populado pelo back -->
+                <!-- <div class="clienteSelect">
+                    <select name="id_cliente" id="id_cliente" required>
+                    </select>
+                </div> -->
+                <div>
+                    <InputsComponent text="Placa" tipoInput="text" idInput="placa" placeholder="ABCD1234" [(ngModel)]="addVeiculo.placa" />
+                    <div class="juntos">
+                        <InputsComponent text="Ano de fabricação" tipoInput="number" idInput="anoFabricado" placeholder="2023" [(ngModel)]="addVeiculo.anoFabricacao" />
+                        <InputsComponent text="Ano do modelo" tipoInput="number" idInput="anoModelo" placeholder="2023" [(ngModel)]="addVeiculo.anoModelo" />
+                    </div>
+                    <!-- populado pelo back -->
+                    <!-- <div class="marcaSelect">
+                        <select name="id_marca" id="id_marca" required>
+                        </select>
+                    </div> -->
+        
+                    <!-- populado pelo back (depende de marca) -->
+                    <!-- <div class="modeloSelect">
+                        <select name="id_modelo" id="id_modelo" required>
+                        </select>
+                    </div> -->
+                    <InputsComponent text="Quilometragem" tipoInput="number" idInput="km" placeholder="50000" [(ngModel)]="addVeiculo.kms" />
+                    <InputsComponent text="Número do chassi" tipoInput="text" idInput="chassi" placeholder="4455QW456UUHG4" [(ngModel)]="addVeiculo.numChassi" />
+                    <InputsComponent text="Número do patrimônio" tipoInput="number" idInput="numPatrimonio" placeholder="1568" [(ngModel)]="addVeiculo.numPatrimonio" />
+                </div>
+            </div>
+        </BlocoComponent>
+        <span class="linha"></span>
+        <BlocoComponent titulo="Atualizar veiculo" descricao="Atualize os dados do veículo cadastrado" textButton="Atualizar" (foiClicado)="atualizarVeiculo()">
+            <div class="conteudo">
+                <div>
+                    <InputsComponent text="Placa do carro" tipoInput="text" idInput="placaSearch" placeholder="ABCD1234" />
+                    <InputsComponent text="Nova quilometragem" tipoInput="number" idInput="novaKm" placeholder="564564" />
+                </div>
+            </div>
+        </BlocoComponent>
+    </div>
+</BaseLayout>
