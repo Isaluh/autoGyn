@@ -6,16 +6,18 @@ import { CadastroSerPeComponent } from './Views/cadastro-ser-pe/cadastro-ser-pe.
 import { CadastroColabComponent } from './Views/cadastro-colab/cadastro-colab.component';
 import { GerencOsComponent } from './Views/gerenc-os/gerenc-os.component';
 import { ClientesComponent } from './Views/clientes/clientes.component';
+import { VeiculosComponent } from './Views/veiculos/veiculos.component';
+import { EstoqueComponent } from './Views/estoque/estoque.component';
 
 export const routes: Routes = [
     {path: '', component: VeiculoCadAtComponent},
     {path: 'veiculoCadAt', component: VeiculoCadAtComponent},
     {path: 'veiculoMarMo', component: VeiculoMarMoComponent},
     {path: 'acessorios', component: AcessoriosComponent},
-    // {path: 'veiculos', component: },
+    {path: 'veiculos', component: VeiculosComponent},
     {path: 'clientes', component: ClientesComponent},
     {path: 'cadastroSerPe', component: CadastroSerPeComponent},
     {path: 'cadastroColab', component: CadastroColabComponent},
     {path: 'gerencOs', component: GerencOsComponent},
-    // {path: 'estoque', component: }
+    {path: 'estoque', component: EstoqueComponent}
 ];

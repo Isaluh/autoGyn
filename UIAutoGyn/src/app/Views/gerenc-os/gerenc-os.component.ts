@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { OrdensServico } from '../../Models/models';
 import { SelectsComponent } from '../../Components/selects/selects.component';
 import { SelectsMultiploComponent } from '../../Components/selects-multiplo/selects-multiplo.component';
+import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-categoria/listagem-sem-categoria.component';
 
 @Component({
   selector: 'app-gerenc-os',
   standalone: true,
-  imports: [BlocoComponent, BaseComponent, InputsComponent, FormsModule, SelectsComponent, SelectsMultiploComponent],
+  imports: [BlocoComponent, BaseComponent, InputsComponent, FormsModule, SelectsComponent, SelectsMultiploComponent, ListagemSemCategoriaComponent],
   templateUrl: './gerenc-os.component.html',
   styleUrl: './gerenc-os.component.css'
 })
@@ -22,6 +23,8 @@ export class GerencOsComponent {
     peca: [],
     orcamento: null
   }
+
+  campos : string[] = ['Veículo', 'Data', 'Valor Total', 'Status']
 
   cadastrarOS(){
     // add OS

@@ -1,0 +1,19 @@
+<div class="listagem">
+    <h1>{{titulo}}</h1>
+    <div class="conteudo" *ngIf="itens.length != 0">
+        <!-- for nos itens -->
+        <div>
+            <h2>Marca</h2>
+            <div class="head">
+                <p>Modelo: </p>
+                <span class="linhaDois"></span>
+            </div>
+            <div class="infos">
+                <h3>a</h3>
+                <h3>a</h3>
+                <h3>a</h3>
+            </div>
+        </div>
+    </div>
+    <p *ngIf="itens.length == 0">{{descricao}}</p>
+</div>

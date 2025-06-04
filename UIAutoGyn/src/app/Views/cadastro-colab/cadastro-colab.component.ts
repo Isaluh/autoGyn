@@ -4,11 +4,12 @@ import { BlocoComponent } from '../../Components/bloco/bloco.component';
 import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
 import { Colaboradores } from '../../Models/models';
+import { ListagemSimplesComponent } from '../../Components/listagem-simples/listagem-simples.component';
 
 @Component({
   selector: 'app-cadastro-colab',
   standalone: true,
-  imports: [BaseComponent, BlocoComponent, InputsComponent, FormsModule],
+  imports: [BaseComponent, BlocoComponent, InputsComponent, FormsModule, ListagemSimplesComponent],
   templateUrl: './cadastro-colab.component.html',
   styleUrl: './cadastro-colab.component.css'
 })

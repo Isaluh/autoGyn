@@ -2,15 +2,21 @@
     <div class="pai">
         <BlocoComponent titulo="Cadastrar ordem de serviço" descricao="Preencha os dados da OS para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarOS()">
             <div class="conteudo">
-                <!-- passar os valores -->
-                <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" />
-                <!-- LISTAGEM DE SERVICOS -->
-                <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" />
-                <!-- LISTAGEM DE PECAS -->
-                <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" />
-                <InputsComponent text="Valor do Orçamento" tipoInput="number" idInput="valor" placeholder="1200" [(ngModel)]="addOS.orcamento" />            
+                <div>
+                    <!-- passar os valores -->
+                    <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" />
+                    <!-- LISTAGEM DE SERVICOS -->
+                    <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" />
+                </div>
+                <span class="linha"></span>
+                <div>
+                    <!-- LISTAGEM DE PECAS -->
+                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" />
+                    <InputsComponent text="Valor do Orçamento" tipoInput="number" idInput="valor" placeholder="1200" [(ngModel)]="addOS.orcamento" />            
+                </div>
             </div>
         </BlocoComponent>
-        <span class="linha"></span>
+        <span class="linhaDois"></span>
+        <ListagemSemCategoriaComponent titulo="Ordens de Serviço" descricao="Sem OS cadastradas." [campos]="campos" />
     </div>
 </BaseLayout>
