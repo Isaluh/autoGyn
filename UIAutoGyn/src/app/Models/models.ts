@@ -11,3 +11,48 @@ export interface Veiculos{
     numPatrimonio: number | null,
     acessorios: []
 }
+
+export interface Marcas{
+    id: number | null,
+    marca: string
+}
+
+export interface Modelos{
+    id: number | null,
+    marca: {},
+    modelo: string
+}
+
+export interface Acessorios{
+    id: number | null,
+    acessorio: string
+}
+
+export interface Servicos{
+    id: number | null,
+    servico: string
+    valor: number | null
+}
+
+export interface Pecas{
+    id: number | null,
+    codigo: number | null,
+    peca: string
+    sku: number | null,
+    quantidade: number | null,
+    valor: number | null
+}
+
+export interface Colaboradores{
+    id: number | null,
+    nome: string,
+    cpf: number | null
+}
+
+export interface OrdensServico{
+    id: number | null,
+    veiculo: {},
+    servico: Servicos[],
+    peca: Pecas[]
+    orcamento: number | null
+}

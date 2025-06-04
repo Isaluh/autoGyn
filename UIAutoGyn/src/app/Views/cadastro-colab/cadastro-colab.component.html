@@ -1,0 +1,11 @@
+<BaseLayout [opcoesOS]="true">
+    <div class="pai">
+        <BlocoComponent titulo="Cadastro de colaborador" descricao="Preencha os dados do colaborador para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarColaborador()">
+            <div class="conteudo">
+                <InputsComponent text="Nome" tipoInput="text" idInput="nome" placeholder="Colaborador" [(ngModel)]="addColaborador.nome" />
+                <InputsComponent text="CPF" tipoInput="number" idInput="cpf" placeholder="12345678902" [(ngModel)]="addColaborador.cpf" />
+            </div>
+        </BlocoComponent>
+        <span class="linha"></span>
+    </div>
+</BaseLayout>

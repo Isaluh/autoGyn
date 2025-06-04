@@ -1,0 +1,18 @@
+<BaseLayout>
+    <div class="pai">
+        <BlocoComponent titulo="Cadastrar cliente" descricao="Preencha os dados do cliente para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarCliente()">
+            <div class="conteudo">
+                <InputsComponent text="Nome" tipoInput="text" idInput="nome" placeholder="Cliente" />
+                <InputsComponent text="E-mail" tipoInput="mail" idInput="email" placeholder="cliente@gmail.com" />
+                <!-- radio -->
+                <InputsComponent text="Telefone" tipoInput="number" idInput="telefoneUm" placeholder="(62)940028922" />
+                <!-- segundo campo pra telefone -->
+            </div>
+            <span class="linha"></span>
+            <div class="conteudo">
+                <InputsComponent text="Endereço" tipoInput="number" idInput="cep" placeholder="CEP"  />
+                <!-- colocar todos os campos de indereço -->
+            </div>
+        </BlocoComponent>
+    </div>
+</BaseLayout>

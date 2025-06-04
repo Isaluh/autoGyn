@@ -1,16 +1,21 @@
 import { Routes } from '@angular/router';
 import { VeiculoCadAtComponent } from './Views/veiculoCadAt/veiculoCadAt.component';
 import { VeiculoMarMoComponent } from './Views/veiculo-mar-mo/veiculo-mar-mo.component';
+import { AcessoriosComponent } from './Views/acessorios/acessorios.component';
+import { CadastroSerPeComponent } from './Views/cadastro-ser-pe/cadastro-ser-pe.component';
+import { CadastroColabComponent } from './Views/cadastro-colab/cadastro-colab.component';
+import { GerencOsComponent } from './Views/gerenc-os/gerenc-os.component';
+import { ClientesComponent } from './Views/clientes/clientes.component';
 
 export const routes: Routes = [
     {path: '', component: VeiculoCadAtComponent},
     {path: 'veiculoCadAt', component: VeiculoCadAtComponent},
     {path: 'veiculoMarMo', component: VeiculoMarMoComponent},
-    // {path: 'acessorios', component: },
+    {path: 'acessorios', component: AcessoriosComponent},
     // {path: 'veiculos', component: },
-    // {path: 'clientes', component: },
-    // {path: 'cadastroSerPe', component: },
-    // {path: 'cadastroColab', component: },
-    // {path: 'gerencOs', component: },
+    {path: 'clientes', component: ClientesComponent},
+    {path: 'cadastroSerPe', component: CadastroSerPeComponent},
+    {path: 'cadastroColab', component: CadastroColabComponent},
+    {path: 'gerencOs', component: GerencOsComponent},
     // {path: 'estoque', component: }
 ];
