@@ -33,7 +33,7 @@ public class OrdemServicoListaDTO {
                 cal.get(Calendar.MONTH) + 1, 
                 cal.get(Calendar.YEAR));
         
-        NumberFormat formatador = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         this.valor = formatador.format(os.getValorTotal());
         
         this.status = os.getEtapa().getDescricao();

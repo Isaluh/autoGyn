@@ -9,7 +9,7 @@ public class FormatacoesComuns {
             return "R$ 0,00";
         }
 
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         return formatter.format(value);
     }
 }
