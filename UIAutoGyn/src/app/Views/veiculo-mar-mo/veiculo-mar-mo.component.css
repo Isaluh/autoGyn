@@ -37,3 +37,81 @@
     width: 1px;
     background-color: var(--borda);
 }
+
+/* FAZER TODA A LISTAGEM AQI */
+
+.listagem{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    height: fit-content;
+
+    & h1{
+        text-align: center;
+    }
+
+    .modelos{
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        gap: 5px;
+
+        & h3{
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: var(--meioBranco);
+        }
+    }
+
+    &>div:last-child h1{
+        text-align: center;
+    }
+
+    &>div>div{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        border: 1px solid var(--borda);
+        border-radius: 8px;
+        height: fit-content;
+
+        &>div{
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+.listaCarros{
+    max-height: 80vh;
+    overflow: auto;
+    margin: -20px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    &>div{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    &>div>div:nth-child(2){
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
+
+    }
+}
+
+.linhaDois{
+    height: 1px;
+    width: 100%;
+    background-color: var(--borda);
+}

@@ -1,0 +1,49 @@
+.pai{
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr 0.1fr 1fr;
+    gap: 30px;
+
+    &>div{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.conteudo{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    &>div{
+        width: 100%;
+    }
+    
+    &>div, &>div>div{
+        display: flex;
+        flex-direction: column;
+    }
+    &>div{
+        gap: 20px;
+    }
+    
+    & .juntos{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+.linha{
+    justify-self: center;
+    height: auto;
+    width: 1px;
+    background-color: var(--borda);
+}
+
+.linhaDois{
+    height: 1px;
+    width: 100%;
+    background-color: var(--borda);
+}
