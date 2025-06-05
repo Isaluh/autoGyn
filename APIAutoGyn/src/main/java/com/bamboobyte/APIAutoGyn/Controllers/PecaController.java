@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pecas")
+@CrossOrigin("*")
 public class PecaController {
 
     private final PecaService pecaService;

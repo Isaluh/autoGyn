@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/colaboradores")
+@CrossOrigin("*")
 public class ColaboradorController {
 
     private final ColaboradorService colaboradorService;

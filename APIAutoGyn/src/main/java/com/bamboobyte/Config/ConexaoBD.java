@@ -13,9 +13,11 @@ import jakarta.persistence.EntityManagerFactory;
 public class ConexaoBD {
     
     @Autowired
+    private EntityManagerFactory entityManagerFactory;  
     private EntityManagerFactory entityManagerFactory;
 
     public EntityManager getEntityManager() {
+        return entityManagerFactory.createEntityManager(); 
         return entityManagerFactory.createEntityManager(); 
     }
 

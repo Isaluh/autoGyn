@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/OS")
+@CrossOrigin("*")
 public class OSController {
 
     private final OSService osService;

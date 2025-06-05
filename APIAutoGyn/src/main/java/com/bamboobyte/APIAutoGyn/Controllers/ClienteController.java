@@ -19,6 +19,7 @@ import com.bamboobyte.APIAutoGyn.Services.ClienteService;
 
 @RestController
 @RequestMapping("/clientes")
+@CrossOrigin("*")
 public class ClienteController {
 
     private final ClienteService clienteService;
