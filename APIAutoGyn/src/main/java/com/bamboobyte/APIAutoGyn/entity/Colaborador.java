@@ -1,44 +1,56 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "colaborador")
 public class Colaborador {
-	private String cpf;
-	private String nome;
-	
-	public Colaborador(ResultSet rs) throws SQLException {
-		this.cpf = rs.getString("cpf");
-		this.nome = rs.getString("nome");
-		this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
 
-	@Override
-	public String toString() {
-		return "Colaborador [cpf=" + cpf + ", nome=" + nome + "]";
-	}
+    @Id
+    @Column(name = "cpf", length = 14)
+    private String cpf;
 
-	public String getCpf() {
-		return cpf;
-	}
+    @Column(name = "nome", nullable = false)
+    private String nome;
 
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
+    @OneToMany(mappedBy = "colaborador", fetch = FetchType.LAZY)
+    private List<ItemServico> itensServico;
 
-	public String getNome() {
-		return nome;
-	}
+    public Colaborador() {}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public String getCpf() {
+        return cpf;
+    }
 
-	
-	
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<ItemServico> getItensServico() {
+        return itensServico;
+    }
+
+    public void setItensServico(List<ItemServico> itensServico) {
+        this.itensServico = itensServico;
+    }
+
+    @Override
+    public String toString() {
+        return "Colaborador [cpf=" + cpf + ", nome=" + nome + "]";
+    }
 }

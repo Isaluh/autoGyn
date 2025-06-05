@@ -1,62 +1,70 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.List;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "servico")
 public class Servico {
 
-	private Long id;
-	private String descricao;
-	private Double valor;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_servico")
+    private Long id;
 
-	public Servico() {
+    @Column(name = "descricao", nullable = false)
+    private String descricao;
 
-	}
+    @Column(name = "valor")
+    private Double valor;
 
-	public Servico(ResultSet source) throws SQLException {
-		this.id = source.getLong("id_servico");
-		this.descricao = source.getString("descricao");
-		this.valor = source.getDouble("valor");
-		this.lazyload = true;
-	}
+    @OneToMany(mappedBy = "servico", fetch = FetchType.LAZY)
+    private List<ItemServico> itensServico;
 
-	private boolean lazyload = false;
+    public Servico() {}
 
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public Double getValor() {
+        return valor;
+    }
 
-	public Double getValor() {
-		return valor;
-	}
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
 
-	public void setValor(Double valor) {
-		this.valor = valor;
-	}
+    public List<ItemServico> getItensServico() {
+        return itensServico;
+    }
 
-	public boolean isLazyload() {
-		return lazyload;
-	}
+    public void setItensServico(List<ItemServico> itensServico) {
+        this.itensServico = itensServico;
+    }
 
-	@Override
-	public String toString() {
-		return "Servico [id=" + id + ", descricao=" + descricao + ", valor=" + valor + "]";
-	}
-
+    @Override
+    public String toString() {
+        return "Servico [id=" + id + ", descricao=" + descricao + ", valor=" + valor + "]";
+    }
 }

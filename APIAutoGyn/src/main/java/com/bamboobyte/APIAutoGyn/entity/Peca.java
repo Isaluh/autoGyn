@@ -1,93 +1,91 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "peca")
 public class Peca {
-	private Long id;
-	private String codigo;
-	private String descricao;
-	private String sku;
-	private int quantidadeEstoque;
-	private double valorUnitario;
-	
-	public Peca() {
-		
-	}
-	
-	public Long getId() {
-		return id;
-	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_peca")
+    private Long id;
 
-	public String getCodigo() {
-		return codigo;
-	}
+    @Column(name = "codigo", nullable = false)
+    private String codigo;
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
-	}
+    @Column(name = "descricao")
+    private String descricao;
 
-	public String getDescricao() {
-		return descricao;
-	}
+    @Column(name = "sku")
+    private String sku;
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    @Column(name = "quantidade_estoque")
+    private int quantidadeEstoque;
 
-	public String getSku() {
-		return sku;
-	}
+    @Column(name = "valor_unitario")
+    private double valorUnitario;
 
-	public void setSku(String sku) {
-		this.sku = sku;
-	}
+    public Peca() {}
 
-	public int getQuantidadeEstoque() {
-		return quantidadeEstoque;
-	}
+    // Getters e Setters
 
-	public void setQuantidadeEstoque(int quantidadeEstoque) {
-		this.quantidadeEstoque = quantidadeEstoque;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public double getValorUnitario() {
-		return valorUnitario;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setValorUnitario(double valorUnitario) {
-		this.valorUnitario = valorUnitario;
-	}
+    public String getCodigo() {
+        return codigo;
+    }
 
-	public boolean isLazyload() {
-		return lazyload;
-	}
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
 
-	public Peca(ResultSet source) throws SQLException {
-		this.id = source.getLong("id_peca");
-		this.codigo = source.getString("codigo");
-		this.descricao = source.getString("descricao");
-		this.sku = source.getString("sku");
-		this.quantidadeEstoque = source.getInt("quantidade_estoque");
-		this.valorUnitario = source.getDouble("valor_unitario");	this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
+    public String getDescricao() {
+        return descricao;
+    }
 
-	@Override
-	public String toString() {
-		return "Peca [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", sku=" + sku
-				+ ", quantidadeEstoque=" + quantidadeEstoque + ", valorUnitario=" + valorUnitario + "]";
-	}
-	
-	
-	
-	
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public int getQuantidadeEstoque() {
+        return quantidadeEstoque;
+    }
+
+    public void setQuantidadeEstoque(int quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
+    }
+
+    public double getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(double valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
+
+    @Override
+    public String toString() {
+        return "Peca [id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", sku=" + sku
+                + ", quantidadeEstoque=" + quantidadeEstoque + ", valorUnitario=" + valorUnitario + "]";
+    }
 }

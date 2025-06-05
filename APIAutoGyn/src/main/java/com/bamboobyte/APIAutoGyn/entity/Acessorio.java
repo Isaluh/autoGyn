@@ -1,28 +1,32 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "acessorio")
 public class Acessorio {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_acessorio")
     private Long id;
+
+    @Column(name = "descricao")
     private String descricao;
 
-    public Acessorio() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "placa")
+    private Veiculo veiculo;
 
-    }
-
-    public Acessorio(ResultSet source) throws SQLException {
-        this.id = source.getLong("id_acessorio");
-        this.descricao = source.getString("descricao");
-        this.lazyload = true;
-    }
-
-    private boolean lazyload = false;
-
-    public void setLazyload(boolean ligado) {
-        this.lazyload = ligado;
-    }
+    public Acessorio() {}
 
     public Long getId() {
         return id;
@@ -40,9 +44,16 @@ public class Acessorio {
         this.descricao = descricao;
     }
 
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+
     @Override
     public String toString() {
         return "Acessorio [id=" + id + ", descricao=" + descricao + "]";
     }
-
 }
