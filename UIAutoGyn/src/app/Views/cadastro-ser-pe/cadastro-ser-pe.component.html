@@ -10,10 +10,10 @@
             <BlocoComponent titulo="Cadastro de peça" descricao="Preencha os dados da peça para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarPeca()">
                 <div class="conteudo">
                     <InputsComponent text="Código" tipoInput="number" idInput="codigo" placeholder="12345" [(ngModel)]="addPeca.codigo" />
-                    <InputsComponent text="Nome da peça" tipoInput="text" idInput="peca" placeholder="Disco de freio" [(ngModel)]="addPeca.peca" />
+                    <InputsComponent text="Nome da peça" tipoInput="text" idInput="peca" placeholder="Disco de freio" [(ngModel)]="addPeca.descricao" />
                     <InputsComponent text="Sku" tipoInput="text" idInput="sku" placeholder="AB5789" [(ngModel)]="addPeca.sku" />
-                    <InputsComponent text="Quantidade no estoque" tipoInput="number" idInput="quantidade" placeholder="14" [(ngModel)]="addPeca.quantidade" />
-                    <InputsComponent text="Valor unitário" tipoInput="number" idInput="valorUnitario" placeholder="70" [(ngModel)]="addPeca.valor" />
+                    <InputsComponent text="Quantidade no estoque" tipoInput="number" idInput="quantidade" placeholder="14" [(ngModel)]="addPeca.quantidadeEstoque" />
+                    <InputsComponent text="Valor unitário" tipoInput="number" idInput="valorUnitario" placeholder="70" [(ngModel)]="addPeca.valorUnitario" />
                 </div>
             </BlocoComponent>
         </div>

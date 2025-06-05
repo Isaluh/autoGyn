@@ -37,10 +37,10 @@ export interface Servicos{
 export interface Pecas{
     id: number | null,
     codigo: number | null,
-    peca: string
+    descricao: string
     sku: number | null,
-    quantidade: number | null,
-    valor: number | null
+    quantidadeEstoque: number | null,
+    valorUnitario: number | null
 }
 
 export interface Colaboradores{

@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class VeiculosService {
-public static API_url: string = "http://localhost:8080/";
+  public static API_url: string = "http://localhost:8080/";
   
   constructor(private httpClient : HttpClient) {}
 

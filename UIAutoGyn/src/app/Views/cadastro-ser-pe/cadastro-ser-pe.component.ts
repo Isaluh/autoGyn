@@ -22,10 +22,10 @@ export class CadastroSerPeComponent {
   addPeca : Pecas = {
     id: null,
     codigo: null,
-    peca: '',
+    descricao: '',
     sku: null,
-    quantidade: null,
-    valor: null
+    quantidadeEstoque: null,
+    valorUnitario: null
   }
 
   cadastrarServico(){
