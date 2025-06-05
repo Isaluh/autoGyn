@@ -1,7 +1,8 @@
 package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 import java.util.List;
+
+import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 
 public class VeiculoDTO {
 

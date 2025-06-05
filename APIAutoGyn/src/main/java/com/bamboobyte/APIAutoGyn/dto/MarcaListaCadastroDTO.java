@@ -3,7 +3,8 @@ package com.bamboobyte.APIAutoGyn.DTO;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.bamboobyte.APIAutoGyn.Entities.*;
+import com.bamboobyte.APIAutoGyn.Entities.Marca;
+import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 
 public class MarcaListaCadastroDTO {
     public String nomeMarca;

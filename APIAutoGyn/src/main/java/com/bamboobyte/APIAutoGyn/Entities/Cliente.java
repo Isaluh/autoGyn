@@ -21,9 +21,17 @@ public class Cliente {
     private Endereco endereco;
 
     @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "ddd", column = @Column(name = "ddd_telefone_principal")),
+        @AttributeOverride(name = "telefone", column = @Column(name = "numero_telefone_principal"))
+    })
     private Telefone telefonePrincipal;
 
     @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "ddd", column = @Column(name = "ddd_telefone_secundario")),
+        @AttributeOverride(name = "telefone", column = @Column(name = "numero_telefone_secundario"))
+    })
     private Telefone telefoneSecundario;
 
     @Embedded

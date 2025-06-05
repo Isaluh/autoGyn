@@ -17,7 +17,6 @@ public class PecaService {
 
     private final PecaRepository pecaRepository;
 
-    @Autowired
     public PecaService(PecaRepository pecaRepository) {
         this.pecaRepository = pecaRepository;
     }

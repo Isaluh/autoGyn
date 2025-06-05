@@ -33,7 +33,15 @@ public class Peca {
     @Column(name = "valor_unitario")
     private double valorUnitario;
 
-    public Peca(CadastrarPecaDTO novaPeca) {}
+    public Peca() {}
+
+    public Peca(CadastrarPecaDTO dto) {
+        this.codigo = dto.getCodigo();
+        this.descricao = dto.getDescricao();
+        this.sku = dto.getSku();
+        this.quantidadeEstoque = dto.getQuantidadeEstoque();
+        this.valorUnitario = dto.getValorUnitario();
+    }
 
     public Long getId() {
         return id;
