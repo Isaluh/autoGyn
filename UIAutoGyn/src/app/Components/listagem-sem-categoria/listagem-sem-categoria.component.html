@@ -1,19 +1,27 @@
 <div class="listagem">
-    <h1>{{titulo}}</h1>
-    <div class="conteudo" *ngIf="itens.length != 0">
-        <!-- for nos itens -->
-        <div>
-            <div class="head">
-                <h2>Nome do cliente | peças | colaborador</h2>
-                <span class="linhaDois"></span>
-            </div>
-            <div class="infos" [ngStyle]="{'display': 'grid', 'grid-template-columns': 'repeat(' + campos.length + ', 1fr)'}">
-                <div *ngFor="let c of campos">
-                    <p>{{c}}</p>
-                    <h3>a</h3>
-                </div>
-            </div>
+  <h1>{{ titulo }}</h1>
+  <ng-container *ngIf="itens.length > 0; else vazio">
+    <div class="conteudo">
+      <div *ngFor="let item of itens" class="item">
+        <div class="head">
+          <h2>{{ item.descricao }}</h2>
+          <span class="linhaDois"></span>
         </div>
+
+        <div class="infos" [ngStyle]="{
+          'display': 'grid',
+          'grid-template-columns': 'repeat(' + campos.length + ', 1fr)'
+        }">
+          <div *ngFor="let c of campos">
+            <p>{{ c }}</p>
+            <h3>{{ item.dados?.[c] }}</h3>
+          </div>
+        </div>
+      </div>
     </div>
-    <p *ngIf="itens.length == 0">{{descricao}}</p>
+  </ng-container>
+
+  <ng-template #vazio>
+    <p>{{ descricao }}</p>
+  </ng-template>
 </div>

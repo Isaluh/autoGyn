@@ -26,6 +26,19 @@ export class GerencOsComponent {
 
   campos : string[] = ['Veículo', 'Data', 'Valor Total', 'Status']
 
+//   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {
+//   this.ordensListagem = res.map(o => ({
+//     descricao: `Ordem ${o.id}`,
+//     dados: {
+//       'Veículo': `${o.veiculo?.modelo?.nome ?? 'Modelo'} - ${o.veiculo?.placa ?? 'Placa'}`,
+//       'Data': this.formatarData(o.data ?? new Date()), // se tiver campo `data`
+//       'Valor Total': o.orcamento != null ? `R$ ${o.orcamento.toFixed(2)}` : '',
+//       'Status': this.definirStatus(o) // se tiver lógica pra status
+//     }
+//   }));
+// });
+
+
   cadastrarOS(){
     // add OS
   }

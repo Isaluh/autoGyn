@@ -5,6 +5,7 @@ import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
 import { Pecas, Servicos } from '../../Models/models';
 import { ListagemSimplesComponent } from '../../Components/listagem-simples/listagem-simples.component';
+import { PecasService } from '../../Services/pecas.service';
 
 @Component({
   selector: 'cadastroSerPeView',
@@ -28,11 +29,14 @@ export class CadastroSerPeComponent {
     valorUnitario: null
   }
 
+  constructor(private pecasService: PecasService) {}
+
   cadastrarServico(){
     // add servico
   }
 
   cadastrarPeca(){
     // add peca
+    this.pecasService.postPeca(this.addPeca).subscribe(() => {})
   }
 }

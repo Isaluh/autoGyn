@@ -11,4 +11,18 @@ import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-cat
 })
 export class VeiculosComponent {
   campos : string[] = ['Placas', 'Marca', 'Modelo', 'Ano do Modelo', 'Ano da Fabricação']
+
+//   this.veiculoService.getTodos().subscribe((res: Veiculos[]) => {
+//   this.veiculosListagem = res.map(v => ({
+//     descricao: `Veículo de ${v.proprietario?.nome ?? 'Desconhecido'}`,
+//     dados: {
+//       'Placas': v.placa,
+//       'Marca': v.marca?.nome ?? '',
+//       'Modelo': v.modelo?.nome ?? '',
+//       'Ano do Modelo': v.anoModelo,
+//       'Ano da Fabricação': v.anoFabricacao
+//     }
+//   }));
+// });
+
 }
