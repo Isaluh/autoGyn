@@ -1,120 +1,86 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import com.pi.autogyn.persistencia.dao.ClienteDao;
-import com.pi.autogyn.persistencia.dao.VeiculoDao;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "propriedade")
 public class Propriedade {
-	private Long id;
-	private Date dataInicio;
-	private Date dataFim;
-	
-	private String placa;
-	private Veiculo veiculo;
-	
-	private Long idCliente;
-	private Cliente cliente;
-	
-	public Propriedade() {
-		
-	}
-	
-	public Propriedade(ResultSet source) throws SQLException {
-		this.id = source.getLong("id_propriedade");
-		this.dataInicio = source.getDate("data_inicio");
-		this.dataFim = source.getDate("data_fim");
-		this.placa = source.getString("placa");
-		this.idCliente = source.getLong("id_cliente");	this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
 
-	public Veiculo getVeiculo() {
-		if (this.veiculo == null && lazyload) {
-			try {
-				this.veiculo = VeiculoDao.getByPlaca(placa);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return veiculo;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_propriedade")
+    private Long id;
 
-	public Cliente getCliente() {
-		if (this.cliente == null && lazyload) {
-			try {
-				this.cliente = ClienteDao.getById(idCliente);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return cliente;
-	}
+    @Column(name = "data_inicio")
+    private Date dataInicio;
 
-	
-	
-	@Override
-	public String toString() {
-		return "Propriedade [id=" + id + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim + ", placa=" + placa
-				+ ", veiculo=" + veiculo + ", idCliente=" + idCliente + ", cliente=" + cliente + "]";
-	}
+    @Column(name = "data_fim")
+    private Date dataFim;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "placa", referencedColumnName = "placa")
+    private Veiculo veiculo;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
-	public Date getDataInicio() {
-		return dataInicio;
-	}
+    public Propriedade() {}
 
-	public void setDataInicio(Date dataInicio) {
-		this.dataInicio = dataInicio;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Date getDataFim() {
-		return dataFim;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setDataFim(Date dataFim) {
-		this.dataFim = dataFim;
-	}
+    public Date getDataInicio() {
+        return dataInicio;
+    }
 
-	public String getPlaca() {
-		return placa;
-	}
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public Date getDataFim() {
+        return dataFim;
+    }
 
-	public Long getIdCliente() {
-		return idCliente;
-	}
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
 
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
-	}
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
 
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
-	}
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	
-	
+    public Cliente getCliente() {
+        return cliente;
+    }
 
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    @Override
+    public String toString() {
+        return "Propriedade [id=" + id + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim +
+                ", veiculo=" + (veiculo != null ? veiculo.getPlaca() : "null") +
+                ", cliente=" + (cliente != null ? cliente.getId() : "null") + "]";
+    }
 }
-

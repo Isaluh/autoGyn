@@ -1,75 +1,52 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import com.pi.autogyn.persistencia.dao.AcessorioDao;
-import com.pi.autogyn.persistencia.dao.ModeloDao;
-import com.pi.autogyn.persistencia.dao.PropriedadeDao;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "veiculo")
 public class Veiculo {
+
+    @Id
+    @Column(name = "placa")
     private String placa;
+
+    @Column(name = "km")
     private int km;
+
+    @Column(name = "ano_fabricacao")
     private int anoFabricacao;
+
+    @Column(name = "num_patrimonio")
     private String numPatrimonio;
+
+    @Column(name = "num_chassi")
     private String numChassi;
+
+    @Column(name = "ano_modelo")
     private int anoModelo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_modelo")
     private Modelo modelo;
-    private Long modelo_id;
+
+    @OneToMany(mappedBy = "veiculo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Acessorio> acessorios;
+
+    @OneToMany(mappedBy = "veiculo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Propriedade> propriedades;
 
-    public Veiculo(ResultSet rs) throws SQLException {
-        this.placa = rs.getString("placa");
-        this.anoFabricacao = rs.getInt("ano_fabricacao");
-        this.numChassi = rs.getString("num_chassi");
-        this.km = rs.getInt("km");
-        this.numPatrimonio = rs.getString("num_patrimonio");
-        this.anoModelo = rs.getInt("ano_modelo");
-        this.modelo_id = rs.getLong("id_modelo");
-        this.lazyload = true;
-    }
-
-    private boolean lazyload = false;
-
-    public void setLazyload(boolean ligado) {
-        this.lazyload = ligado;
-    }
-
-    public List<Propriedade> getPropriedades() {
-        if (this.propriedades == null && lazyload) {
-            try {
-                this.propriedades = PropriedadeDao.getAllByPlaca(this.placa);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return this.propriedades;
-    }
-
-    public Modelo getModelo() {
-        if (modelo == null && lazyload) {
-            try {
-                this.modelo = ModeloDao.getById(this.modelo_id);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return this.modelo;
-    }
-
-    public List<Acessorio> getAcessorios() {
-        if (acessorios == null && lazyload) {
-            try {
-                this.acessorios = AcessorioDao.getAllAcessoriosOfVeiculo(this.placa);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return this.acessorios;
+    public Veiculo() {
     }
 
     public int getKm() {
@@ -96,12 +73,8 @@ public class Veiculo {
         this.anoModelo = anoModelo;
     }
 
-    public Long getModelo_id() {
-        return modelo_id;
-    }
-
-    public void setModelo_id(Long modelo_id) {
-        this.modelo_id = modelo_id;
+    public Modelo getModelo() {
+        return modelo;
     }
 
     public void setModelo(Modelo modelo) {
@@ -116,13 +89,45 @@ public class Veiculo {
         this.placa = placa;
     }
 
+    public String getNumPatrimonio() {
+        return numPatrimonio;
+    }
+
+    public void setNumPatrimonio(String numPatrimonio) {
+        this.numPatrimonio = numPatrimonio;
+    }
+
+    public String getNumChassi() {
+        return numChassi;
+    }
+
+    public void setNumChassi(String numChassi) {
+        this.numChassi = numChassi;
+    }
+
+    public List<Acessorio> getAcessorios() {
+        return acessorios;
+    }
+
+    public void setAcessorios(List<Acessorio> acessorios) {
+        this.acessorios = acessorios;
+    }
+
+    public List<Propriedade> getPropriedades() {
+        return propriedades;
+    }
+
+    public void setPropriedades(List<Propriedade> propriedades) {
+        this.propriedades = propriedades;
+    }
+
     public Cliente getProprietarioMaisRecente() {
         Cliente proprietarioMaisRecente = null;
         Date dataMaisRecente = null;
-        if (this.getPropriedades() == null) {
+        if (this.propriedades == null) {
             return null;
         }
-        for (Propriedade propriedade : this.getPropriedades()) {
+        for (Propriedade propriedade : this.propriedades) {
             Date dataInicio = propriedade.getDataInicio();
             if (dataInicio == null) {
                 continue;
@@ -134,29 +139,4 @@ public class Veiculo {
         }
         return proprietarioMaisRecente;
     }
-
-    public String getNumPatrimonio() {
-        return numPatrimonio;
-    }
-
-    public void setNumPatrimonio(String numPatrimonio) {
-        this.numPatrimonio = numPatrimonio;
-    }
-
-    public void setAcessorios(List<Acessorio> acessorios) {
-        this.acessorios = acessorios;
-    }
-
-    public void setPropriedades(List<Propriedade> propriedades) {
-        this.propriedades = propriedades;
-    }
-
-    public String getNumChassi() {
-        return numChassi;
-    }
-
-    public void setNumChassi(String numChassi) {
-        this.numChassi = numChassi;
-    }
-
 }

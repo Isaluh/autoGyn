@@ -1,116 +1,94 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-import com.pi.autogyn.persistencia.dao.OSDao;
-import com.pi.autogyn.persistencia.dao.PecaDao;
-
+@Entity
+@Table(name = "item_peca")
 public class ItemPeca {
-	private Long id;
-	private int quantidade;
-	private double valor_total;
-	private double valor_unitario;
-	private long idOs;
-	private OS os;
-	private long idPeca;
-	private Peca peca;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_item_peca")
+    private Long id;
+
+    @Column(name = "quantidade", nullable = false)
+    private int quantidade;
+
+    @Column(name = "valor_total")
+    private double valorTotal;
+
+    @Column(name = "valor_unitario")
+    private double valorUnitario;
 	
-	public ItemPeca() {
-		
-	}
-	
-	public ItemPeca(ResultSet source) throws SQLException {
-		this.id = source.getLong("id_item_peca");
-		this.quantidade = source.getInt("quantidade");
-		this.valor_total = source.getDouble("valor_total");
-		this.valor_unitario = source.getDouble("valor_unitario");
-		this.idOs = source.getLong("id_os");
-		this.idPeca = source.getLong("id_peca");	this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
-	
-	public OS getOs() {
-		if (this.os == null && lazyload) {
-			try {
-				this.os = OSDao.getById(this.idOs);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.os;
-	}
-	
-	public Peca getPeca() {
-		if (this.peca == null && lazyload) {
-			try {
-				this.peca = PecaDao.getById(this.idPeca);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.peca;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_os", nullable = false)
+    private OS os;
 
-	public Long getId() {
-		return id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_peca", nullable = false)
+    private Peca peca;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public ItemPeca() {}
 
-	public int getQuantidade() {
-		return quantidade;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public double getValor_total() {
-		return valor_total;
-	}
+    public int getQuantidade() {
+        return quantidade;
+    }
 
-	public void setValor_total(double valor_total) {
-		this.valor_total = valor_total;
-	}
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
 
-	public double getValor_unitario() {
-		return valor_unitario;
-	}
+    public double getValorTotal() {
+        return valorTotal;
+    }
 
-	public void setValor_unitario(double valor_unitario) {
-		this.valor_unitario = valor_unitario;
-	}
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
 
-	public long getIdOs() {
-		return idOs;
-	}
+    public double getValorUnitario() {
+        return valorUnitario;
+    }
 
-	public void setIdOs(long idOs) {
-		this.idOs = idOs;
-	}
+    public void setValorUnitario(double valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
 
-	public long getIdPeca() {
-		return idPeca;
-	}
+    public OS getOs() {
+        return os;
+    }
 
-	public void setIdPeca(long idPeca) {
-		this.idPeca = idPeca;
-	}
+    public void setOs(OS os) {
+        this.os = os;
+    }
 
-	public void setOs(OS os) {
-		this.os = os;
-	}
+    public Peca getPeca() {
+        return peca;
+    }
 
-	public void setPeca(Peca peca) {
-		this.peca = peca;
-	}
-	
+    public void setPeca(Peca peca) {
+        this.peca = peca;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemPeca [id=" + id + ", quantidade=" + quantidade + ", valorTotal=" + valorTotal + ", valorUnitario=" + valorUnitario
+                + ", os=" + (os != null ? os.getId() : null) + ", peca=" + (peca != null ? peca.getId() : null) + "]";
+    }
 }
-

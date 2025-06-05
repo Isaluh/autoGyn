@@ -1,172 +1,138 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import com.pi.autogyn.persistencia.dao.ClienteDao;
-import com.pi.autogyn.persistencia.dao.ItemPecaDao;
-import com.pi.autogyn.persistencia.dao.ItemServicoDao;
-import com.pi.autogyn.persistencia.dao.VeiculoDao;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
+@Entity
+@Table(name = "os")
 public class OS {
-	private Long id;
-	private Date data;
-	private double valor_total;
-	private double valor_pago;
-	private Etapa etapa;
-	private String veiculoPlaca;
-	private Long idCliente;
-	private Veiculo veiculo;
-	private Cliente cliente;
-	private List<ItemPeca> itensPeca;
-	private List<ItemServico> itensServico;
-	public OS() {
-		
-	}
-	
-	public OS(ResultSet source) throws SQLException {
-		this.id = source.getLong("id_os");
-		this.data = source.getDate("data");
-		this.valor_total = source.getDouble("valor_total");
-		this.valor_pago = source.getDouble("valor_pago");
-		if (source.getString("etapa") != null) {
-			this.etapa = Etapa.valueOf(source.getString("etapa").toUpperCase());
-		} else {
-			this.etapa = Etapa.CANCELADO;
-		}
-		this.veiculoPlaca = source.getString("placa");
-		this.idCliente = source.getLong("id_cliente");	this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
 
-	public Cliente getCliente() {
-		if (this.cliente == null && lazyload) {
-			try {
-				this.cliente = ClienteDao.getById(this.idCliente);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.cliente;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_os")
+    private Long id;
 
-	@Override
-	public String toString() {
-		return "OS [id=" + id + ", data=" + data + ", valor_total=" + valor_total + ", valor_pago=" + valor_pago
-				+ ", etapa=" + etapa + ", veiculoPlaca=" + veiculoPlaca + ", idCliente=" + idCliente + ", veiculo="
-				+ getVeiculo()+ ", cliente=" + getCliente() + "]";
-	}
+    @Column(name = "data")
+    @Temporal(TemporalType.DATE)
+    private Date data;
 
-	public Veiculo getVeiculo() {
-		if (this.veiculo == null && lazyload) {
-			try {
-				this.veiculo = VeiculoDao.getByPlaca(veiculoPlaca);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.veiculo;
-	}
-	
-	public List<ItemPeca> getItensPeca() {
-		if (this.itensPeca == null && lazyload) {
-			try {
-				this.itensPeca = ItemPecaDao.getByIdOs(this.id);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.itensPeca;
-	}
-	
-	public List<ItemServico> getItensServico() {
-		if (this.itensServico == null && lazyload) {
-			try {
-				this.itensServico = ItemServicoDao.getByIdOs(this.id);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.itensServico;
-	}
+    @Column(name = "valor_total")
+    private double valorTotal;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "valor_pago")
+    private double valorPago;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etapa")
+    private Etapa etapa;
 
-	public Date getData() {
-		return data;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "placa") 
+    private Veiculo veiculo;
 
-	public void setData(Date data) {
-		this.data = data;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
 
-	public double getValor_total() {
-		return valor_total;
-	}
+    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ItemPeca> itensPeca;
 
-	public void setValor_total(double valor_total) {
-		this.valor_total = valor_total;
-	}
+    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ItemServico> itensServico;
 
-	public double getValor_pago() {
-		return valor_pago;
-	}
+    public OS() {}
 
-	public void setValor_pago(double valor_pago) {
-		this.valor_pago = valor_pago;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public Etapa getEtapa() {
-		return etapa;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setEtapa(Etapa etapa) {
-		this.etapa = etapa;
-	}
+    public Date getData() {
+        return data;
+    }
 
-	public String getVeiculoPlaca() {
-		return veiculoPlaca;
-	}
+    public void setData(Date data) {
+        this.data = data;
+    }
 
-	public void setVeiculoPlaca(String veiculoPlaca) {
-		this.veiculoPlaca = veiculoPlaca;
-	}
+    public double getValorTotal() {
+        return valorTotal;
+    }
 
-	public Long getIdCliente() {
-		return idCliente;
-	}
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
 
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
-	}
+    public double getValorPago() {
+        return valorPago;
+    }
 
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
-	}
+    public void setValorPago(double valorPago) {
+        this.valorPago = valorPago;
+    }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+    public Etapa getEtapa() {
+        return etapa;
+    }
 
-	public void setItensPeca(List<ItemPeca> itensPeca) {
-		this.itensPeca = itensPeca;
-	}
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
+    }
 
-	public void setItensServico(List<ItemServico> itensServico) {
-		this.itensServico = itensServico;
-	}
-	
-	
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<ItemPeca> getItensPeca() {
+        return itensPeca;
+    }
+
+    public void setItensPeca(List<ItemPeca> itensPeca) {
+        this.itensPeca = itensPeca;
+    }
+
+    public List<ItemServico> getItensServico() {
+        return itensServico;
+    }
+
+    public void setItensServico(List<ItemServico> itensServico) {
+        this.itensServico = itensServico;
+    }
+
+    @Override
+    public String toString() {
+        return "OS [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", valorPago=" + valorPago + ", etapa=" + etapa
+                + ", veiculo=" + (veiculo != null ? veiculo.getPlaca() : null) + ", cliente=" + (cliente != null ? cliente.getId() : null) + "]";
+    }
 }

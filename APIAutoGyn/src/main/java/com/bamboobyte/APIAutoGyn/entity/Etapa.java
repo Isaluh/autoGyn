@@ -1,19 +1,20 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
 public enum Etapa {
-    //	'Orcamento', 'Aprovado', 'Execucao', 'Finalizado', 'Pago'
-        ORCAMENTO("Orçamento"),
-        APROVADO("Aprovado"),
-        EXECUCAO("Execucão"),
-        FINALIZADO("Finalizado"),
-        PAGO("Pago"),
-        CANCELADO("Cancelado");
-    
-        private String etapa;
-        Etapa(String etapa) {
-            this.etapa = etapa;
-        }
-        public String valor() {
-            return this.etapa;		
-        }
+    ORCAMENTO("Orçamento"),
+    APROVADO("Aprovado"),
+    EXECUCAO("Execução"),
+    FINALIZADO("Finalizado"),
+    PAGO("Pago"),
+    CANCELADO("Cancelado");
+
+    private final String descricao;
+
+    Etapa(String descricao) {
+        this.descricao = descricao;
     }
+
+    public String getDescricao() {
+        return descricao;
+    }
+}
