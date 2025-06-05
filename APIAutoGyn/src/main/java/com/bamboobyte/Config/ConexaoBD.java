@@ -11,14 +11,12 @@ import jakarta.persistence.EntityManagerFactory;
 public class ConexaoBD {
     
     @Autowired
-    private EntityManagerFactory entityManagerFactory;  // O Spring cria isso automaticamente
+    private EntityManagerFactory entityManagerFactory;  
 
-    // Método para obter a instância do EntityManager
     public EntityManager getEntityManager() {
-        return entityManagerFactory.createEntityManager();  // Obtém a instância do EntityManager a partir do EntityManagerFactory
+        return entityManagerFactory.createEntityManager(); 
     }
 
-    // Método para configurar o JpaTransactionManager
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
