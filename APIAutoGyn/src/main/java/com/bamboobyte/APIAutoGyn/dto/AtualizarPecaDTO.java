@@ -1,4 +1,4 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
 public class AtualizarPecaDTO {
     private String codigo;
@@ -40,6 +40,11 @@ public class AtualizarPecaDTO {
 
     public void setValorUnitario(Double valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+
+    public int getQuantidadeEstoque() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getQuantidadeEstoque'");
     }
 
 }

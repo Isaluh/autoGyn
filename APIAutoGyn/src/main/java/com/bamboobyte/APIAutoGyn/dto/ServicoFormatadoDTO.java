@@ -1,7 +1,7 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.entity.Servico;
-import com.bamboobyte.APIAutoGyn.valiForm.FormatacoesComuns;
+import com.bamboobyte.APIAutoGyn.Entities.Servico;
+import com.bamboobyte.APIAutoGyn.Validacoes.FormatacoesComuns;
 
 public class ServicoFormatadoDTO {
     private Long id;

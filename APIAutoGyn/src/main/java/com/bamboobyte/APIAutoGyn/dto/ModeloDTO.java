@@ -1,6 +1,6 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.entity.Modelo;
+import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 
 public class ModeloDTO {
 	private Long id;

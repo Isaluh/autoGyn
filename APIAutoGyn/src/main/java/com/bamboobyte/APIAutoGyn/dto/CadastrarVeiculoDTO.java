@@ -1,98 +1,97 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class CadastrarVeiculoDTO {
-	private String placa;
-	private Long id_cliente;
-	private Integer ano_fabricacao;
-	private Integer ano_modelo;
-	private Long id_modelo;
-	private Integer quilometragem;
-	private String numero_chassi;
-	private Integer numero_patrimonio;
+    private String placa;
+    private Long idCliente;
+    private Integer anoFabricacao;
+    private Integer anoModelo;
+    private Long idModelo;
+    private Integer km;
+    private String numeroChassi;
+    private String numeroPatrimonio;
 
-	private List<Long> acessorios = new LinkedList<>();
+    private List<Long> acessorios = new LinkedList<>();
 
-	@Override
-	public String toString() {
-		return "CadastrarVeiculoDTO [placa=" + placa + ", id_cliente=" + id_cliente + ", ano_fabricacao="
-				+ ano_fabricacao + ", ano_modelo=" + ano_modelo + ", id_modelo=" + id_modelo
-				+ ", quilometragem=" + quilometragem + ", numero_chassi=" + numero_chassi + ", numero_patrimonio="
-				+ numero_patrimonio + ", acessorios=" + acessorios + "]";
-	}
+    @Override
+    public String toString() {
+        return "CadastrarVeiculoDTO [placa=" + placa + ", idCliente=" + idCliente + ", anoFabricacao="
+                + anoFabricacao + ", anoModelo=" + anoModelo + ", idModelo=" + idModelo
+                + ", km=" + km + ", numeroChassi=" + numeroChassi + ", numeroPatrimonio="
+                + numeroPatrimonio + ", acessorios=" + acessorios + "]";
+    }
 
-	public String getPlaca() {
-		return placa;
-	}
+    public String getPlaca() {
+        return placa;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 
-	public Long getId_cliente() {
-		return id_cliente;
-	}
+    public Long getIdCliente() {
+        return idCliente;
+    }
 
-	public void setId_cliente(Long id_cliente) {
-		this.id_cliente = id_cliente;
-	}
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
 
-	public Integer getAno_fabricacao() {
-		return ano_fabricacao;
-	}
+    public Integer getAnoFabricacao() {
+        return anoFabricacao;
+    }
 
-	public void setAno_fabricacao(Integer ano_fabricacao) {
-		this.ano_fabricacao = ano_fabricacao;
-	}
+    public void setAnoFabricacao(Integer anoFabricacao) {
+        this.anoFabricacao = anoFabricacao;
+    }
 
-	public Integer getAno_modelo() {
-		return ano_modelo;
-	}
+    public Integer getAnoModelo() {
+        return anoModelo;
+    }
 
-	public void setAno_modelo(Integer ano_modelo) {
-		this.ano_modelo = ano_modelo;
-	}
+    public void setAnoModelo(Integer anoModelo) {
+        this.anoModelo = anoModelo;
+    }
 
-	public Long getId_modelo() {
-		return id_modelo;
-	}
+    public Long getIdModelo() {
+        return idModelo;
+    }
 
-	public void setId_modelo(Long id_modelo) {
-		this.id_modelo = id_modelo;
-	}
+    public void setIdModelo(Long idModelo) {
+        this.idModelo = idModelo;
+    }
 
-	public Integer getQuilometragem() {
-		return quilometragem;
-	}
+    public Integer getkm() {
+        return km;
+    }
 
-	public void setQuilometragem(Integer quilometragem) {
-		this.quilometragem = quilometragem;
-	}
+    public void setkm(Integer km) {
+        this.km = km;
+    }
 
-	public String getNumero_chassi() {
-		return numero_chassi;
-	}
+    public String getNumeroChassi() {
+        return numeroChassi;
+    }
 
-	public void setNumero_chassi(String numero_chassi) {
-		this.numero_chassi = numero_chassi;
-	}
+    public void setNumeroChassi(String numeroChassi) {
+        this.numeroChassi = numeroChassi;
+    }
 
-	public Integer getNumero_patrimonio() {
-		return numero_patrimonio;
-	}
+    public String getNumeroPatrimonio() {
+        return numeroPatrimonio;
+    }
 
-	public void setNumero_patrimonio(Integer numero_patrimonio) {
-		this.numero_patrimonio = numero_patrimonio;
-	}
+    public void setNumeroPatrimonio(String numeroPatrimonio) {
+        this.numeroPatrimonio = numeroPatrimonio;
+    }
 
-	public List<Long> getAcessorios() {
-		return acessorios;
-	}
+    public List<Long> getAcessorios() {
+        return acessorios;
+    }
 
-	public void setAcessorios(List<Long> acessorios) {
-		this.acessorios = acessorios;
-	}
-
+    public void setAcessorios(List<Long> acessorios) {
+        this.acessorios = acessorios;
+    }
 }

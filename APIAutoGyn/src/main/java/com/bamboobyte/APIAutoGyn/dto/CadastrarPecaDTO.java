@@ -1,6 +1,6 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.entity.Peca;
+import com.bamboobyte.APIAutoGyn.Entities.Peca;
 
 public class CadastrarPecaDTO {
     private Long id;

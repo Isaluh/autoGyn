@@ -1,21 +1,22 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
 public record CadastrarClienteDTO(
     String nome,
     String email,
-    boolean isPJ,
-    String cpf,
-    String cnpj,
-    String inscricaoEstadual,
-    String nomeContato,
-    Integer ddd,
-    Integer ddd2,
-    Integer telefone,
-    Integer telefone2,
+    String logradouro,
+    String complemento,
+    String numero,
     String cep,
     String cidade,
     String uf,
-    String numero,
-    String logradouro,
-    String complemento
+    Integer ddd,
+    Integer telefone,
+    Integer ddd2,
+    Integer telefone2,
+    String cnpj,
+    String inscricaoEstadual,
+    String nomeContato,
+    String cpf,
+    boolean isPJ,
+    boolean isPF
 ) {}

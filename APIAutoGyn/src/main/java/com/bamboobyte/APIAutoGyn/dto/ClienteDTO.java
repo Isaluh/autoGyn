@@ -1,4 +1,4 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
 public record ClienteDTO(
     Long id,

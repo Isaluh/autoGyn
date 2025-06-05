@@ -1,11 +1,12 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
-import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 
-import com.bamboobyte.APIAutoGyn.entity.*;
-import com.pi.autogyn.persistencia.dao.OSDao;
+import com.bamboobyte.APIAutoGyn.Entities.ItemServico;
+import com.bamboobyte.APIAutoGyn.Entities.Servico;
 
 public class ServicoOSDTO {
     private Long id;
@@ -15,25 +16,21 @@ public class ServicoOSDTO {
     private String fim;
     private String responsavel;
 
-    public ServicoOSDTO() {
-    }
+    public ServicoOSDTO() {}
 
     public ServicoOSDTO(ItemServico itemServico) {
         Servico servico = itemServico.getServico();
         this.id = servico.getId();
         this.nome = servico.getDescricao();
         this.terminado = itemServico.getDataFim() != null;
-        this.inicio = itemServico.getDataInicio() != null ? new java.text.SimpleDateFormat("dd/MM/yyyy")
-                .format(itemServico.getDataInicio()) : null;
-        this.fim = itemServico.getDataFim() != null ? new java.text.SimpleDateFormat("dd/MM/yyyy")
-                .format(itemServico.getDataFim()) : null;
-        this.responsavel = itemServico.getCpfColaborador();
+        this.inicio = itemServico.getDataInicio() != null ? convertDateToLocalDate(itemServico.getDataInicio()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : null;
+        this.fim = itemServico.getDataFim() != null ? convertDateToLocalDate(itemServico.getDataFim()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : null;
+        this.responsavel = itemServico.getColaborador() != null ? itemServico.getColaborador().getNome() : "Responsável não informado";
     }
 
-    public static void main(String args[]) throws SQLException {
-        for (ItemServico item : OSDao.getAll().get(10).getItensServico()) {
-            System.out.println(new ServicoOSDTO(item));
-        }
+    private LocalDate convertDateToLocalDate(java.util.Date date) {
+        Instant instant = date.toInstant();
+        return instant.atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
     public Long getId() {
@@ -76,10 +73,17 @@ public class ServicoOSDTO {
         this.fim = fim;
     }
 
+    public String getResponsavel() {
+        return responsavel;
+    }
+
+    public void setResponsavel(String responsavel) {
+        this.responsavel = responsavel;
+    }
+
     @Override
     public String toString() {
         return "ServicoOSDTO [id=" + id + ", nome=" + nome + ", terminado=" + terminado + ", inicio=" + inicio
                 + ", fim=" + fim + ", responsavel=" + responsavel + "]";
     }
-
 }

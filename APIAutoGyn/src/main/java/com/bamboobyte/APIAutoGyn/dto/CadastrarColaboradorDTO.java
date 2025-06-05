@@ -1,6 +1,6 @@
-package com.bamboobyte.APIAutoGyn.dto;
+package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.entity.Colaborador;
+import com.bamboobyte.APIAutoGyn.Entities.Colaborador;
 
 public class CadastrarColaboradorDTO {
     private String cpf;
