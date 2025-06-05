@@ -48,6 +48,10 @@ public class ItemServico {
     @JoinColumn(name = "cpf_colaborador")
     private Colaborador colaborador;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_os")
+    private OS os;
+
     public ItemServico() {}
 
     public Long getId() {
@@ -112,5 +116,13 @@ public class ItemServico {
 
     public void setColaborador(Colaborador colaborador) {
         this.colaborador = colaborador;
+    }
+
+    public OS getOs() {
+        return os;
+    }
+
+    public void setOs(OS os) {
+        this.os = os;
     }
 }

@@ -1,0 +1,61 @@
+.listagem {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    height: fit-content;
+
+    & h1 {
+        text-align: center;
+    }
+
+    & .conteudo>div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+.conteudo{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    max-height: 80vh;
+    overflow: auto;
+    padding-right: 10px;
+}
+
+.head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 20px;
+}
+
+.infos{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+
+    
+    & h3{
+        padding: 10px;
+        border-radius: 8px;
+        text-align: center;
+        background-color: var(--meioBranco);
+    }
+}
+
+p{
+    color: var(--cinza);
+}
+
+.linhaDois {
+    height: 1px;
+    width: 100%;
+    background-color: var(--borda);
+}

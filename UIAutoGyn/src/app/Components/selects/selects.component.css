@@ -1,0 +1,8 @@
+select{
+    border-radius: 5px;
+    border: 1px solid var(--borda);
+    outline: none;
+    height: 40px;
+    padding: 0 10px;
+    width: 100%;
+}

@@ -4,6 +4,8 @@ import { BlocoComponent } from "../../Components/bloco/bloco.component";
 import { InputsComponent } from "../../Components/inputs/inputs.component";
 import { Veiculos } from '../../Models/models';
 import { FormsModule } from '@angular/forms';
+import { SelectsComponent } from '../../Components/selects/selects.component';
+import { SelectsMultiploComponent } from '../../Components/selects-multiplo/selects-multiplo.component';
 
 interface Veiculo{
   proprietario: {},
@@ -14,7 +16,7 @@ interface Veiculo{
 @Component({
   selector: 'VeiculoCadAtView',
   standalone: true,
-  imports: [BaseComponent, BlocoComponent, InputsComponent, FormsModule],
+  imports: [BaseComponent, BlocoComponent, InputsComponent, FormsModule, SelectsComponent, SelectsMultiploComponent],
   templateUrl: './veiculoCadAt.component.html',
   styleUrl: './veiculoCadAt.component.css'
 })

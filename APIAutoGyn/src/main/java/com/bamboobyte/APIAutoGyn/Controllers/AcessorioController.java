@@ -2,7 +2,6 @@ package com.bamboobyte.APIAutoGyn.Controllers;
 
 import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
 import com.bamboobyte.APIAutoGyn.Services.AcessorioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,6 @@ public class AcessorioController {
 
     private final AcessorioService acessorioService;
 
-    @Autowired
     public AcessorioController(AcessorioService acessorioService) {
         this.acessorioService = acessorioService;
     }

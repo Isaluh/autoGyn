@@ -1,0 +1,23 @@
+<BaseLayout [opcoesOS]="true">
+    <div class="pai">
+        <div>
+            <BlocoComponent titulo="Cadastro de serviço" descricao="Preencha os dados do serviço para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarServico()">
+                <div class="conteudo">
+                    <InputsComponent text="Nome do serviço" tipoInput="text" idInput="servico" placeholder="Trocar óleo" [(ngModel)]="addServico.servico" />
+                    <InputsComponent text="Valor" tipoInput="number" idInput="valor" placeholder="120" [(ngModel)]="addServico.valor" />
+                </div>
+            </BlocoComponent>
+            <BlocoComponent titulo="Cadastro de peça" descricao="Preencha os dados da peça para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarPeca()">
+                <div class="conteudo">
+                    <InputsComponent text="Código" tipoInput="number" idInput="codigo" placeholder="12345" [(ngModel)]="addPeca.codigo" />
+                    <InputsComponent text="Nome da peça" tipoInput="text" idInput="peca" placeholder="Disco de freio" [(ngModel)]="addPeca.descricao" />
+                    <InputsComponent text="Sku" tipoInput="text" idInput="sku" placeholder="AB5789" [(ngModel)]="addPeca.sku" />
+                    <InputsComponent text="Quantidade no estoque" tipoInput="number" idInput="quantidade" placeholder="14" [(ngModel)]="addPeca.quantidadeEstoque" />
+                    <InputsComponent text="Valor unitário" tipoInput="number" idInput="valorUnitario" placeholder="70" [(ngModel)]="addPeca.valorUnitario" />
+                </div>
+            </BlocoComponent>
+        </div>
+        <span class="linha"></span>
+        <ListagemSimplesComponent titulo="Serviços Cadastrados" descricao="Sem serviços cadastrados." [numGap]="3" />
+    </div>
+</BaseLayout>

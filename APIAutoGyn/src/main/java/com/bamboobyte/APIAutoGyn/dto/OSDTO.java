@@ -3,7 +3,8 @@ package com.bamboobyte.APIAutoGyn.DTO;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.bamboobyte.APIAutoGyn.Entities.*;
+import com.bamboobyte.APIAutoGyn.Entities.ItemServico;
+import com.bamboobyte.APIAutoGyn.Entities.OS;
 
 public class OSDTO {
     

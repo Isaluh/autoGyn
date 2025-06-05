@@ -1,6 +1,6 @@
 package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.Entities.*;
+import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
 
 public class MinimalAcessorioDTO {
 	private Long id;

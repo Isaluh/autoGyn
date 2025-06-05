@@ -5,7 +5,6 @@ import com.bamboobyte.APIAutoGyn.DTO.CadastrarPecaDTO;
 import com.bamboobyte.APIAutoGyn.DTO.PecaListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
 import com.bamboobyte.APIAutoGyn.Services.PecaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ public class PecaController {
 
     private final PecaService pecaService;
 
-    @Autowired
     public PecaController(PecaService pecaService) {
         this.pecaService = pecaService;
     }
