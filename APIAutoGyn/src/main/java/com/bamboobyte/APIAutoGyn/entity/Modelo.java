@@ -1,79 +1,56 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
+import jakarta.persistence.*;
 
-import com.pi.autogyn.persistencia.dao.MarcaDao;
-
+@Entity
+@Table(name = "modelo")
 public class Modelo {
-	private Long id;
-	private String nome;
-	
-	private Long idMarca;
-	private Marca marca;
-	
-	
-	public Modelo(ResultSet rs) throws SQLException {
-		this.id = rs.getLong("id_modelo");
-		this.nome = rs.getString("nome");
-		this.idMarca = rs.getLong("id_marca");	this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
 
-	public Marca getMarca() {
-		if (this.marca == null && lazyload) {
-			try {
-				this.marca = MarcaDao.getById(this.idMarca);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return this.marca;
-	}
-	
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-	@Override
-	public String toString() {
-		return "Modelo [id=" + id + ", nome=" + nome + ", idMarca=" + idMarca + ", marca=" + getMarca().getNome() + "]";
-	}
-	
-	public Long getId() {
-		return id;
-	}
+    private String nome;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne
+    @JoinColumn(name = "marca_id") 
+    private Marca marca;
 
-	public String getNome() {
-		return nome;
-	}
+    public Modelo() {
+    }
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
+    public Modelo(Long id, String nome, Marca marca) {
+        this.id = id;
+        this.nome = nome;
+        this.marca = marca;
+    }
 
-	public Long getIdMarca() {
-		return idMarca;
-	}
+    @Override
+    public String toString() {
+        return "Modelo [id=" + id + ", nome=" + nome + ", marca=" + (marca != null ? marca.getNome() : "null") + "]";
+    }
 
-	public void setIdMarca(Long idMarca) {
-		this.idMarca = idMarca;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setMarca(Marca marca) {
-		this.marca = marca;
-	}
-	
-	
-	
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
 }
-

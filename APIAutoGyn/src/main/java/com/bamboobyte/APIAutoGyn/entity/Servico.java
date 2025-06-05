@@ -1,10 +1,17 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "servico")
 public class Servico {
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String descricao;
 	private Double valor;
@@ -13,17 +20,10 @@ public class Servico {
 
 	}
 
-	public Servico(ResultSet source) throws SQLException {
-		this.id = source.getLong("id_servico");
-		this.descricao = source.getString("descricao");
-		this.valor = source.getDouble("valor");
-		this.lazyload = true;
-	}
-
-	private boolean lazyload = false;
-
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
+	public Servico(Long id, String descricao, Double valor) {
+		this.id = id;
+		this.descricao = descricao;
+		this.valor = valor;
 	}
 
 	public Long getId() {
@@ -48,10 +48,6 @@ public class Servico {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
-	}
-
-	public boolean isLazyload() {
-		return lazyload;
 	}
 
 	@Override

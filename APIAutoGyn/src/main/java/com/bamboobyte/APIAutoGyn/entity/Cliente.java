@@ -1,101 +1,50 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.*;
 import java.util.List;
-import java.util.Optional;
 
-import com.bamboobyte.APIAutoGyn.repository.PropriedadeRepository;
-import com.bamboobyte.APIAutoGyn.dto.CadastrarClienteDTO;
+@Entity
+@Table(name = "cliente")
 
 public class Cliente {
-    public Cliente(ResultSet rs) throws SQLException {
-        this.id = rs.getLong("id_cliente");
-        this.nome = rs.getString("nome");
-        this.email = rs.getString("email");
-        this.endereco = new Endereco(rs);
-        this.telefone = new Telefone(rs);
-        this.telefone2 = Telefone.createSecondary(rs);
-        this.pessoaJuridica = PJ.create(rs);
-        this.pessoaFisica = PF.create(rs);
-        this.lazyload = true;
-    }
 
-    private boolean lazyload = false;
-
-    public void setLazyload(boolean ligado) {
-        this.lazyload = ligado;
-    }
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String nome;
     private String email;
+
+    @Embedded
     private Endereco endereco;
-    private Telefone telefone;
-    private Optional<Telefone> telefone2;
-    private Optional<PJ> pessoaJuridica;
-    private Optional<PF> pessoaFisica;
+
+    @Embedded
+    private Telefone telefonePrincipal;
+
+    @Embedded
+    private Telefone telefoneSecundario;
+
+    @Embedded
+    private PJ pessoaJuridica;
+
+    @Embedded
+    private PF pessoaFisica;
+
+    @OneToMany(mappedBy = "cliente")
     private List<Propriedade> propriedades;
 
-    public Cliente(CadastrarClienteDTO dto) {
-        this.nome = dto.getNome();
-        this.email = dto.getEmail();
-        this.lazyload = false;
-
-        this.endereco = new Endereco();
-        this.endereco.setLogradouro(dto.getLogradouro());
-        this.endereco.setComplemento(dto.getComplemento());
-        this.endereco.setNumero(dto.getNumero());
-        this.endereco.setCep(dto.getCep());
-        this.endereco.setCidade(dto.getCidade());
-        this.endereco.setUf(dto.getUf());
-
-        this.telefone = new Telefone();
-        this.telefone.setDdd(dto.getDdd());
-        this.telefone.setTelefone(dto.getTelefone());
-
-        if (dto.getDdd2() != null && dto.getDdd2() != 0 && dto.getTelefone2() != 0) {
-            Telefone tel2 = new Telefone();
-            tel2.setDdd(dto.getDdd2());
-            tel2.setTelefone(dto.getTelefone2());
-            this.telefone2 = Optional.of(tel2);
-        } else {
-            this.telefone2 = Optional.empty();
-        }
-
-        if (dto.isPJ()) {
-            PJ pj = new PJ();
-            pj.setCnpj(dto.getCnpj());
-            pj.setContato(dto.getNomeContato());
-            pj.setInscricaoEstadual(dto.getInscricao_estadual());
-            this.pessoaJuridica = Optional.of(pj);
-            this.pessoaFisica = Optional.empty();
-        } else {
-            PF pf = new PF();
-            pf.setCpf(dto.getCpf());
-            this.pessoaFisica = Optional.of(pf);
-            this.pessoaJuridica = Optional.empty();
-        }
-
-        this.propriedades = null;
+    public Cliente() {
     }
 
-    public List<Propriedade> getPropriedades() {
-        if (this.propriedades == null && lazyload) {
-            try {
-                this.propriedades = PropriedadeRepository.getAllByCliente(this.id);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return this.propriedades;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", endereco=" + endereco + ", telefone="
-                + telefone + ", telefone2=" + telefone2 + ", pessoaJuridica=" + pessoaJuridica + ", pessoaFisica="
-                + pessoaFisica + ", propriedades=" + getPropriedades() + "]";
+    public Cliente(String nome, String email, Endereco endereco, Telefone telefonePrincipal,
+            Telefone telefoneSecundario, PJ pessoaJuridica, PF pessoaFisica) {
+        this.nome = nome;
+        this.email = email;
+        this.endereco = endereco;
+        this.telefonePrincipal = telefonePrincipal;
+        this.telefoneSecundario = telefoneSecundario;
+        this.pessoaJuridica = pessoaJuridica;
+        this.pessoaFisica = pessoaFisica;
     }
 
     public Long getId() {
@@ -130,36 +79,40 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public Telefone getTelefone() {
-        return telefone;
+    public Telefone getTelefonePrincipal() {
+        return telefonePrincipal;
     }
 
-    public void setTelefone(Telefone telefone) {
-        this.telefone = telefone;
+    public void setTelefonePrincipal(Telefone telefonePrincipal) {
+        this.telefonePrincipal = telefonePrincipal;
     }
 
-    public Optional<Telefone> getTelefone2() {
-        return telefone2;
+    public Telefone getTelefoneSecundario() {
+        return telefoneSecundario;
     }
 
-    public void setTelefone2(Optional<Telefone> telefone2) {
-        this.telefone2 = telefone2;
+    public void setTelefoneSecundario(Telefone telefoneSecundario) {
+        this.telefoneSecundario = telefoneSecundario;
     }
 
-    public Optional<PJ> getPessoaJuridica() {
+    public PJ getPessoaJuridica() {
         return pessoaJuridica;
     }
 
-    public void setPessoaJuridica(Optional<PJ> pessoaJuridica) {
+    public void setPessoaJuridica(PJ pessoaJuridica) {
         this.pessoaJuridica = pessoaJuridica;
     }
 
-    public Optional<PF> getPessoaFisica() {
+    public PF getPessoaFisica() {
         return pessoaFisica;
     }
 
-    public void setPessoaFisica(Optional<PF> pessoaFisica) {
+    public void setPessoaFisica(PF pessoaFisica) {
         this.pessoaFisica = pessoaFisica;
+    }
+
+    public List<Propriedade> getPropriedades() {
+        return propriedades;
     }
 
     public void setPropriedades(List<Propriedade> propriedades) {

@@ -1,33 +1,26 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import jakarta.persistence.Embeddable;
 
+@Embeddable
 public class Endereco {
-    public Endereco(ResultSet rs) throws SQLException {
-        this.logradouro = rs.getString("logradouro");
-        this.complemento = rs.getString("complemento");
-        this.numero = rs.getString("numero");
-        this.cep = rs.getString("cep");
-        this.cidade = rs.getString("cidade");
-        this.uf = rs.getString("uf");
-    }
-
-    public Endereco() {
-
-    }
-
     private String logradouro;
-    private String complemento;
     private String numero;
+    private String complemento;
     private String cep;
     private String cidade;
     private String uf;
 
-    @Override
-    public String toString() {
-        return "Endereco [logradouro=" + logradouro + ", complemento=" + complemento + ", numero=" + numero + ", cep="
-                + cep + ", cidade=" + cidade + ", uf=" + uf + "]";
+    public Endereco() {
+    }
+
+    public Endereco(String logradouro, String numero, String complemento, String cep, String cidade, String uf) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.uf = uf;
     }
 
     public String getLogradouro() {
@@ -38,20 +31,20 @@ public class Endereco {
         this.logradouro = logradouro;
     }
 
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
     public String getNumero() {
         return numero;
     }
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
     }
 
     public String getCep() {
@@ -77,5 +70,6 @@ public class Endereco {
     public void setUf(String uf) {
         this.uf = uf;
     }
-
+    
+    
 }

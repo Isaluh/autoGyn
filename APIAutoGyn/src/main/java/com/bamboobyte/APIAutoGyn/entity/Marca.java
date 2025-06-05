@@ -1,34 +1,28 @@
 package com.bamboobyte.APIAutoGyn.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.EnumMap;
-import java.util.LinkedList;
 import java.util.List;
 
-import com.pi.autogyn.persistencia.dao.ModeloDao;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "marca")
 public class Marca {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
+	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
 	private List<Modelo> modelos;
-	
-	
-	public Marca(ResultSet rs) throws SQLException {
-		this.id = rs.getLong("id_marca");
-		this.nome = rs.getString("nome");	this.lazyload = true;
-	}
-	
-	private boolean lazyload = false;
-	public void setLazyload(boolean ligado) {
-		this.lazyload = ligado;
-	}
 
 	public Marca() {
-		
+
 	}
-	
-	
+
+	public Marca(Long id, String nome, List<Modelo> modelos) {
+		this.id = id;
+		this.nome = nome;
+		this.modelos = modelos;
+	}
 
 	@Override
 	public String toString() {
@@ -52,22 +46,11 @@ public class Marca {
 	}
 
 	public List<Modelo> getModelos() {
-		if (this.modelos == null && lazyload) {
-			try {
-				this.modelos = ModeloDao.getAllModelosOfMarca(this.id);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 		return modelos;
 	}
 
 	public void setModelos(List<Modelo> modelos) {
 		this.modelos = modelos;
 	}
-	
-	
-	
-	
-}
 
+}
