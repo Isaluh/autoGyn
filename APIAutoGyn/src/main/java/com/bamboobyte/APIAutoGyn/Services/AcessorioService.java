@@ -29,7 +29,7 @@ public class AcessorioService {
         if (!acessorioRepository.existsById(id)) {
             throw new RuntimeException("Acessório não encontrado com ID: " + id);
         }
-        return acessorioRepository.getReferenceById(id); // ou acessorioRepository.findById(id).get()
+        return acessorioRepository.getReferenceById(id); 
     }
 
     public void excluirAcessorio(Long id) {

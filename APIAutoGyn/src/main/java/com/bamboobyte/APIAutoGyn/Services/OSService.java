@@ -1,12 +1,12 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
-import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
-import com.bamboobyte.APIAutoGyn.DTO.OrdemServicoListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.OS;
 import com.bamboobyte.APIAutoGyn.Repositories.OSRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
 import com.bamboobyte.APIAutoGyn.Entities.ItemPeca;
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.OrdemServicoListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Etapa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
