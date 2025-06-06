@@ -15,7 +15,8 @@ export class BlocoComponent {
 
   @Output() foiClicado = new EventEmitter()
 
-  clicado(){
+  clicado(event : Event){
+    event.preventDefault();
     this.foiClicado.emit()
   }
 }

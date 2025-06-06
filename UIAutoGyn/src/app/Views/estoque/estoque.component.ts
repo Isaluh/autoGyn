@@ -15,22 +15,19 @@ export class EstoqueComponent {
 
   campos: string[] = ['Código', 'SKU', 'Quantidade no Estoque', 'Valor Unitário'];
 
-  pecas: Pecas[] = [];
   pecasListagem: {
     descricao: string;
     dados: { [key: string]: string | number }
   }[] = [];
-
+  
   constructor(private pecasService: PecasService) {}
-
-  ngOnInit(): void {
+  
+  ngOnInit() {
     this.pegarPecas();
   }
 
-  pegarPecas(): void {
+  pegarPecas() {
     this.pecasService.getPecas().subscribe((res: Pecas[]) => {
-      this.pecas = res;
-
       this.pecasListagem = res.map(p => ({
         descricao: p.descricao,
         dados: {
@@ -40,7 +37,6 @@ export class EstoqueComponent {
           'Valor Unitário': p.valorUnitario != null ? `R$ ${p.valorUnitario.toFixed(2)}` : ''
         }
       }));
-      console.log(this.pecasListagem)
     });
   }
 }

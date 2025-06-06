@@ -6,6 +6,6 @@
 
     <form>
         <ng-content></ng-content>
-        <ButtonsComponent [text]="textButton" (click)="clicado()" />
+        <ButtonsComponent [text]="textButton" (click)="clicado($event)" />
     </form>
 </div>

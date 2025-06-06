@@ -11,7 +11,7 @@
                 <span class="linha"></span>
                 <div>
                     <!-- LISTAGEM DE PECAS -->
-                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" />
+                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" [opcoes]="pecas" />
                     <InputsComponent text="Valor do Orçamento" tipoInput="number" idInput="valor" placeholder="1200" [(ngModel)]="addOS.orcamento" />            
                 </div>
             </div>

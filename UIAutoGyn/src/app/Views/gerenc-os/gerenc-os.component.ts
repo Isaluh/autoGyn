@@ -3,10 +3,11 @@ import { BlocoComponent } from '../../Components/bloco/bloco.component';
 import { BaseComponent } from '../../Layouts/base/base.component';
 import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
-import { OrdensServico } from '../../Models/models';
+import { OrdensServico, Pecas } from '../../Models/models';
 import { SelectsComponent } from '../../Components/selects/selects.component';
 import { SelectsMultiploComponent } from '../../Components/selects-multiplo/selects-multiplo.component';
 import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-categoria/listagem-sem-categoria.component';
+import { PecasService } from '../../Services/pecas.service';
 
 @Component({
   selector: 'app-gerenc-os',
@@ -23,8 +24,19 @@ export class GerencOsComponent {
     peca: [],
     orcamento: null
   }
+  pecas: Pecas[] = [];
 
   campos : string[] = ['Veículo', 'Data', 'Valor Total', 'Status']
+
+  constructor(private pecasService: PecasService) {}
+    
+  ngOnInit() {
+    this.pegarPecas();
+  }
+  
+  pegarPecas() {
+    this.pecasService.getPecas().subscribe((peca) => this.pecas = peca)
+  }
 
 //   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {
 //   this.ordensListagem = res.map(o => ({
@@ -37,7 +49,6 @@ export class GerencOsComponent {
 //     }
 //   }));
 // });
-
 
   cadastrarOS(){
     // add OS

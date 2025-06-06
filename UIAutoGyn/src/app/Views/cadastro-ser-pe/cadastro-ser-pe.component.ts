@@ -31,6 +31,18 @@ export class CadastroSerPeComponent {
 
   constructor(private pecasService: PecasService) {}
 
+//   servicosListagem: string[] = [];
+
+// pegarServicos() {
+//   this.servicosService.getServicos().subscribe((res: Servicos[]) => {
+//     this.servicosListagem = res.flatMap(s => [
+//       s.servico,
+//       s.valor != null ? `R$ ${s.valor.toFixed(2)}` : ''
+//     ]);
+//   });
+// }
+
+
   cadastrarServico(){
     // add servico
   }
