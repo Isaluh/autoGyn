@@ -14,18 +14,25 @@ export interface Veiculos{
 
 export interface Marcas{
     id: number | null,
-    marca: string
+    nome: string
 }
 
 export interface Modelos{
     id: number | null,
-    marca: {},
-    modelo: string
+    marca: Marcas,
+    nome: string
 }
+
+export interface MarcaComModelos {
+  id: number;
+  nomeMarca: string;
+  nomeModelos: string[];
+}
+
 
 export interface Acessorios{
     id: number | null,
-    acessorio: string
+    descricao: string
 }
 
 export interface Servicos{

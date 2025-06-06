@@ -17,9 +17,9 @@ import { AcessoriosService } from '../../Services/acessorios.service';
 export class AcessoriosComponent {
   addAcessorio : Acessorios = {
     id: null,
-    acessorio: ''
+    descricao: ''
   }
-  acessoriosListagem: Acessorios[] = [];
+  acessoriosListagem: string[] = [];
 
   constructor(private acessorioService: AcessoriosService) {}
 
@@ -27,9 +27,10 @@ export class AcessoriosComponent {
     this.pegarAcessorios()
   }
   
-  // ta vindo errado, verificar no back
   pegarAcessorios() {
-    this.acessorioService.getAcessorios().subscribe((acess) => {this.acessoriosListagem = acess; console.log(this.acessoriosListagem)});
+    this.acessorioService.getAcessorios().subscribe((res: Acessorios[]) =>{
+      this.acessoriosListagem = res.map(item => item.descricao);
+    });
   }
 
   cadastrarAcessorio() {
@@ -38,7 +39,7 @@ export class AcessoriosComponent {
         alert('Acessório cadastrado com sucesso!');
         this.addAcessorio = {
           id: null,
-          acessorio: ''
+          descricao: ''
         }
         this.pegarAcessorios()
       },

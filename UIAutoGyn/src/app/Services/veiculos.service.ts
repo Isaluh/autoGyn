@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MarcaComModelos, Marcas, Modelos } from '../Models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +10,20 @@ export class VeiculosService {
   
   constructor(private httpClient : HttpClient) {}
 
-  // getLivros(){
-  //   return this.httpClient.get<Livro[]>(LivroService.API_url)
-  // }
+  getMarcas(){
+    return this.httpClient.get<Marcas[]>(VeiculosService.API_url + 'marcas')
+  }
 
-  // postLivro(livro : Livro){
-  //   return this.httpClient.post<Livro>(LivroService.API_url+'/add', livro)
-  // }
+  postMarca(marca : Marcas){
+    return this.httpClient.post<Marcas>(VeiculosService.API_url + 'marcas', marca)
+  }
 
-  // putLivro(livro : Livro){
-  //   return this.httpClient.put<Livro>(LivroService.API_url+'/update', livro)
-  // }
+  getMarcasEModelos() {
+    return this.httpClient.get<MarcaComModelos[]>(VeiculosService.API_url + 'marcas/modelos');
+  }
 
-  // delLivro(id : number){
-  //   return this.httpClient.delete<Livro>(LivroService.API_url+`/${id}`)
-  // }
+  postModelo(modelo : Object){
+    return this.httpClient.post<Modelos>(VeiculosService.API_url + 'modelos', modelo)
+  }
+
 }
