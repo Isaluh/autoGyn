@@ -5,7 +5,6 @@ import com.bamboobyte.APIAutoGyn.DTO.ColaboradorDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Colaborador;
 import com.bamboobyte.APIAutoGyn.Repositories.ColaboradorRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public class ColaboradorService {
 
     private final ColaboradorRepository colaboradorRepository;
 
-    @Autowired
     public ColaboradorService(ColaboradorRepository colaboradorRepository) {
         this.colaboradorRepository = colaboradorRepository;
     }

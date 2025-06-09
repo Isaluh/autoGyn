@@ -7,7 +7,6 @@ import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
 
 @Entity
 @Table(name = "cliente")
-
 public class Cliente {
 
     @Id
@@ -42,19 +41,46 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente")
     private List<Propriedade> propriedades;
-    
-    public Cliente(String nome, String email, Endereco endereco, Telefone telefonePrincipal,
-            Telefone telefoneSecundario, PJ pessoaJuridica, PF pessoaFisica) {
-        this.nome = nome;
-        this.email = email;
-        this.endereco = endereco;
-        this.telefonePrincipal = telefonePrincipal;
-        this.telefoneSecundario = telefoneSecundario;
-        this.pessoaJuridica = pessoaJuridica;
-        this.pessoaFisica = pessoaFisica;
-    }
 
     public Cliente(CadastrarClienteDTO dto) {
+        this.nome = dto.nome();
+        this.email = dto.email();
+
+        this.endereco = new Endereco(
+            dto.logradouro(),
+            dto.complemento(),
+            dto.numero(),
+            dto.cep(),
+            dto.cidade(),
+            dto.uf()
+        );
+
+        this.telefonePrincipal = new Telefone(
+            dto.ddd(),
+            dto.telefone()
+        );
+
+        this.telefoneSecundario = new Telefone(
+            dto.ddd2(),
+            dto.telefone2()
+        );
+
+        if (dto.isPJ()) {
+            this.pessoaJuridica = new PJ(
+                dto.cnpj(),
+                dto.inscricaoEstadual(),
+                dto.nomeContato()
+            );
+            this.pessoaFisica = null;
+        } else if (dto.isPF()) {
+            this.pessoaFisica = new PF(dto.cpf());
+            this.pessoaJuridica = null;
+        } else {
+            throw new IllegalArgumentException("Cliente deve ser PF ou PJ.");
+        }
+    }
+
+    public Cliente() {
     }
 
     public Long getId() {

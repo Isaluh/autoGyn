@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Pecas, Servicos } from '../../Models/models';
 import { ListagemSimplesComponent } from '../../Components/listagem-simples/listagem-simples.component';
 import { PecasService } from '../../Services/pecas.service';
+import { ServicosService } from '../../Services/servicos.service';
 
 @Component({
   selector: 'cadastroSerPeView',
@@ -17,8 +18,9 @@ import { PecasService } from '../../Services/pecas.service';
 export class CadastroSerPeComponent {
   addServico : Servicos = {
     id: null,
-    servico: '',
-    valor: null
+    descricao: '',
+    valor: null,
+    formatado: ''
   }
   addPeca : Pecas = {
     id: null,
@@ -28,27 +30,42 @@ export class CadastroSerPeComponent {
     quantidadeEstoque: null,
     valorUnitario: null
   }
+  servicosListagem: string[] = [];
 
-  constructor(private pecasService: PecasService) {}
+  constructor(private pecasService: PecasService, private servicosService : ServicosService) {}
 
-//   servicosListagem: string[] = [];
+  ngOnInit(){
+    this.pegarServicos()
+  }
 
-// pegarServicos() {
-//   this.servicosService.getServicos().subscribe((res: Servicos[]) => {
-//     this.servicosListagem = res.flatMap(s => [
-//       s.servico,
-//       s.valor != null ? `R$ ${s.valor.toFixed(2)}` : ''
-//     ]);
-//   });
-// }
-
+  pegarServicos() {
+    this.servicosService.getServicos().subscribe((res: Servicos[]) => {
+      this.servicosListagem = res.flatMap(s => [
+        s.formatado
+      ]);
+    });
+  }
 
   cadastrarServico(){
-    // add servico
+    this.servicosService.postServico(this.addServico).subscribe({
+      next: res => {
+        alert('Serviço cadastrado com sucesso!');
+        this.addServico = {
+          id: null,
+          descricao: '',
+          valor: null,
+          formatado: ''
+        }
+        this.pegarServicos()
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar serviço.';
+        alert(mensagem);
+      }
+    })
   }
 
   cadastrarPeca(){
-    // add peca
     this.pecasService.postPeca(this.addPeca).subscribe(() => {})
   }
 }

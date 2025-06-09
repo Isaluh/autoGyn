@@ -1,6 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Controllers;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarMarcaDTO;
+import com.bamboobyte.APIAutoGyn.DTO.MarcaListaCadastroDTO;
 import com.bamboobyte.APIAutoGyn.DTO.MinimalMarcaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Marca;
 import com.bamboobyte.APIAutoGyn.Services.MarcaService;
@@ -9,10 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/marcas")
+@CrossOrigin("*")
 public class MarcaController {
 
     private final MarcaService marcaServico;
@@ -24,6 +25,12 @@ public class MarcaController {
     @GetMapping
     public List<MinimalMarcaDTO> listarTodos() {
         return marcaServico.listarTodos();
+    }
+
+    @GetMapping("/modelos")
+    public ResponseEntity<List<MarcaListaCadastroDTO>> listarMarcasComModelos() {
+        List<MarcaListaCadastroDTO> marcasComModelos = marcaServico.listarMarcasComModelos();
+        return ResponseEntity.ok(marcasComModelos);
     }
 
     @GetMapping("/{id}")

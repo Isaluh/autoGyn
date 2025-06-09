@@ -30,14 +30,22 @@ public class ClienteService {
 
     public List<ClienteDTO> listarTodos() {
         return clienteRepository.findAll().stream()
-                .map(cliente -> {
-                    String doc = cliente.getPessoaFisica() != null
-                            ? cliente.getPessoaFisica().getCpf()
-                            : cliente.getPessoaJuridica().getCnpj();
-                    return new ClienteDTO(cliente.getId(), "[" + doc + "] | " + cliente.getNome());
-                })
-                .collect(Collectors.toList());
+            .map(cliente -> {
+                String doc;
+
+                if (cliente.getPessoaFisica() != null) {
+                    doc = cliente.getPessoaFisica().getCpf();
+                } else if (cliente.getPessoaJuridica() != null) {
+                    doc = cliente.getPessoaJuridica().getCnpj();
+                } else {
+                    doc = "Cliente deve ser PF ou PJ, mas não ambos nem nenhum";
+                }
+
+                return new ClienteDTO(cliente.getId(), "[" + doc + "] | " + cliente.getNome());
+            })
+            .collect(Collectors.toList());
     }
+
 
     public Cliente buscarClientePorId(Long id) {
         if (!clienteRepository.existsById(id)) {

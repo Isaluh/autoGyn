@@ -1,10 +1,10 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarMarcaDTO;
+import com.bamboobyte.APIAutoGyn.DTO.MarcaListaCadastroDTO;
 import com.bamboobyte.APIAutoGyn.DTO.MinimalMarcaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Marca;
 import com.bamboobyte.APIAutoGyn.Repositories.MarcaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +16,6 @@ public class MarcaService {
 
     private final MarcaRepository marcaRepositorio;
 
-    @Autowired
     public MarcaService(MarcaRepository marcaRepositorio) {
         this.marcaRepositorio = marcaRepositorio;
     }
@@ -26,6 +25,13 @@ public class MarcaService {
         return marcas.stream()
                 .map(MinimalMarcaDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    public List<MarcaListaCadastroDTO> listarMarcasComModelos() {
+        List<Marca> marcas = marcaRepositorio.findAll();
+        return marcas.stream()
+                    .map(MarcaListaCadastroDTO::new)
+                    .collect(Collectors.toList());
     }
 
     public Marca incluirMarca(CadastrarMarcaDTO dto) {

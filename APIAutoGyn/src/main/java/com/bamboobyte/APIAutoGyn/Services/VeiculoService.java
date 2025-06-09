@@ -3,7 +3,6 @@ package com.bamboobyte.APIAutoGyn.Services;
 import com.bamboobyte.APIAutoGyn.DTO.*;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,8 +12,11 @@ import java.util.stream.Collectors;
 @Service
 public class VeiculoService {
 
-    @Autowired
     private VeiculoRepository veiculoRepository;
+
+    public VeiculoService(VeiculoRepository veiculoRepository) {
+        this.veiculoRepository = veiculoRepository;
+    }
 
     public List<VeiculoDTO> listarVeiculosCadastrados() {
         List<Veiculo> veiculos = veiculoRepository.findAll();
@@ -29,6 +31,10 @@ public class VeiculoService {
 
     @Transactional
     public String criarVeiculo(CadastrarVeiculoDTO novoVeiculoDTO) {
+        if (novoVeiculoDTO == null || novoVeiculoDTO.getPlaca() == null || novoVeiculoDTO.getPlaca().isEmpty()) {
+            throw new RuntimeException("Dados do veículo inválidos.");
+        }
+
         Veiculo veiculo = new Veiculo();
         veiculo.setPlaca(novoVeiculoDTO.getPlaca());
         veiculo.setKm(novoVeiculoDTO.getkm());
@@ -36,18 +42,15 @@ public class VeiculoService {
         veiculo.setNumPatrimonio(novoVeiculoDTO.getNumeroPatrimonio());
         veiculo.setNumChassi(novoVeiculoDTO.getNumeroChassi());
         veiculo.setAnoModelo(novoVeiculoDTO.getAnoModelo());
-        veiculoRepository.save(veiculo);
 
+        veiculoRepository.save(veiculo);
         return "Veículo cadastrado com sucesso!";
     }
 
     @Transactional
     public String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculoDTO) {
-        Veiculo veiculo = veiculoRepository.findById(placa).orElse(null);
-
-        if (veiculo == null) {
-            return "Veículo não encontrado!";
-        }
+        Veiculo veiculo = veiculoRepository.findById(placa)
+            .orElseThrow(() -> new RuntimeException("Veículo não encontrado com placa: " + placa));
 
         veiculo.setKm(atualizarVeiculoDTO.getKm());
         veiculo.setAnoFabricacao(atualizarVeiculoDTO.getAnoFabricacao());
@@ -58,7 +61,9 @@ public class VeiculoService {
     }
 
     public VeiculoDTO encontrarPorPlaca(String placa) {
-        Veiculo veiculo = veiculoRepository.findById(placa).orElse(null);
-        return (veiculo != null) ? new VeiculoDTO(veiculo) : null;
+        Veiculo veiculo = veiculoRepository.findById(placa)
+            .orElseThrow(() -> new RuntimeException("Veículo não encontrado com placa: " + placa));
+
+        return new VeiculoDTO(veiculo);
     }
 }

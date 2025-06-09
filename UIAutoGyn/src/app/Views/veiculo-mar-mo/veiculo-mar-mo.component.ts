@@ -70,7 +70,7 @@ export class VeiculoMarMoComponent {
       marcaId: this.addModelo.marca.id,
       nome: this.addModelo.nome
     };
-    console.log(modeloParaEnvio)
+
     this.veiculosService.postModelo(modeloParaEnvio).subscribe({
       next: res => {
         alert('Modelo cadastrado com sucesso!');

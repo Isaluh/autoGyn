@@ -9,21 +9,18 @@ public class AcessorioDTO {
 
     private Long id;
     private String descricao;
-    private String placaVeiculo;
 
     public AcessorioDTO() {
     }
 
-    public AcessorioDTO(Long id, String descricao, String placaVeiculo) {
+    public AcessorioDTO(Long id, String descricao) {
         this.id = id;
         this.descricao = descricao;
-        this.placaVeiculo = placaVeiculo;
     }
 
     public AcessorioDTO(Acessorio acessorio) {
         this.id = acessorio.getId();
         this.descricao = acessorio.getDescricao();
-        this.placaVeiculo = (acessorio.getVeiculo() != null) ? acessorio.getVeiculo().getPlaca() : null; 
     }
 
     public static List<AcessorioDTO> convertAcessorios(List<Acessorio> acessorios) {
@@ -48,16 +45,8 @@ public class AcessorioDTO {
         this.descricao = descricao;
     }
 
-    public String getPlacaVeiculo() {
-        return placaVeiculo;
-    }
-
-    public void setPlacaVeiculo(String placaVeiculo) {
-        this.placaVeiculo = placaVeiculo;
-    }
-
     @Override
     public String toString() {
-        return "AcessorioDTO [id=" + id + ", descricao=" + descricao + ", placaVeiculo=" + placaVeiculo + "]";
+        return "AcessorioDTO [id=" + id + ", descricao=" + descricao + "]";
     }
 }

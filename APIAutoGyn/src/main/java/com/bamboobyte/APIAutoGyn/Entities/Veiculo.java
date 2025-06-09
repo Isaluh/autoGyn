@@ -1,5 +1,6 @@
 package com.bamboobyte.APIAutoGyn.Entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,8 @@ public class Veiculo {
     @JoinColumn(name = "id_modelo")
     private Modelo modelo;
 
-    @OneToMany(mappedBy = "veiculo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "veiculo_id")
     private List<Acessorio> acessorios;
 
     @OneToMany(mappedBy = "veiculo", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

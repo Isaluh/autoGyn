@@ -1,15 +1,14 @@
 export interface Veiculos{
     id: number | null,
-    proprietario: {},
-    placa: string,
-    anoFabricacao : number | null,
-    anoModelo : number | null,
-    marca: {},
-    modelo: {},
-    kms: number | null,
-    numChassi: number | null,
-    numPatrimonio: number | null,
-    acessorios: []
+    placa: string;
+    idCliente: number | null;
+    anoFabricacao: number | null;
+    anoModelo: number | null;
+    idModelo: number | null;
+    km: number | null;
+    numeroChassi: string;
+    numeroPatrimonio: string;
+    acessorios: Acessorios[]
 }
 
 export interface Marcas{
@@ -37,8 +36,10 @@ export interface Acessorios{
 
 export interface Servicos{
     id: number | null,
-    servico: string
-    valor: number | null
+    descricao: string
+    valor: number | null,
+    formatado: string
+
 }
 
 export interface Pecas{
@@ -62,4 +63,25 @@ export interface OrdensServico{
     servico: Servicos[],
     peca: Pecas[]
     orcamento: number | null
+}
+
+export interface Clientes {
+  nome: string;
+  email: string;
+  logradouro: string;
+  complemento: string;
+  numero: string;
+  cep: string;
+  cidade: string;
+  uf: string;
+  ddd: number | null;
+  telefone: number | null;
+  ddd2: number | null;
+  telefone2: number | null;
+  cnpj: string;
+  inscricaoEstadual: string;
+  nomeContato: string;
+  cpf: string;
+  isPJ: boolean;
+  isPF: boolean;
 }

@@ -5,7 +5,7 @@ import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
 import { Colaboradores } from '../../Models/models';
 import { ListagemSimplesComponent } from '../../Components/listagem-simples/listagem-simples.component';
-import { ColaboradorService } from '../../Services/colaborador.service';
+import { PessoasService } from '../../Services/pessoas.service';
 
 @Component({
   selector: 'app-cadastro-colab',
@@ -22,7 +22,7 @@ export class CadastroColabComponent {
   }
   colaboradoresListagem: string[] = [];
 
-  constructor(private colaboradorService: ColaboradorService) { }
+  constructor(private colaboradorService: PessoasService) { }
 
   ngOnInit(){
     this.pegarColaboradores()

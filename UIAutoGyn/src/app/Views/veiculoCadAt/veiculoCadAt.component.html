@@ -2,27 +2,20 @@
     <div class="pai">
         <BlocoComponent titulo="Cadastro de veiculo" descricao="Preencha os dados do veículo para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarVeiculo()">
             <div class="conteudo">
-                <!-- passar os valores -->
-                <SelectsComponent idSelect="proprietario" placeholder="Selecione o proprietário" />
+
+                <SelectsComponent idSelect="proprietario" placeholder="Selecione o proprietário" [opcoes]="clientes" (selecionado)="addVeiculo.idCliente = $event" />
                 <div>
                     <InputsComponent text="Placa" tipoInput="text" idInput="placa" placeholder="ABCD1234" [(ngModel)]="addVeiculo.placa" />
                     <div class="juntos">
                         <InputsComponent text="Ano de fabricação" tipoInput="number" idInput="anoFabricado" placeholder="2023" [(ngModel)]="addVeiculo.anoFabricacao" />
                         <InputsComponent text="Ano do modelo" tipoInput="number" idInput="anoModelo" placeholder="2023" [(ngModel)]="addVeiculo.anoModelo" />
                     </div>
-
-                    <!-- passar os valores -->
-                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" />
-
-                    <!-- passar os valores - popular so dps de marca -->
-                    <SelectsComponent idSelect="modelo" placeholder="Selecione o modelo" />
-
-                    <InputsComponent text="Quilometragem" tipoInput="number" idInput="km" placeholder="50000" [(ngModel)]="addVeiculo.kms" />
-                    <InputsComponent text="Número do chassi" tipoInput="text" idInput="chassi" placeholder="4455QW456UUHG4" [(ngModel)]="addVeiculo.numChassi" />
-                    <InputsComponent text="Número do patrimônio" tipoInput="number" idInput="numPatrimonio" placeholder="1568" [(ngModel)]="addVeiculo.numPatrimonio" />
-                    
-                    <!-- passa os valores -->
-                    <SelectsMultiploComponent idSelect="acessorios" placeholder="Selecione os acessórios" tipo="Acessórios" />
+                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" (selecionado)="procurarModelos($event)"/>
+                    <SelectsComponent idSelect="modelo" placeholder="Selecione o modelo" [opcoes]="modelos" (selecionado)="addVeiculo.idModelo = $event"/>
+                    <InputsComponent text="Quilometragem" tipoInput="number" idInput="km" placeholder="50000" [(ngModel)]="addVeiculo.km" />
+                    <InputsComponent text="Número do chassi" tipoInput="text" idInput="chassi" placeholder="4455QW456UUHG4" [(ngModel)]="addVeiculo.numeroChassi" />
+                    <InputsComponent text="Número do patrimônio" tipoInput="number" idInput="numPatrimonio" placeholder="1568" [(ngModel)]="addVeiculo.numeroPatrimonio" />
+                    <SelectsMultiploComponent idSelect="acessorios" placeholder="Selecione os acessórios" tipo="Acessórios" [opcoes]="acessorios" (opcoesSelectedChange)="addVeiculo.acessorios = $event" />
                 </div>
             </div>
         </BlocoComponent>

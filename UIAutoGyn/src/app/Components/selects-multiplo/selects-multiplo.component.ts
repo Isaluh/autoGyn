@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'SelectsMultiploComponent',
@@ -13,18 +13,18 @@ export class SelectsMultiploComponent {
   @Input() placeholder = ''
   @Input() tipo = ''
   @Input() opcoes : any = []
+  @Output() opcoesSelectedChange = new EventEmitter<any[]>();
 
   abrirOpcoes = false
   opcoesSelected : any = []
 
-  addRem(item: string) {
-  const index = this.opcoesSelected.indexOf(item);
-
-  if (index !== -1) {
-    this.opcoesSelected.splice(index, 1);
-  } else {
-    this.opcoesSelected.push(item);
+  addRem(opcao: any) {
+    const index = this.opcoesSelected.findIndex((o: any) => o === opcao);
+    if (index === -1) {
+      this.opcoesSelected.push(opcao);
+    } else {
+      this.opcoesSelected.splice(index, 1);
+    }
+    this.opcoesSelectedChange.emit(this.opcoesSelected);
   }
-}
-
 }

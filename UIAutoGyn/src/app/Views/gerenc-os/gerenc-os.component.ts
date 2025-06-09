@@ -3,11 +3,12 @@ import { BlocoComponent } from '../../Components/bloco/bloco.component';
 import { BaseComponent } from '../../Layouts/base/base.component';
 import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
-import { OrdensServico, Pecas } from '../../Models/models';
+import { OrdensServico, Pecas, Servicos } from '../../Models/models';
 import { SelectsComponent } from '../../Components/selects/selects.component';
 import { SelectsMultiploComponent } from '../../Components/selects-multiplo/selects-multiplo.component';
 import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-categoria/listagem-sem-categoria.component';
 import { PecasService } from '../../Services/pecas.service';
+import { ServicosService } from '../../Services/servicos.service';
 
 @Component({
   selector: 'app-gerenc-os',
@@ -25,17 +26,19 @@ export class GerencOsComponent {
     orcamento: null
   }
   pecas: Pecas[] = [];
+  servicos : Servicos[] = []
 
   campos : string[] = ['Veículo', 'Data', 'Valor Total', 'Status']
 
-  constructor(private pecasService: PecasService) {}
+  constructor(private pecasService: PecasService, private servicosService : ServicosService) {}
     
   ngOnInit() {
-    this.pegarPecas();
+    this.pegarInfos();
   }
   
-  pegarPecas() {
+  pegarInfos() {
     this.pecasService.getPecas().subscribe((peca) => this.pecas = peca)
+    this.servicosService.getServicos().subscribe((ser) => this.servicos = ser)
   }
 
 //   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {

@@ -22,25 +22,33 @@ public class VeiculoController {
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping("/novo")
-    public ResponseEntity<String> criarVeiculo(@RequestBody CadastrarVeiculoDTO novoVeiculo) {
-        String resposta = veiculoService.criarVeiculo(novoVeiculo);
-        return ResponseEntity.ok(resposta);
+    @PostMapping
+    public ResponseEntity<?> criarVeiculo(@RequestBody CadastrarVeiculoDTO novoVeiculo) {
+        try {
+            String resposta = veiculoService.criarVeiculo(novoVeiculo);
+            return ResponseEntity.ok(resposta);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping("/{placa}")
-    public ResponseEntity<String> atualizarVeiculo(@PathVariable String placa, 
-                                                   @RequestBody AtualizarVeiculoDTO atualizarVeiculo) {
-        String resposta = veiculoService.atualizarVeiculo(placa, atualizarVeiculo);
-        return ResponseEntity.ok(resposta);
+    public ResponseEntity<?> atualizarVeiculo(@PathVariable String placa, @RequestBody AtualizarVeiculoDTO atualizarVeiculo) {
+        try {
+            String resposta = veiculoService.atualizarVeiculo(placa, atualizarVeiculo);
+            return ResponseEntity.ok(resposta);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 
     @GetMapping("/{placa}")
-    public ResponseEntity<VeiculoDTO> encontrarPorPlaca(@PathVariable String placa) {
-        VeiculoDTO veiculoDTO = veiculoService.encontrarPorPlaca(placa);
-        if (veiculoDTO == null) {
-            return ResponseEntity.status(404).body(null);
+    public ResponseEntity<?> encontrarPorPlaca(@PathVariable String placa) {
+        try {
+            VeiculoDTO veiculoDTO = veiculoService.encontrarPorPlaca(placa);
+            return ResponseEntity.ok(veiculoDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         }
-        return ResponseEntity.ok(veiculoDTO);
     }
 }

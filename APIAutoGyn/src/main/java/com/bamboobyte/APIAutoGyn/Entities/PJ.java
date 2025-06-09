@@ -17,6 +17,12 @@ public class PJ {
 
     public PJ() {}
 
+    public PJ(String inscricaoEstadual, String contato, String cnpj) {
+        this.inscricaoEstadual = inscricaoEstadual;
+        this.contato = contato;
+        this.cnpj = cnpj;
+    }
+
     public String getInscricaoEstadual() {
         return inscricaoEstadual;
     }

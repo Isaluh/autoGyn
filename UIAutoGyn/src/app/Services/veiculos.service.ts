@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MarcaComModelos, Marcas, Modelos } from '../Models/models';
+import { MarcaComModelos, Marcas, Modelos, Veiculos } from '../Models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +26,11 @@ export class VeiculosService {
     return this.httpClient.post<Modelos>(VeiculosService.API_url + 'modelos', modelo)
   }
 
+  getModelos(){
+    return this.httpClient.get<Modelos[]>(VeiculosService.API_url + 'modelos')
+  }
+
+  postVeiculo(veiculo : Veiculos){
+    return this.httpClient.post<Veiculos>(VeiculosService.API_url + 'veiculos', veiculo)
+  }
 }

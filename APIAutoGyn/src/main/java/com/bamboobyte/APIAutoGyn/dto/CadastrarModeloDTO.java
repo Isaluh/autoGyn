@@ -2,7 +2,7 @@ package com.bamboobyte.APIAutoGyn.DTO;
 
 public class CadastrarModeloDTO {
 	private Long marcaId;
-	private String nomeModelo;
+	private String nome;
 
 	public Long getMarcaId() {
 		return marcaId;
@@ -13,11 +13,10 @@ public class CadastrarModeloDTO {
 	}
 
 	public String getNome() {
-		return nomeModelo;
-	}
+        return nome;
+    }
 
-	public void setNome(String nomeModelo) {
-		this.nomeModelo = nomeModelo;
-	}
-
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }
