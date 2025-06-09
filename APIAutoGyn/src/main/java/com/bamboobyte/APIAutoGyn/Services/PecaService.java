@@ -6,7 +6,6 @@ import com.bamboobyte.APIAutoGyn.DTO.PecaListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
 import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -14,7 +14,7 @@ public class ServicoFormatadoDTO {
     public ServicoFormatadoDTO(Servico servico) {
         this.id = servico.getId();
         this.formatado = String.format("%s | %s", servico.getDescricao(),
-                FormatacoesComuns.doubleToBRL(servico.getValor()));
+                FormatacoesComuns.getInstancia().formatarParaMoedaBR(servico.getValor()));
     }
 
     public Long getId() {

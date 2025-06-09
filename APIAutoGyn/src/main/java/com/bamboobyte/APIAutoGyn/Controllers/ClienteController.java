@@ -17,6 +17,9 @@ import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
 import com.bamboobyte.APIAutoGyn.DTO.ClienteDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Services.ClienteService;
+import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
+import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErro;
+import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 
 @RestController
 @RequestMapping("/clientes")
@@ -24,50 +27,61 @@ import com.bamboobyte.APIAutoGyn.Services.ClienteService;
 public class ClienteController {
 
     private final ClienteService clienteService;
+    private final GatewayValidacao validador;
 
-    public ClienteController(ClienteService clienteService) {
+    public ClienteController(ClienteService clienteService, GatewayValidacao validador) {
         this.clienteService = clienteService;
+        this.validador = validador;
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> salvarCliente(@RequestBody CadastrarClienteDTO dto) {
-        Cliente cliente = clienteService.salvar(dto); 
-        return ResponseEntity.ok(cliente); 
+    public ResponseEntity<?> salvarCliente(@RequestBody CadastrarClienteDTO dto) {
+        List<StatusValidacao> erros = validador.validar(dto);
+        if (erros.size() > 0) {
+            return ResponseEntity.badRequest().body(new MensagemErro(erros));
+        }
+        Cliente idCliente = clienteService.salvar(dto);
+        if (idCliente == null) {
+            return ResponseEntity.badRequest().body(new MensagemErro("Cliente não criado."));
+        }
+        return ResponseEntity.ok("Criado Cliente " + idCliente);
     }
 
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> listarTodosClientes() {
-        List<ClienteDTO> clientes = clienteService.listarTodos();  
-        return ResponseEntity.ok(clientes);  
+        List<ClienteDTO> clientes = clienteService.listarTodos();
+        return ResponseEntity.ok(clientes);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarClientePorId(@PathVariable Long id) {
-        try {
-            Cliente cliente = clienteService.buscarClientePorId(id);  
-            return ResponseEntity.ok(cliente);  
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null); 
-        }
-    }
+    // @GetMapping("/{id}")
+    // public ResponseEntity<Cliente> buscarClientePorId(@PathVariable Long id) {
+    // try {
+    // Cliente cliente = clienteService.buscarClientePorId(id);
+    // return ResponseEntity.ok(cliente);
+    // } catch (RuntimeException e) {
+    // return ResponseEntity.status(404).body(null);
+    // }
+    // }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> excluirCliente(@PathVariable Long id) {
-        try {
-            clienteService.excluirCliente(id);  
-            return ResponseEntity.noContent().build();  
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null);  
-        }
-    }
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> excluirCliente(@PathVariable Long id) {
+    // try {
+    // clienteService.excluirCliente(id);
+    // return ResponseEntity.noContent().build();
+    // } catch (RuntimeException e) {
+    // return ResponseEntity.status(404).body(null);
+    // }
+    // }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id, @RequestBody CadastrarClienteDTO clienteAtualizadoDTO) {
-        try {
-            Cliente clienteAtualizado = clienteService.atualizarCliente(id, clienteAtualizadoDTO);  
-            return ResponseEntity.ok(clienteAtualizado); 
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(null);  
-        }
-    }
+    // @PutMapping("/{id}")
+    // public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id,
+    // @RequestBody CadastrarClienteDTO clienteAtualizadoDTO) {
+    // try {
+    // Cliente clienteAtualizado = clienteService.atualizarCliente(id,
+    // clienteAtualizadoDTO);
+    // return ResponseEntity.ok(clienteAtualizado);
+    // } catch (RuntimeException e) {
+    // return ResponseEntity.status(404).body(null);
+    // }
+    // }
 }

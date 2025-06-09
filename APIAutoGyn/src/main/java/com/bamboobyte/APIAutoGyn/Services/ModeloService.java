@@ -1,26 +1,27 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarModeloDTO;
 import com.bamboobyte.APIAutoGyn.DTO.ModeloDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Marca;
 import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 import com.bamboobyte.APIAutoGyn.Repositories.MarcaRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.ModeloRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
-public class ModeloServico {
+public class ModeloService {
 
     private final ModeloRepository modeloRepositorio;
     private final MarcaRepository marcaRepositorio;
 
     @Autowired
-    public ModeloServico(ModeloRepository modeloRepositorio, MarcaRepository marcaRepositorio) {
+    public ModeloService(ModeloRepository modeloRepositorio, MarcaRepository marcaRepositorio) {
         this.modeloRepositorio = modeloRepositorio;
         this.marcaRepositorio = marcaRepositorio;
     }

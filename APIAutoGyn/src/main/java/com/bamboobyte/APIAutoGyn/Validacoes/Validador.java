@@ -2,19 +2,32 @@ package com.bamboobyte.APIAutoGyn.Validacoes;
 
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+//Singleton que centraliza validações de entrada de dados.
 
 class Validador {
 
+    private static final Validador instancia = new Validador();
+
+    private Validador() {
+    }
+
+    public static Validador getInstancia() {
+        return instancia;
+    }
+
     public StatusValidacao validaCPF(String CPF) {
-        if (CPF == null) return StatusValidacao.CPF_INVALIDO;
+        if (CPF == null)
+            return StatusValidacao.CPF_INVALIDO;
 
         CPF = CPF.replaceAll("[^\\d]", "");
 
-        if (CPF.length() != 11) return StatusValidacao.CPF_TAMANHO_ERRADO;
+        if (CPF.length() != 11)
+            return StatusValidacao.CPF_TAMANHO_ERRADO;
 
-        if (CPF.matches("(\\d)\\1{10}")) return StatusValidacao.CPF_INVALIDO;
+        if (CPF.matches("(\\d)\\1{10}"))
+            return StatusValidacao.CPF_INVALIDO;
 
         CharacterIterator it = new StringCharacterIterator(CPF);
         int d1 = 0, d2 = 0, d1Input, d2Input;
@@ -30,30 +43,37 @@ class Validador {
 
         // Cálculo do primeiro dígito
         int val = 0, peso = 10;
-        for (int i = 0; i < 9; i++) val += digitos[i] * peso--;
+        for (int i = 0; i < 9; i++)
+            val += digitos[i] * peso--;
         int res1 = val % 11;
         d1 = (res1 < 2) ? 0 : 11 - res1;
-        if (d1 != d1Input) return StatusValidacao.CPF_INVALIDO;
+        if (d1 != d1Input)
+            return StatusValidacao.CPF_INVALIDO;
 
-        // Cálculo do segundo dígito 
+        // Cálculo do segundo dígito
         val = 0;
         peso = 11;
-        for (int i = 0; i < 10; i++) val += digitos[i] * peso--;
+        for (int i = 0; i < 10; i++)
+            val += digitos[i] * peso--;
         int res2 = val % 11;
         d2 = (res2 < 2) ? 0 : 11 - res2;
-        if (d2 != d2Input) return StatusValidacao.CPF_INVALIDO;
+        if (d2 != d2Input)
+            return StatusValidacao.CPF_INVALIDO;
 
         return null;
     }
 
     public StatusValidacao validaCNPJ(String CNPJ) {
-        if (CNPJ == null) return StatusValidacao.CNPJ_INVALIDO;
+        if (CNPJ == null)
+            return StatusValidacao.CNPJ_INVALIDO;
 
         // Remove caracteres especiais
         CNPJ = CNPJ.replaceAll("[^\\d]", "");
 
-        if (CNPJ.length() != 14) return StatusValidacao.CNPJ_TAMANHO_ERRADO;
-        if (CNPJ.matches("(\\d)\\1{13}")) return StatusValidacao.CNPJ_INVALIDO;
+        if (CNPJ.length() != 14)
+            return StatusValidacao.CNPJ_TAMANHO_ERRADO;
+        if (CNPJ.matches("(\\d)\\1{13}"))
+            return StatusValidacao.CNPJ_INVALIDO;
 
         CharacterIterator it = new StringCharacterIterator(CNPJ);
         int[] digitos = new int[14];
@@ -70,40 +90,46 @@ class Validador {
         // Primeiro dígito
         for (int i = 0; i < 12; i++) {
             val += digitos[i] * peso--;
-            if (peso == 1) peso = 9;
+            if (peso == 1)
+                peso = 9;
         }
         int res1 = val % 11;
         d1 = (res1 < 2) ? 0 : 11 - res1;
-        if (d1 != d1Input) return StatusValidacao.CNPJ_INVALIDO;
+        if (d1 != d1Input)
+            return StatusValidacao.CNPJ_INVALIDO;
 
         // Segundo dígito
         val = 0;
         peso = 6;
         for (int i = 0; i < 13; i++) {
             val += digitos[i] * peso--;
-            if (peso == 1) peso = 9;
+            if (peso == 1)
+                peso = 9;
         }
         int res2 = val % 11;
         d2 = (res2 < 2) ? 0 : 11 - res2;
-        if (d2 != d2Input) return StatusValidacao.CNPJ_INVALIDO;
+        if (d2 != d2Input)
+            return StatusValidacao.CNPJ_INVALIDO;
 
-        return null; 
+        return null;
     }
 
+    // 1.1 - Linguagens Formais e Autômatos e Compiladores
     public StatusValidacao validaEmail(String email) {
-        if (email == null) return StatusValidacao.EMAIL_INVALIDO;
+        if (email == null)
+            return StatusValidacao.EMAIL_INVALIDO;
 
         String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,7}$";
         return Pattern.matches(regex, email) ? null : StatusValidacao.EMAIL_INVALIDO;
     }
 
     public StatusValidacao validaTelefone(Integer telefone) {
-        if (telefone == null) return StatusValidacao.TELEFONE_INVALIDO;
+        if (telefone == null)
+            return StatusValidacao.TELEFONE_INVALIDO;
 
         String telefoneStr = String.valueOf(telefone);
         return telefoneStr.matches("^[1-9][0-9]{7,8}$") ? null : StatusValidacao.TELEFONE_INVALIDO;
     }
-
 
     public StatusValidacao validaCEP(String CEP) {
         return (CEP != null && CEP.matches("^\\d{8}$")) ? null : StatusValidacao.CEP_INVALIDO;
@@ -113,28 +139,25 @@ class Validador {
         return (UF != null && UF.matches("^[A-Z]{2}$")) ? null : StatusValidacao.UF_INVALIDA;
     }
 
-
     public StatusValidacao validaDDD(Integer DDD) {
         return (DDD != null && DDD >= 1 && DDD <= 999) ? null : StatusValidacao.DDD_INVALIDO;
     }
-
 
     public StatusValidacao validaInscricaoEstadual(String inscricao) {
         return (inscricao != null && inscricao.matches("^\\d{9,14}$")) ? null : StatusValidacao.IE_INVALIDA;
     }
 
-
     public StatusValidacao validaChassi(String chassi) {
         return (chassi != null && chassi.matches("^[A-HJ-NPR-Z0-9]{17}$")) ? null : StatusValidacao.NC_INVALIDO;
     }
 
-
-    public StatusValidacao validaPlacaVeiculo(String placa) {
-        if (placa == null) return StatusValidacao.PLACA_INVALIDA;
+    public StatusValidacao validaPlaca(String placa) {
+        if (placa == null)
+            return StatusValidacao.PLACA_INVALIDA;
         return (placa.matches("^[A-Z]{3}[0-9][A-Z][0-9]{2}$") || placa.matches("^[A-Z]{3}-[0-9]{4}$"))
-                ? null : StatusValidacao.PLACA_INVALIDA;
+                ? null
+                : StatusValidacao.PLACA_INVALIDA;
     }
-
 
     public StatusValidacao validaSKU(String sku) {
         return (sku != null && sku.matches("^SKU-\\d{4}$")) ? null : StatusValidacao.SKU_INVALIDO;

@@ -4,59 +4,87 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import com.bamboobyte.APIAutoGyn.Entities.Peca;
-import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
-import com.bamboobyte.APIAutoGyn.DTO.*;
-import com.bamboobyte.APIAutoGyn.Entities.Colaborador;
-import com.bamboobyte.APIAutoGyn.Entities.Servico;
+import org.springframework.stereotype.Component;
 
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarAcessorioDTO;
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarColaboradorDTO;
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarVeiculoDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ColaboradorServicoDTO;
+import com.bamboobyte.APIAutoGyn.DTO.PecaQuantidadeDTO;
+import com.bamboobyte.APIAutoGyn.Entities.Colaborador;
+import com.bamboobyte.APIAutoGyn.Entities.Peca;
+import com.bamboobyte.APIAutoGyn.Entities.Servico;
+import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
+
+@Component
 public class GatewayValidacao {
-    private Validador validador;
+
     private List<Veiculo> veiculos;
-    private List<Colaborador> colaboradores; 
+    private List<Colaborador> colaboradores;
     private List<Servico> servicos;
     private List<Peca> pecas;
 
-    public GatewayValidacao(List<Veiculo> veiculos, List<Colaborador> colaboradores, List<Servico> servicos, List<Peca> pecas) {
-        this.validador = new Validador();
+    private Validador validador = Validador.getInstancia(); // Singleton
+
+    public GatewayValidacao(List<Veiculo> veiculos, List<Colaborador> colaboradores, List<Servico> servicos,
+            List<Peca> pecas) {
         this.veiculos = veiculos;
         this.colaboradores = colaboradores;
         this.servicos = servicos;
         this.pecas = pecas;
     }
 
-     public List<StatusValidacao> validar(CadastrarClienteDTO novoCliente) {
+    public List<StatusValidacao> validar(CadastrarClienteDTO novoCliente) {
         List<StatusValidacao> erros = new LinkedList<>();
 
         if (novoCliente.isPJ()) {
-            erros.add(this.validador.validaCNPJ(novoCliente.cnpj()));
-            erros.add(this.validador.validaInscricaoEstadual(novoCliente.inscricaoEstadual()));
-        } else {
-            erros.add(this.validador.validaCPF(novoCliente.cpf()));
+            erros.add(this.validador.validaCNPJ(novoCliente.getCnpj()));
+            erros.add(this.validador.validaInscricaoEstadual(novoCliente.getInscricao_estadual()));
+        }
+        if (!novoCliente.isPJ()) {
+            erros.add(this.validador.validaCPF(novoCliente.getCpf()));
         }
 
-        erros.add(this.validador.validaEmail(novoCliente.email()));
-        erros.add(this.validador.validaCEP(novoCliente.cep()));
-        erros.add(this.validador.validaUF(novoCliente.uf()));
-        erros.add(this.validador.validaTelefone(novoCliente.telefone()));
-        erros.add(this.validador.validaDDD(novoCliente.ddd()));
-
-        if (novoCliente.ddd2() != null) {
-            erros.add(this.validador.validaDDD(novoCliente.ddd2()));
-            erros.add(this.validador.validaTelefone(novoCliente.telefone2()));
+        erros.add(this.validador.validaEmail(novoCliente.getEmail()));
+        erros.add(this.validador.validaCEP(novoCliente.getCep()));
+        erros.add(this.validador.validaUF(novoCliente.getUf()));
+        erros.add(this.validador.validaTelefone(novoCliente.getTelefone()));
+        erros.add(this.validador.validaDDD(novoCliente.getDdd()));
+        if (novoCliente.getDdd2() != null) {
+            erros.add(this.validador.validaDDD(novoCliente.getDdd2()));
+            erros.add(this.validador.validaTelefone(novoCliente.getTelefone2()));
         }
+        removerNulos(erros);
+
+        return erros;
+    }
+
+    public List<StatusValidacao> validar(CadastrarColaboradorDTO novoColaboradorDTO) {
+        List<StatusValidacao> erros = new LinkedList<>();
+        erros.add(this.validador.validaCPF(novoColaboradorDTO.getCpf()));
+        removerNulos(erros);
+        return erros;
+    }
+
+    public List<StatusValidacao> validar(CadastrarVeiculoDTO novoVeiculo) {
+        List<StatusValidacao> erros = new LinkedList<>();
+
+        erros.add(validador.validaPlaca(novoVeiculo.getPlaca()));
+        erros.add(validador.validaChassi(novoVeiculo.getNumeroChassi()));
 
         removerNulos(erros);
         return erros;
     }
 
     public List<StatusValidacao> validar(CadastrarAcessorioDTO novoAcessorio) {
-        return new LinkedList<>(); 
+        return new LinkedList<>();
     }
 
     public List<StatusValidacao> validar(CadastrarOSDTO novaOS) {
         List<StatusValidacao> erros = new LinkedList<>();
-        
+
         Veiculo veiculo = findVeiculoByPlaca(novaOS.getPlaca());
         if (veiculo == null) {
             erros.add(StatusValidacao.VEICULO_NAO_ENCONTRADO);
@@ -131,10 +159,4 @@ public class GatewayValidacao {
         lista.removeIf(Objects::isNull);
     }
 
-    public List<StatusValidacao> validar(CadastrarColaboradorDTO novoColaboradorDTO) {
-        List<StatusValidacao> erros = new LinkedList<>();
-        erros.add(this.validador.validaCPF(novoColaboradorDTO.getCpf()));
-        removerNulos(erros);
-        return erros;
-    }
 }

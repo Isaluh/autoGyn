@@ -1,35 +1,49 @@
 package com.bamboobyte.APIAutoGyn.Validacoes;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MensagemErro {
-	private List<String> mensagens = new LinkedList<>();
 
-	public MensagemErro() {
+//Classe de erro que implementa Iterator.
 
-	}
+public class MensagemErro implements Iterator<String> {
 
-	public MensagemErro(String mensagem) {
-		mensagens.add(mensagem);
-	}
+    private List<String> mensagens = new LinkedList<>();
+    private int indiceAtual = 0;
 
-	public MensagemErro(StatusValidacao status) {
-		mensagens.add(status.getMensagem());
-	}
+    public MensagemErro() {}
 
-	public MensagemErro(List<StatusValidacao> erros) {
-		for (StatusValidacao erro : erros) {
-			mensagens.add(erro.getMensagem());
-		}
-	}
+    public MensagemErro(String mensagem) {
+        mensagens.add(mensagem);
+    }
 
-	public List<String> getMensagens() {
-		return mensagens;
-	}
+    public MensagemErro(StatusValidacao status) {
+        mensagens.add(status.getMensagem());
+    }
 
-	public void setMensagens(List<String> mensagens) {
-		this.mensagens = mensagens;
-	}
+    public MensagemErro(List<StatusValidacao> erros) {
+        for (StatusValidacao erro : erros) {
+            mensagens.add(erro.getMensagem());
+        }
+    }
 
+    public List<String> getMensagens() {
+        return mensagens;
+    }
+
+    public void setMensagens(List<String> mensagens) {
+        this.mensagens = mensagens;
+        this.indiceAtual = 0;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return indiceAtual < mensagens.size();
+    }
+
+    @Override
+    public String next() {
+        return mensagens.get(indiceAtual++);
+    }
 }
