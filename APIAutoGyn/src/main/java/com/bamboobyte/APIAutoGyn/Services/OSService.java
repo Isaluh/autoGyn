@@ -8,7 +8,6 @@ import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.OrdemServicoListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Etapa;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +19,6 @@ public class OSService {
     private final OSRepository osRepository;
     private final PecaRepository pecaRepository;
 
-    @Autowired
     public OSService(OSRepository osRepository, PecaRepository pecaRepository) {
         this.osRepository = osRepository;
         this.pecaRepository = pecaRepository;

@@ -12,6 +12,5 @@ export class ListagemSimplesComponent {
   @Input() titulo = ''
   @Input() descricao = ''
   @Input() numGap: number = 0
-  @Input() itens : any[] = []
-
+  @Input() itens: any[] = [];
 }

@@ -3,7 +3,7 @@
         <div>
             <BlocoComponent titulo="Cadastro de serviço" descricao="Preencha os dados do serviço para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarServico()">
                 <div class="conteudo">
-                    <InputsComponent text="Nome do serviço" tipoInput="text" idInput="servico" placeholder="Trocar óleo" [(ngModel)]="addServico.servico" />
+                    <InputsComponent text="Nome do serviço" tipoInput="text" idInput="servico" placeholder="Trocar óleo" [(ngModel)]="addServico.descricao" />
                     <InputsComponent text="Valor" tipoInput="number" idInput="valor" placeholder="120" [(ngModel)]="addServico.valor" />
                 </div>
             </BlocoComponent>
@@ -18,6 +18,6 @@
             </BlocoComponent>
         </div>
         <span class="linha"></span>
-        <ListagemSimplesComponent titulo="Serviços Cadastrados" descricao="Sem serviços cadastrados." [numGap]="3" />
+        <ListagemSimplesComponent titulo="Serviços Cadastrados" descricao="Sem serviços cadastrados." [numGap]="2" [itens]="servicosListagem"/>
     </div>
 </BaseLayout>

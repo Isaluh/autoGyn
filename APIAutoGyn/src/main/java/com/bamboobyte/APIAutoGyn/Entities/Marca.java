@@ -7,10 +7,13 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "marca")
 public class Marca {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
 	private String nome;
+
 	@OneToMany(mappedBy = "marca", cascade = CascadeType.ALL)
 	private List<Modelo> modelos;
 

@@ -22,6 +22,7 @@ public class PJ {
         this.inscricaoEstadual = inscricaoEstadual;
         this.nomeContato = nomeContato;
     }
+    
     public String getInscricaoEstadual() {
         return inscricaoEstadual;
     }

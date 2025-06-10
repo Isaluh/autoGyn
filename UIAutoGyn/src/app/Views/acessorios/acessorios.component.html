@@ -2,10 +2,10 @@
     <div class="pai">
         <BlocoComponent titulo="Cadastro de acessórios" descricao="Preencha os dados do acessorio para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarAcessorio()">
             <div class="conteudo">
-                <InputsComponent text="Nome do acessório" tipoInput="text" idInput="acessorio" placeholder="Capa de volante" [(ngModel)]="addAcessorio.acessorio" />
+                <InputsComponent text="Nome do acessório" tipoInput="text" idInput="acessorio" placeholder="Capa de volante" [(ngModel)]="addAcessorio.descricao" />
             </div>
         </BlocoComponent>
         <span class="linha"></span>
-        <ListagemSimplesComponent titulo="Acessórios Cadastrados" descricao="Sem acessórios cadastrados." [numGap]="3" />
+        <ListagemSimplesComponent titulo="Acessórios Cadastrados" descricao="Sem acessórios cadastrados." [numGap]="3" [itens]="acessoriosListagem" />
     </div>
 </BaseLayout>

@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, model } from '@angular/core';
 import { BaseComponent } from "../../Layouts/base/base.component";
 import { BlocoComponent } from "../../Components/bloco/bloco.component";
 import { InputsComponent } from "../../Components/inputs/inputs.component";
-import { Marcas, Modelos } from '../../Models/models';
+import { MarcaComModelos, Marcas, Modelos } from '../../Models/models';
 import { FormsModule } from '@angular/forms';
 import { SelectsComponent } from '../../Components/selects/selects.component';
 import { ListagemComCategoriaComponent } from '../../Components/listagem-com-categoria/listagem-com-categoria.component';
+import { VeiculosService } from '../../Services/veiculos.service';
 
 @Component({
   selector: 'veiculoMarMoView',
@@ -17,19 +18,77 @@ import { ListagemComCategoriaComponent } from '../../Components/listagem-com-cat
 export class VeiculoMarMoComponent {
   addMarca : Marcas = {
     id: null,
-    marca: ''
+    nome: ''
   }
   addModelo : Modelos = {
     id: null,
-    marca: {},
-    modelo: ''
+    marca: {
+      id: null,
+      nome: ''
+    },
+    nome: ''
+  }
+  marcas : Marcas[] = []
+  listagemMarcaModelo: MarcaComModelos[] = []
+
+  constructor(private veiculosService: VeiculosService) {}
+
+  ngOnInit(){
+    this.pegarMarcasEModeLos()
+  }
+
+  pegarMarcasEModeLos() {
+    this.veiculosService.getMarcasEModelos().subscribe(res => {
+      this.listagemMarcaModelo = res;
+
+      this.marcas = res.map(item => ({
+        id: item.id,
+        nome: item.nomeMarca
+      }));
+    });
   }
 
   cadastrarMarca(){
-    // add marca
+    this.veiculosService.postMarca(this.addMarca).subscribe({
+      next: res => {
+        alert('Marca cadastrada com sucesso!');
+        this.addMarca = {
+          id: null,
+          nome: ''
+        }
+        this.pegarMarcasEModeLos()
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar marca.';
+        alert(mensagem);
+      }
+    })
   }
 
   cadastrarModelo(){
-    // add modelo
+    const modeloParaEnvio = {
+      marcaId: this.addModelo.marca.id,
+      nome: this.addModelo.nome
+    };
+
+    this.veiculosService.postModelo(modeloParaEnvio).subscribe({
+      next: res => {
+        alert('Modelo cadastrado com sucesso!');
+        this.addModelo = {
+          id: null,
+          marca: {
+            id: null,
+            nome: ''
+          },
+          nome: ''
+        }
+        this.pegarMarcasEModeLos();
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar modelo.';
+        alert(mensagem);
+      }
+    });
   }
+
 }

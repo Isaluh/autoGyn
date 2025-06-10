@@ -1,14 +1,11 @@
 .pai{
     width: 100%;
+}
+
+.emDois{
     display: grid;
     grid-template-columns: 1fr 0.1fr 1fr;
     gap: 20px;
-
-    &>div{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
 }
 
 .conteudo{
@@ -16,19 +13,22 @@
     flex-direction: column;
     gap: 20px;
     
-    &>div, &>div>div{
+    &>div{
         display: flex;
         flex-direction: column;
-    }
-    &>div{
-        gap: 20px;
+        gap: 10px;
     }
     
     & .juntos{
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
+        grid-template-columns: 20% 1fr;
+        gap: 10px;
+        align-items: end;
+
+        &.em3{
+            grid-template-columns: 1fr 25% 25%;
+        }
+    } 
 }
 
 .linha{
@@ -36,4 +36,43 @@
     height: auto;
     width: 1px;
     background-color: var(--borda);
+}
+
+
+label{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 8px;
+    border: 2px solid var(--preto);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+input[type="radio"]:checked {
+    background-color: var(--preto);
+    border-color: var(--preto);
+}
+
+input[type="radio"]:checked::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--branco);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+input[type="radio"]:hover {
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }

@@ -1,63 +1,58 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bamboobyte.APIAutoGyn.DTO.ServicoDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Servico;
 import com.bamboobyte.APIAutoGyn.Repositories.ServicoRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ServicoService {
 
     private final ServicoRepository servicoRepository;
 
-    @Autowired
     public ServicoService(ServicoRepository servicoRepository) {
         this.servicoRepository = servicoRepository;
     }
 
-    public Servico salvarServico(Servico servico) {
-        if (servico.getDescricao() == null || servico.getDescricao().isEmpty()) {
-            throw new RuntimeException("A descrição do serviço é obrigatória.");
-        }
-        if (servico.getValor() == null || servico.getValor() <= 0) {
-            throw new RuntimeException("O valor do serviço deve ser maior que zero.");
-        }
-        return servicoRepository.save(servico); 
+    public ServicoDTO salvarServico(ServicoDTO dto) {
+        validarServico(dto);
+
+        Servico servico = dto.toEntity();
+        Servico salvo = servicoRepository.save(servico);
+
+        return new ServicoDTO(salvo);
     }
 
-    public List<Servico> listarTodosServicos() {
-        return servicoRepository.findAll(); 
+    public List<ServicoDTO> listarTodosServicos() {
+        return servicoRepository.findAll().stream()
+                .map(ServicoDTO::new)
+                .toList();
     }
 
-    public Servico buscarServicoPorId(Long id) {
-        Optional<Servico> servicoOptional = servicoRepository.findById(id);
-        if (servicoOptional.isPresent()) {
-            return servicoOptional.get();
-        } else {
-            throw new RuntimeException("Serviço não encontrado com ID: " + id);
-        }
+    public ServicoDTO buscarServicoPorId(Long id) {
+        Servico servico = servicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado com ID: " + id));
+
+        return new ServicoDTO(servico);
     }
 
-    public Servico atualizarServico(Long id, Servico servicoAtualizado) {
-        if (!servicoRepository.existsById(id)) {
-            throw new RuntimeException("Serviço não encontrado com ID: " + id);
+    public ServicoDTO atualizarServico(Long id, ServicoDTO dto) {
+        Servico servico = servicoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Serviço não encontrado com ID: " + id));
+
+        if (dto.getDescricao() != null && !dto.getDescricao().isEmpty()) {
+            servico.setDescricao(dto.getDescricao());
         }
 
-        Servico servicoExistente = servicoRepository.findById(id).get();
-
-        if (servicoAtualizado.getDescricao() != null && !servicoAtualizado.getDescricao().isEmpty()) {
-            servicoExistente.setDescricao(servicoAtualizado.getDescricao());
+        if (dto.getValor() != null && dto.getValor() > 0) {
+            servico.setValor(dto.getValor());
         }
 
-        if (servicoAtualizado.getValor() != null && servicoAtualizado.getValor() > 0) {
-            servicoExistente.setValor(servicoAtualizado.getValor());
-        }
-
-        return servicoRepository.save(servicoExistente);
+        Servico atualizado = servicoRepository.save(servico);
+        return new ServicoDTO(atualizado);
     }
 
     public void excluirServico(Long id) {
@@ -65,5 +60,14 @@ public class ServicoService {
             throw new RuntimeException("Serviço não encontrado para exclusão com ID: " + id);
         }
         servicoRepository.deleteById(id);
+    }
+
+    private void validarServico(ServicoDTO dto) {
+        if (dto.getDescricao() == null || dto.getDescricao().isBlank()) {
+            throw new RuntimeException("A descrição do serviço é obrigatória.");
+        }
+        if (dto.getValor() == null || dto.getValor() <= 0) {
+            throw new RuntimeException("O valor do serviço deve ser maior que zero.");
+        }
     }
 }

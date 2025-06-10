@@ -5,6 +5,7 @@ import { BlocoComponent } from '../../Components/bloco/bloco.component';
 import { Acessorios } from '../../Models/models';
 import { FormsModule } from '@angular/forms';
 import { ListagemSimplesComponent } from '../../Components/listagem-simples/listagem-simples.component';
+import { AcessoriosService } from '../../Services/acessorios.service';
 
 @Component({
   selector: 'AcessoriosView',
@@ -16,10 +17,36 @@ import { ListagemSimplesComponent } from '../../Components/listagem-simples/list
 export class AcessoriosComponent {
   addAcessorio : Acessorios = {
     id: null,
-    acessorio: ''
+    descricao: ''
+  }
+  acessoriosListagem: string[] = [];
+
+  constructor(private acessorioService: AcessoriosService) {}
+
+  ngOnInit(){
+    this.pegarAcessorios()
+  }
+  
+  pegarAcessorios() {
+    this.acessorioService.getAcessorios().subscribe((res: Acessorios[]) =>{
+      this.acessoriosListagem = res.map(item => item.descricao);
+    });
   }
 
-  cadastrarAcessorio(){
-    // add acessorio
+  cadastrarAcessorio() {
+    this.acessorioService.postAcessorio(this.addAcessorio).subscribe({
+      next: res => {
+        alert('Acessório cadastrado com sucesso!');
+        this.addAcessorio = {
+          id: null,
+          descricao: ''
+        }
+        this.pegarAcessorios()
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar acessório.';
+        alert(mensagem);
+      }
+    })
   }
 }

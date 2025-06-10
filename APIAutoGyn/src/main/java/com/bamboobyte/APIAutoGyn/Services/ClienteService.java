@@ -45,6 +45,7 @@ public class ClienteService {
             .collect(Collectors.toList());
     }
 
+
     public Cliente buscarClientePorId(Long id) {
         if (!clienteRepository.existsById(id)) {
             throw new RuntimeException("Cliente não encontrado com ID: " + id);

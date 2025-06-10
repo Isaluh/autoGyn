@@ -20,7 +20,6 @@ public class ModeloService {
     private final ModeloRepository modeloRepositorio;
     private final MarcaRepository marcaRepositorio;
 
-    @Autowired
     public ModeloService(ModeloRepository modeloRepositorio, MarcaRepository marcaRepositorio) {
         this.modeloRepositorio = modeloRepositorio;
         this.marcaRepositorio = marcaRepositorio;

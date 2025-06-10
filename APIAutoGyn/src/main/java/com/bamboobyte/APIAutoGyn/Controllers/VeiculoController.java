@@ -53,11 +53,12 @@ public class VeiculoController {
     }
 
     @GetMapping("/{placa}")
-    public ResponseEntity<VeiculoDTO> encontrarPorPlaca(@PathVariable String placa) {
-        VeiculoDTO veiculoDTO = veiculoService.encontrarPorPlaca(placa);
-        if (veiculoDTO == null) {
-            return ResponseEntity.status(404).body(null);
+    public ResponseEntity<?> encontrarPorPlaca(@PathVariable String placa) {
+        try {
+            VeiculoDTO veiculoDTO = veiculoService.encontrarPorPlaca(placa);
+            return ResponseEntity.ok(veiculoDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
         }
-        return ResponseEntity.ok(veiculoDTO);
     }
 }

@@ -6,12 +6,12 @@
                     <!-- passar os valores -->
                     <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" />
                     <!-- LISTAGEM DE SERVICOS -->
-                    <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" />
+                    <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" [opcoes]="servicos" />
                 </div>
                 <span class="linha"></span>
                 <div>
                     <!-- LISTAGEM DE PECAS -->
-                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" />
+                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" [opcoes]="pecas" />
                     <InputsComponent text="Valor do Orçamento" tipoInput="number" idInput="valor" placeholder="1200" [(ngModel)]="addOS.orcamento" />            
                 </div>
             </div>

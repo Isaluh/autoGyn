@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'SelectsComponent',
@@ -12,4 +12,10 @@ export class SelectsComponent {
   @Input() idSelect = ''
   @Input() placeholder = ''
   @Input() opcoes : any = []
+
+  @Output() selecionado = new EventEmitter();
+
+  onChange(valor: any) {
+    this.selecionado.emit(valor.value);
+  }
 }
