@@ -20,7 +20,7 @@ public class FormatacoesComuns implements FormatadorAdapter {
     public String formatarParaMoedaBR(Double valor) {
         if (valor == null)
             return "R$ 0,00";
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         return formatter.format(valor);
     }
 }

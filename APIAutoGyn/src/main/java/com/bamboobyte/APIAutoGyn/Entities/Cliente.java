@@ -53,18 +53,50 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<Propriedade> propriedades;
     
-    public Cliente(String nome, String email, Endereco endereco, Telefone telefonePrincipal,
-            Telefone telefoneSecundario, PJ pessoaJuridica, PF pessoaFisica) {
-        this.nome = nome;
-        this.email = email;
-        this.endereco = endereco;
-        this.telefonePrincipal = telefonePrincipal;
-        this.telefoneSecundario = telefoneSecundario;
-        this.pessoaJuridica = pessoaJuridica;
-        this.pessoaFisica = pessoaFisica;
+    public Cliente(CadastrarClienteDTO dto) {
+        this.nome = dto.getNome();
+        this.email = dto.getEmail();
+
+        this.endereco = new Endereco(
+            dto.getLogradouro(),
+            dto.getComplemento(),
+            dto.getNumero(),
+            dto.getCep(),
+            dto.getCidade(),
+            dto.getUf()
+        );
+
+        this.telefonePrincipal = new Telefone(
+            dto.getDdd(),
+            dto.getTelefone()
+        );
+
+        this.telefoneSecundario = new Telefone(
+            dto.getDdd2(),
+            dto.getTelefone2()
+        );
+
+        if (dto.isPJ() && dto.isPF()) {
+            throw new IllegalArgumentException("Cliente não pode ser PF e PJ ao mesmo tempo.");
+        } else if (!dto.isPJ() && !dto.isPF()) {
+            throw new IllegalArgumentException("Cliente deve ser PF ou PJ.");
+        } else {
+            if (dto.isPJ()) {
+                this.pessoaJuridica = new PJ(
+                    dto.getCnpj(),
+                    dto.getInscricao_estadual(),
+                    dto.getNomeContato()
+                );
+                this.pessoaFisica = null;
+            } 
+            else if (dto.isPF()) {
+                this.pessoaFisica = new PF(dto.getCpf());
+                this.pessoaJuridica = null;
+            }
+        }
     }
 
-    public Cliente(CadastrarClienteDTO dto) {
+    public Cliente() {
     }
 
     public Long getId() {

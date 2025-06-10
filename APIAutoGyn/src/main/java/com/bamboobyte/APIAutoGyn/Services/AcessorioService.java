@@ -1,8 +1,8 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
+import com.bamboobyte.APIAutoGyn.DTO.AcessorioDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
 import com.bamboobyte.APIAutoGyn.Repositories.AcessorioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,17 +12,20 @@ public class AcessorioService {
 
     private final AcessorioRepository acessorioRepository;
 
-    @Autowired
     public AcessorioService(AcessorioRepository acessorioRepository) {
         this.acessorioRepository = acessorioRepository;
     }
 
-    public Acessorio salvarAcessorio(Acessorio acessorio) {
+    public Acessorio salvarAcessorio(AcessorioDTO dto) {
+        Acessorio acessorio = new Acessorio();
+        acessorio.setDescricao(dto.getDescricao());
+        
         return acessorioRepository.save(acessorio);
     }
 
-    public List<Acessorio> listarAcessorios() {
-        return acessorioRepository.findAll();
+    public List<AcessorioDTO> listarAcessorios() {
+        List<Acessorio> acessorios = acessorioRepository.findAll();
+        return AcessorioDTO.convertAcessorios(acessorios);
     }
 
     public Acessorio buscarAcessorioPorId(Long id) {
@@ -45,7 +48,6 @@ public class AcessorioService {
         }
         Acessorio acessorio = acessorioRepository.getReferenceById(id);
         acessorio.setDescricao(acessorioAtualizado.getDescricao());
-        acessorio.setVeiculo(acessorioAtualizado.getVeiculo());
         return acessorioRepository.save(acessorio);
     }
 }

@@ -6,7 +6,6 @@ import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
 import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErro;
 import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

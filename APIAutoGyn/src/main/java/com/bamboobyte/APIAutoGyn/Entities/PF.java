@@ -11,6 +11,10 @@ public class PF {
 
     public PF() {}
 
+    public PF(String cpf) {
+        this.cpf = cpf;
+    }
+
     public String getCpf() {
         return cpf;
     }

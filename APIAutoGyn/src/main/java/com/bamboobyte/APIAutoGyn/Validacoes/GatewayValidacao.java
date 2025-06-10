@@ -43,7 +43,7 @@ public class GatewayValidacao {
             erros.add(this.validador.validaCNPJ(novoCliente.getCnpj()));
             erros.add(this.validador.validaInscricaoEstadual(novoCliente.getInscricao_estadual()));
         }
-        if (!novoCliente.isPJ()) {
+        if (novoCliente.isPF()) {
             erros.add(this.validador.validaCPF(novoCliente.getCpf()));
         }
 

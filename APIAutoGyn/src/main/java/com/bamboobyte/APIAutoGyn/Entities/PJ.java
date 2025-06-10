@@ -9,14 +9,19 @@ public class PJ {
     @Column(name = "inscricao_estadual")
     private String inscricaoEstadual;
 
-    @Column(name = "contato")
-    private String contato;
+    @Column(name = "nome_contato")
+    private String nomeContato;
 
     @Column(name = "cnpj")
     private String cnpj;
 
     public PJ() {}
 
+    public PJ(String cnpj, String inscricaoEstadual, String nomeContato) {
+        this.cnpj = cnpj;
+        this.inscricaoEstadual = inscricaoEstadual;
+        this.nomeContato = nomeContato;
+    }
     public String getInscricaoEstadual() {
         return inscricaoEstadual;
     }
@@ -25,12 +30,12 @@ public class PJ {
         this.inscricaoEstadual = inscricaoEstadual;
     }
 
-    public String getContato() {
-        return contato;
+    public String getNomeContato() {
+        return nomeContato;
     }
 
-    public void setContato(String contato) {
-        this.contato = contato;
+    public void setNomeContato(String nomeContato) {
+        this.nomeContato = nomeContato;
     }
 
     public String getCnpj() {
@@ -43,6 +48,6 @@ public class PJ {
 
     @Override
     public String toString() {
-        return "PJ [inscricaoEstadual=" + inscricaoEstadual + ", contato=" + contato + ", cnpj=" + cnpj + "]";
+        return "PJ [inscricaoEstadual=" + inscricaoEstadual + ", nomeContato=" + nomeContato + ", cnpj=" + cnpj + "]";
     }
 }

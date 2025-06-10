@@ -30,13 +30,19 @@ public class ClienteService {
 
     public List<ClienteDTO> listarTodos() {
         return clienteRepository.findAll().stream()
-                .map(cliente -> {
-                    String doc = cliente.getPessoaFisica() != null
-                            ? cliente.getPessoaFisica().getCpf()
-                            : cliente.getPessoaJuridica().getCnpj();
-                    return new ClienteDTO(cliente.getId(), "[" + doc + "] | " + cliente.getNome());
-                })
-                .collect(Collectors.toList());
+            .map(cliente -> {
+                String doc;
+
+                if (cliente.getPessoaFisica() != null) {
+                    doc = cliente.getPessoaFisica().getCpf();
+                } else if (cliente.getPessoaJuridica() != null) {
+                    doc = cliente.getPessoaJuridica().getCnpj();
+                } else {
+                    doc = "Cliente deve ser PF ou PJ, mas não ambos nem nenhum";
+                }
+                return new ClienteDTO(cliente.getId(), "[" + doc + "] | " + cliente.getNome());
+            })
+            .collect(Collectors.toList());
     }
 
     public Cliente buscarClientePorId(Long id) {
@@ -54,56 +60,56 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    // public Cliente atualizarCliente(Long id, CadastrarClienteDTO clienteAtualizadoDTO) {
-    //     if (!clienteRepository.existsById(id)) {
-    //         throw new RuntimeException("Cliente não encontrado para atualização com ID: " + id); 
-    //     }
+    public Cliente atualizarCliente(Long id, CadastrarClienteDTO clienteAtualizadoDTO) {
+        if (!clienteRepository.existsById(id)) {
+            throw new RuntimeException("Cliente não encontrado para atualização com ID: " + id); 
+        }
 
-    //     Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() ->
-    //         new RuntimeException("Erro ao buscar cliente para atualização com ID: " + id));
+        Cliente clienteExistente = clienteRepository.findById(id).orElseThrow(() ->
+            new RuntimeException("Erro ao buscar cliente para atualização com ID: " + id));
 
-    //     clienteExistente.setNome(clienteAtualizadoDTO.nome());
-    //     clienteExistente.setEmail(clienteAtualizadoDTO.email());
+        clienteExistente.setNome(clienteAtualizadoDTO.getNome());
+        clienteExistente.setEmail(clienteAtualizadoDTO.getEmail());
 
-    //     if (clienteAtualizadoDTO.logradouro() != null) {
-    //         Endereco enderecoAtualizado = new Endereco();
-    //         enderecoAtualizado.setLogradouro(clienteAtualizadoDTO.logradouro());
-    //         enderecoAtualizado.setComplemento(clienteAtualizadoDTO.complemento());
-    //         enderecoAtualizado.setNumero(clienteAtualizadoDTO.numero());
-    //         enderecoAtualizado.setCep(clienteAtualizadoDTO.cep());
-    //         enderecoAtualizado.setCidade(clienteAtualizadoDTO.cidade());
-    //         enderecoAtualizado.setUf(clienteAtualizadoDTO.uf());
-    //         clienteExistente.setEndereco(enderecoAtualizado); 
-    //     }
+        if (clienteAtualizadoDTO.getLogradouro() != null) {
+            Endereco enderecoAtualizado = new Endereco();
+            enderecoAtualizado.setLogradouro(clienteAtualizadoDTO.getLogradouro());
+            enderecoAtualizado.setComplemento(clienteAtualizadoDTO.getComplemento());
+            enderecoAtualizado.setNumero(clienteAtualizadoDTO.getNumero());
+            enderecoAtualizado.setCep(clienteAtualizadoDTO.getCep());
+            enderecoAtualizado.setCidade(clienteAtualizadoDTO.getCidade());
+            enderecoAtualizado.setUf(clienteAtualizadoDTO.getUf());
+            clienteExistente.setEndereco(enderecoAtualizado); 
+        }
 
-    //     if (clienteAtualizadoDTO.ddd() != null && clienteAtualizadoDTO.telefone() != null) {
-    //         Telefone telefoneAtualizado1 = new Telefone();
-    //         telefoneAtualizado1.setDdd(clienteAtualizadoDTO.ddd());
-    //         telefoneAtualizado1.setTelefone(clienteAtualizadoDTO.telefone());
-    //         clienteExistente.setTelefonePrincipal(telefoneAtualizado1);  
-    //     }
+        if (clienteAtualizadoDTO.getDdd() != null && clienteAtualizadoDTO.getTelefone() != null) {
+            Telefone telefoneAtualizado1 = new Telefone();
+            telefoneAtualizado1.setDdd(clienteAtualizadoDTO.getDdd());
+            telefoneAtualizado1.setTelefone(clienteAtualizadoDTO.getTelefone());
+            clienteExistente.setTelefonePrincipal(telefoneAtualizado1);  
+        }
 
-    //     if (clienteAtualizadoDTO.ddd2() != null && clienteAtualizadoDTO.telefone2() != null) {
-    //         Telefone telefoneAtualizado2 = new Telefone();
-    //         telefoneAtualizado2.setDdd(clienteAtualizadoDTO.ddd2());
-    //         telefoneAtualizado2.setTelefone(clienteAtualizadoDTO.telefone2());
-    //         clienteExistente.setTelefoneSecundario(telefoneAtualizado2);  
-    //     }
+        if (clienteAtualizadoDTO.getDdd2() != null && clienteAtualizadoDTO.getTelefone2() != null) {
+            Telefone telefoneAtualizado2 = new Telefone();
+            telefoneAtualizado2.setDdd(clienteAtualizadoDTO.getDdd2());
+            telefoneAtualizado2.setTelefone(clienteAtualizadoDTO.getTelefone2());
+            clienteExistente.setTelefoneSecundario(telefoneAtualizado2);  
+        }
 
-    //     if (clienteAtualizadoDTO.isPJ()) {
-    //         PJ pjAtualizado = new PJ();
-    //         pjAtualizado.setCnpj(clienteAtualizadoDTO.cnpj());
-    //         pjAtualizado.setInscricaoEstadual(clienteAtualizadoDTO.inscricaoEstadual());
-    //         pjAtualizado.setContato(clienteAtualizadoDTO.nomeContato());
-    //         clienteExistente.setPessoaJuridica(pjAtualizado); 
-    //         clienteExistente.setPessoaFisica(null); 
-    //     } else if (clienteAtualizadoDTO.isPF()) {
-    //         PF pfAtualizado = new PF();
-    //         pfAtualizado.setCpf(clienteAtualizadoDTO.cpf());
-    //         clienteExistente.setPessoaFisica(pfAtualizado);  
-    //         clienteExistente.setPessoaJuridica(null);  
-    //     }
+        if (clienteAtualizadoDTO.isPJ()) {
+            PJ pjAtualizado = new PJ();
+            pjAtualizado.setCnpj(clienteAtualizadoDTO.getCnpj());
+            pjAtualizado.setInscricaoEstadual(clienteAtualizadoDTO.getInscricao_estadual());
+            pjAtualizado.setNomeContato(clienteAtualizadoDTO.getNomeContato());
+            clienteExistente.setPessoaJuridica(pjAtualizado); 
+            clienteExistente.setPessoaFisica(null); 
+        } else if (clienteAtualizadoDTO.isPF()) {
+            PF pfAtualizado = new PF();
+            pfAtualizado.setCpf(clienteAtualizadoDTO.getCpf());
+            clienteExistente.setPessoaFisica(pfAtualizado);  
+            clienteExistente.setPessoaJuridica(null);  
+        }
 
-    //     return clienteRepository.save(clienteExistente);  
-    // }
+        return clienteRepository.save(clienteExistente);  
+    }
 }

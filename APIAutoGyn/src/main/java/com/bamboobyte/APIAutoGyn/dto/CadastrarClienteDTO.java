@@ -5,6 +5,7 @@ public class CadastrarClienteDTO {
     private String email;
 
     private boolean isPJ;
+    private boolean isPF;
 
     private String cpf;
     private String cnpj;
@@ -22,6 +23,30 @@ public class CadastrarClienteDTO {
     private String numero;
     private String logradouro;
     private String complemento;
+
+    public CadastrarClienteDTO(String nome, String email, boolean isPJ, boolean isPF, String cpf, String cnpj,
+            String inscricao_estadual, String nomeContato, Integer ddd, Integer ddd2, Integer telefone,
+            Integer telefone2, String cep, String cidade, String uf, String numero, String logradouro,
+            String complemento) {
+        this.nome = nome;
+        this.email = email;
+        this.isPJ = isPJ;
+        this.isPF = isPF;
+        this.cpf = cpf;
+        this.cnpj = cnpj;
+        this.inscricao_estadual = inscricao_estadual;
+        this.nomeContato = nomeContato;
+        this.ddd = ddd;
+        this.ddd2 = ddd2;
+        this.telefone = telefone;
+        this.telefone2 = telefone2;
+        this.cep = cep;
+        this.cidade = cidade;
+        this.uf = uf;
+        this.numero = numero;
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+    }
 
     public String getNome() {
         return nome;
@@ -157,6 +182,14 @@ public class CadastrarClienteDTO {
 
     public void setNomeContato(String nomeContato) {
         this.nomeContato = nomeContato;
+    }
+
+    public boolean isPF() {
+        return isPF;
+    }
+
+    public void setPF(boolean isPF) {
+        this.isPF = isPF;
     }
 
 }

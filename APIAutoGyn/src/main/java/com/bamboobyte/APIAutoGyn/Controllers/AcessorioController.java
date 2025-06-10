@@ -1,5 +1,6 @@
 package com.bamboobyte.APIAutoGyn.Controllers;
 
+import com.bamboobyte.APIAutoGyn.DTO.AcessorioDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
 import com.bamboobyte.APIAutoGyn.Services.AcessorioService;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +20,14 @@ public class AcessorioController {
     }
 
     @PostMapping
-    public ResponseEntity<Acessorio> salvarAcessorio(@RequestBody Acessorio acessorio) {
-        Acessorio acessorioSalvo = acessorioService.salvarAcessorio(acessorio);
+    public ResponseEntity<Acessorio> salvarAcessorio(@RequestBody AcessorioDTO dto) {
+        Acessorio acessorioSalvo = acessorioService.salvarAcessorio(dto);
         return ResponseEntity.ok(acessorioSalvo);
     }
 
     @GetMapping
-    public ResponseEntity<List<Acessorio>> listarAcessorios() {
-        List<Acessorio> acessorios = acessorioService.listarAcessorios();
+    public ResponseEntity<List<AcessorioDTO>> listarAcessorios() {
+        List<AcessorioDTO> acessorios = acessorioService.listarAcessorios();
         return ResponseEntity.ok(acessorios);
     }
 
