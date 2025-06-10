@@ -1,10 +1,15 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
 import com.bamboobyte.APIAutoGyn.DTO.*;
+import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
+import com.bamboobyte.APIAutoGyn.Entities.Cliente;
+import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
+import com.bamboobyte.APIAutoGyn.Repositories.AcessorioRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.ClienteRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.ModeloRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,10 +17,18 @@ import java.util.stream.Collectors;
 @Service
 public class VeiculoService {
 
-    private VeiculoRepository veiculoRepository;
+    private final VeiculoRepository veiculoRepository;
+    private final ModeloRepository modeloRepository;
+    private final AcessorioRepository acessorioRepository;
+    private final ClienteRepository clienteRepository;
 
-    public VeiculoService(VeiculoRepository veiculoRepository) {
+    public VeiculoService(VeiculoRepository veiculoRepository,
+                      ModeloRepository modeloRepository,
+                      AcessorioRepository acessorioRepository, ClienteRepository clienteRepository) {
         this.veiculoRepository = veiculoRepository;
+        this.modeloRepository = modeloRepository;
+        this.acessorioRepository = acessorioRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     public List<VeiculoDTO> listarVeiculosCadastrados() {
@@ -29,7 +42,6 @@ public class VeiculoService {
         return null;
     }
 
-    @Transactional
     public String criarVeiculo(CadastrarVeiculoDTO novoVeiculoDTO) {
         if (novoVeiculoDTO == null || novoVeiculoDTO.getPlaca() == null || novoVeiculoDTO.getPlaca().isEmpty()) {
             throw new RuntimeException("Dados do veículo inválidos.");
@@ -43,11 +55,34 @@ public class VeiculoService {
         veiculo.setNumChassi(novoVeiculoDTO.getNumeroChassi());
         veiculo.setAnoModelo(novoVeiculoDTO.getAnoModelo());
 
+        if (novoVeiculoDTO.getIdModelo() != null) {
+            Modelo modelo = modeloRepository.findById(novoVeiculoDTO.getIdModelo())
+                    .orElseThrow(() -> new RuntimeException("Modelo não encontrado com id: " + novoVeiculoDTO.getIdModelo()));
+            veiculo.setModelo(modelo);
+        }
+
+        // if (novoVeiculoDTO.getIdCliente() != null) {
+        //     Cliente cliente = clienteRepository.findById(novoVeiculoDTO.getIdCliente())
+        //             .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + novoVeiculoDTO.getIdCliente()));
+        //     veiculo.setCliente(cliente);
+        // }
+
+        if (novoVeiculoDTO.getAcessorios() != null && !novoVeiculoDTO.getAcessorios().isEmpty()) {
+            List<Acessorio> acessorios = acessorioRepository.findAllById(novoVeiculoDTO.getAcessorios());
+
+            for (Acessorio acessorio : acessorios) {
+                acessorio.setVeiculo(veiculo);
+            }
+
+            veiculo.setAcessorios(acessorios);
+        }
+
         veiculoRepository.save(veiculo);
         return "Veículo cadastrado com sucesso!";
     }
 
-    @Transactional
+
+
     public String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculoDTO) {
         Veiculo veiculo = veiculoRepository.findById(placa)
             .orElseThrow(() -> new RuntimeException("Veículo não encontrado com placa: " + placa));
@@ -66,4 +101,13 @@ public class VeiculoService {
 
         return new VeiculoDTO(veiculo);
     }
+
+    public String deletarVeiculoPorId(String placa) {
+        Veiculo veiculo = veiculoRepository.findById(placa)
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado com id: " + placa));
+
+        veiculoRepository.delete(veiculo);
+        return "Veículo deletado com sucesso!";
+    }
+
 }

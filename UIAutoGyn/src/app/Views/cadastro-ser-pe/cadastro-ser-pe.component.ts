@@ -66,6 +66,22 @@ export class CadastroSerPeComponent {
   }
 
   cadastrarPeca(){
-    this.pecasService.postPeca(this.addPeca).subscribe(() => {})
+    this.pecasService.postPeca(this.addPeca).subscribe({
+      next: res => {
+        alert('Peça cadastrada com sucesso!');
+        this.addPeca = {
+          id: null,
+          codigo: null,
+          descricao: '',
+          sku: null,
+          quantidadeEstoque: null,
+          valorUnitario: null
+        }
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar peça.';
+        alert(mensagem);
+      }
+    })
   }
 }

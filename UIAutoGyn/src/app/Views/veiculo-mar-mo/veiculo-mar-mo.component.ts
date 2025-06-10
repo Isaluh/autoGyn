@@ -30,6 +30,7 @@ export class VeiculoMarMoComponent {
   }
   marcas : Marcas[] = []
   listagemMarcaModelo: MarcaComModelos[] = []
+  valorSelect: any = "";
 
   constructor(private veiculosService: VeiculosService) {}
 
@@ -82,6 +83,7 @@ export class VeiculoMarMoComponent {
           },
           nome: ''
         }
+        this.valorSelect = "";
         this.pegarMarcasEModeLos();
       },
       error: err => {

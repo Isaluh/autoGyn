@@ -3,15 +3,15 @@
         <BlocoComponent titulo="Cadastro de veiculo" descricao="Preencha os dados do veículo para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarVeiculo()">
             <div class="conteudo">
 
-                <SelectsComponent idSelect="proprietario" placeholder="Selecione o proprietário" [opcoes]="clientes" (selecionado)="addVeiculo.idCliente = $event" />
+                <SelectsComponent idSelect="proprietario" placeholder="Selecione o proprietário" [opcoes]="clientes" (valorSelecionadoChange)="addVeiculo.idCliente = $event" />
                 <div>
                     <InputsComponent text="Placa" tipoInput="text" idInput="placa" placeholder="ABCD1234" [(ngModel)]="addVeiculo.placa" />
                     <div class="juntos">
                         <InputsComponent text="Ano de fabricação" tipoInput="number" idInput="anoFabricado" placeholder="2023" [(ngModel)]="addVeiculo.anoFabricacao" />
                         <InputsComponent text="Ano do modelo" tipoInput="number" idInput="anoModelo" placeholder="2023" [(ngModel)]="addVeiculo.anoModelo" />
                     </div>
-                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" (selecionado)="procurarModelos($event)"/>
-                    <SelectsComponent idSelect="modelo" placeholder="Selecione o modelo" [opcoes]="modelos" (selecionado)="addVeiculo.idModelo = $event"/>
+                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" (valorSelecionadoChange)="procurarModelos($event)"/>
+                    <SelectsComponent idSelect="modelo" placeholder="Selecione o modelo" [opcoes]="modelos" (valorSelecionadoChange)="addVeiculo.idModelo = $event"/>
                     <InputsComponent text="Quilometragem" tipoInput="number" idInput="km" placeholder="50000" [(ngModel)]="addVeiculo.km" />
                     <InputsComponent text="Número do chassi" tipoInput="text" idInput="chassi" placeholder="4455QW456UUHG4" [(ngModel)]="addVeiculo.numeroChassi" />
                     <InputsComponent text="Número do patrimônio" tipoInput="number" idInput="numPatrimonio" placeholder="1568" [(ngModel)]="addVeiculo.numeroPatrimonio" />

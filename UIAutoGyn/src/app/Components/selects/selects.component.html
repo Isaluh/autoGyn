@@ -1,4 +1,6 @@
-<select [name]="idSelect" [id]="idSelect" (change)="onChange($event.target)">
-    <option value="" disabled selected hidden>{{placeholder}}</option>
-    <option *ngFor="let op of opcoes" [value]="op.id">{{op.nome || op.nomeFormatado}}</option>
+<select [name]="idSelect" [id]="idSelect" [ngModel]="valorSelecionado" (ngModelChange)="onChange($event)">
+    <option value="" disabled selected hidden> {{ placeholder }} </option>
+  <option *ngFor="let op of opcoes" [value]="op.id">
+    {{ op.nome || op.nomeFormatado }}
+  </option>
 </select>

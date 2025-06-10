@@ -12,8 +12,8 @@ public class Modelo {
 
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "marca_id") 
+    @ManyToOne(fetch = FetchType.EAGER) 
+    @JoinColumn(name = "marca_id")
     private Marca marca;
 
     public Modelo() {

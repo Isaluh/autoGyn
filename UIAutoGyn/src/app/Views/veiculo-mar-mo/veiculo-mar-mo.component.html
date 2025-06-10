@@ -8,7 +8,8 @@
             </BlocoComponent>
             <BlocoComponent titulo="Cadastro de modelo" descricao="Preencha os dados do modelo para cadastro" textButton="Atualizar" (foiClicado)="cadastrarModelo()">
                 <div class="conteudo">
-                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" (selecionado)="addModelo.marca.id = $event" />
+                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" [(valorSelecionado)]="valorSelect"
+  (valorSelecionadoChange)="addModelo.marca.id = $event" />
                     <InputsComponent text="Nome do modelo" tipoInput="text" idInput="modelo" placeholder="Fiat Argo" [(ngModel)]="addModelo.nome" />
                 </div>
             </BlocoComponent>

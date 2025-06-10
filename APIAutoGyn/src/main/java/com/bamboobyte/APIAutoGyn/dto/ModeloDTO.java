@@ -3,17 +3,17 @@ package com.bamboobyte.APIAutoGyn.DTO;
 import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 
 public class ModeloDTO {
-	private Long id;
-	private String nome;
+    private Long id;
+    private String nome;
+    private MarcaDTO marca;
 
-	public ModeloDTO() {
+    public ModeloDTO() {}
 
-	}
-
-	public ModeloDTO(Modelo modelo) {
-		this.id = modelo.getId();
-		this.nome = modelo.getNome();
-	}
+    public ModeloDTO(Modelo modelo) {
+        this.id = modelo.getId();
+        this.nome = modelo.getNome();
+        this.marca = new MarcaDTO(modelo.getMarca());
+    }
 
 	public Long getId() {
 		return id;

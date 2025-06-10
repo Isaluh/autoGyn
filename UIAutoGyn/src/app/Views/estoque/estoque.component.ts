@@ -37,6 +37,7 @@ export class EstoqueComponent {
           'Valor Unitário': p.valorUnitario != null ? `R$ ${p.valorUnitario.toFixed(2)}` : ''
         }
       }));
+      console.log(this.pecasListagem)
     });
   }
 }

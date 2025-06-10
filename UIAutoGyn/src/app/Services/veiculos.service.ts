@@ -33,4 +33,8 @@ export class VeiculosService {
   postVeiculo(veiculo : Veiculos){
     return this.httpClient.post<Veiculos>(VeiculosService.API_url + 'veiculos', veiculo)
   }
+
+  getVeiculos(){
+    return this.httpClient.get<Veiculos[]>(VeiculosService.API_url + 'veiculos')
+  }
 }

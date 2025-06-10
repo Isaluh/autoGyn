@@ -64,7 +64,6 @@ export class VeiculoCadAtComponent {
     this.veiculosService.getModelos().subscribe(todosModelos => {
     this.veiculosService.getMarcasEModelos().subscribe(todasMarcas => {
       const marca = todasMarcas.find(m => m.id == idMarca);
-      console.log(todasMarcas)
       if (!marca) {
         this.modelos = [];
         return;
@@ -87,9 +86,9 @@ export class VeiculoCadAtComponent {
   cadastrarVeiculo() {
     const veiculoParaEnviar = {
       ...this.addVeiculo,
-      acessorios: this.addVeiculo.acessorios.map((a: any) => a.id)  // só os IDs
+      acessorios: this.addVeiculo.acessorios.map((a: any) => a.id)
     };
-
+    console.log(veiculoParaEnviar)
     this.veiculosService.postVeiculo(veiculoParaEnviar).subscribe({
       next: res => {
         alert('Veículo cadastrado com sucesso!');

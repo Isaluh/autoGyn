@@ -30,7 +30,7 @@ public class VeiculoController {
         return ResponseEntity.ok(lista);
     }
 
-    @PostMapping("/novo")
+    @PostMapping("")
     public ResponseEntity<?> criarVeiculo(@RequestBody CadastrarVeiculoDTO novoVeiculo) {
         List<StatusValidacao> erros = validador.validar(novoVeiculo);
         if (!erros.isEmpty()) {
@@ -61,4 +61,15 @@ public class VeiculoController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
+
+    @DeleteMapping("/{placa}")
+    public ResponseEntity<String> deletarVeiculo(@PathVariable String placa) {
+        try {
+            String resposta = veiculoService.deletarVeiculoPorId(placa);
+            return ResponseEntity.ok(resposta);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
 }
