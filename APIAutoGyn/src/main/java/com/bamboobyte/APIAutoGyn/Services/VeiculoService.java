@@ -25,9 +25,6 @@ public class VeiculoService {
                        .collect(Collectors.toList());
     }
 
-    public List<AcessorioDTO> listarAcessorios() {
-        return null;
-    }
 
     @Transactional
     public String criarVeiculo(CadastrarVeiculoDTO novoVeiculoDTO) {
@@ -39,25 +36,9 @@ public class VeiculoService {
         veiculo.setPlaca(novoVeiculoDTO.getPlaca());
         veiculo.setKm(novoVeiculoDTO.getkm());
         veiculo.setAnoFabricacao(novoVeiculoDTO.getAnoFabricacao());
-        veiculo.setNumPatrimonio(novoVeiculoDTO.getNumeroPatrimonio());
-        veiculo.setNumChassi(novoVeiculoDTO.getNumeroChassi());
-        veiculo.setAnoModelo(novoVeiculoDTO.getAnoModelo());
 
         veiculoRepository.save(veiculo);
         return "Veículo cadastrado com sucesso!";
-    }
-
-    @Transactional
-    public String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculoDTO) {
-        Veiculo veiculo = veiculoRepository.findById(placa)
-            .orElseThrow(() -> new RuntimeException("Veículo não encontrado com placa: " + placa));
-
-        veiculo.setKm(atualizarVeiculoDTO.getKm());
-        veiculo.setAnoFabricacao(atualizarVeiculoDTO.getAnoFabricacao());
-        veiculo.setAnoModelo(atualizarVeiculoDTO.getAnoModelo());
-
-        veiculoRepository.save(veiculo);
-        return "Veículo atualizado com sucesso!";
     }
 
     public VeiculoDTO encontrarPorPlaca(String placa) {

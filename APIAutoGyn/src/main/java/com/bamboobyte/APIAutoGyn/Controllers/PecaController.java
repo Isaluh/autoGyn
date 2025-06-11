@@ -1,6 +1,5 @@
 package com.bamboobyte.APIAutoGyn.Controllers;
 
-import com.bamboobyte.APIAutoGyn.DTO.AtualizarPecaDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarPecaDTO;
 import com.bamboobyte.APIAutoGyn.DTO.PecaListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
@@ -49,9 +48,4 @@ public class PecaController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarPeca(@PathVariable Long id, @RequestBody AtualizarPecaDTO atualizarPeca) {
-        String response = pecaService.atualizarPeca(id, atualizarPeca);
-        return ResponseEntity.ok(response);
-    }
 }

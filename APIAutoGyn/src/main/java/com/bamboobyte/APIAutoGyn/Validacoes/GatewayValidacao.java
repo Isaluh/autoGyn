@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import org.springframework.stereotype.Component;
 
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarAcessorioDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarColaboradorDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
@@ -61,9 +60,9 @@ public class GatewayValidacao {
         return erros;
     }
 
-    public List<StatusValidacao> validar(CadastrarColaboradorDTO novoColaboradorDTO) {
+    public List<StatusValidacao> validar(Colaborador novoColaborador) {
         List<StatusValidacao> erros = new LinkedList<>();
-        erros.add(this.validador.validaCPF(novoColaboradorDTO.getCpf()));
+        erros.add(this.validador.validaCPF(novoColaborador.getCpf()));
         removerNulos(erros);
         return erros;
     }
@@ -76,10 +75,6 @@ public class GatewayValidacao {
 
         removerNulos(erros);
         return erros;
-    }
-
-    public List<StatusValidacao> validar(CadastrarAcessorioDTO novoAcessorio) {
-        return new LinkedList<>();
     }
 
     public List<StatusValidacao> validar(CadastrarOSDTO novaOS) {

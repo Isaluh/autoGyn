@@ -22,8 +22,7 @@ public class OrdemServicoListaDTO {
         this.veiculo = String.format(
                 "%s (%s) %d", 
                 os.getVeiculo().getModelo().getNome(), 
-                os.getVeiculo().getModelo().getMarca().getNome(),
-                os.getVeiculo().getAnoModelo());
+                os.getVeiculo().getModelo().getMarca().getNome());
         
         Date data = os.getData();
         Calendar cal = Calendar.getInstance();

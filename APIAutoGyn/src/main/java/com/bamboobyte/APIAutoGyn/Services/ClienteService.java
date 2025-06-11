@@ -3,7 +3,7 @@ package com.bamboobyte.APIAutoGyn.Services;
 import org.springframework.stereotype.Service;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
-import com.bamboobyte.APIAutoGyn.DTO.ClienteDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaClienteDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Entities.Endereco;
 import com.bamboobyte.APIAutoGyn.Entities.PF;
@@ -28,7 +28,7 @@ public class ClienteService {
         return clienteRepository.save(novoCliente);
     }
 
-    public List<ClienteDTO> listarTodos() {
+    public List<ListaClienteDTO> listarTodos() {
         return clienteRepository.findAll().stream()
             .map(cliente -> {
                 String doc;
@@ -40,7 +40,7 @@ public class ClienteService {
                 } else {
                     doc = "Cliente deve ser PF ou PJ, mas não ambos nem nenhum";
                 }
-                return new ClienteDTO(cliente.getId(), "[" + doc + "] | " + cliente.getNome());
+                return new ListaClienteDTO(cliente.getId(), "[" + doc + "] | " + cliente.getNome());
             })
             .collect(Collectors.toList());
     }

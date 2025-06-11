@@ -28,7 +28,14 @@ public class Colaborador {
     @OneToMany(mappedBy = "colaborador", fetch = FetchType.LAZY)
     private List<ItemServico> itensServico;
 
-    public Colaborador() {}
+    public Colaborador(Colaborador colaborador) {}
+
+    public Colaborador(Long id, String cpf, String nome, List<ItemServico> itensServico) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.itensServico = itensServico;
+    }
 
     public Long getId() {
         return id;

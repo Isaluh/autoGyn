@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
-import com.bamboobyte.APIAutoGyn.DTO.ClienteDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaClienteDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Services.ClienteService;
 import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
@@ -48,8 +48,8 @@ public class ClienteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ClienteDTO>> listarTodosClientes() {
-        List<ClienteDTO> clientes = clienteService.listarTodos();
+    public ResponseEntity<List<ListaClienteDTO>> listarTodosClientes() {
+        List<ListaClienteDTO> clientes = clienteService.listarTodos();
         return ResponseEntity.ok(clientes);
     }
 
