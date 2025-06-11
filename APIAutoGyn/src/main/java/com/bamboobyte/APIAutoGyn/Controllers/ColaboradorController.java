@@ -44,7 +44,7 @@ public class ColaboradorController {
             return ResponseEntity.badRequest().body(new MensagemErro("Colaborador não pôde ser criado."));
         }
 
-        return ResponseEntity.ok("Colaborador criado com sucesso. ID: " + colaborador.getId());
+        return ResponseEntity.ok("");
     }
 
     @GetMapping("/{id}")

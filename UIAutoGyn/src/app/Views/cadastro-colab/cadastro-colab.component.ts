@@ -31,7 +31,7 @@ export class CadastroColabComponent {
   pegarColaboradores() {
     this.colaboradorService.getColaboradores().subscribe((res: Colaboradores[]) => {
       this.colaboradoresListagem = res.map(c => `${c.nome} | ${c.cpf ?? ''}`);
-    });
+    }); 
   }
 
   cadastrarColaborador() {

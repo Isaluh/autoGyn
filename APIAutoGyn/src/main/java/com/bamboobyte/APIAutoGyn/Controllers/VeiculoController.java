@@ -36,13 +36,8 @@ public class VeiculoController {
         if (!erros.isEmpty()) {
             return ResponseEntity.badRequest().body(new MensagemErro(erros));
         }
-
-        String resposta = veiculoService.criarVeiculo(novoVeiculo);
-        if (resposta != null) {
-            return ResponseEntity.badRequest().body(new MensagemErro(resposta));
-        }
-
-        return ResponseEntity.ok("Veículo criado com sucesso.");
+        veiculoService.criarVeiculo(novoVeiculo);
+        return ResponseEntity.ok("");
     }
 
     @PutMapping("/{placa}")

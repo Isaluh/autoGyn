@@ -4,6 +4,7 @@ import com.bamboobyte.APIAutoGyn.DTO.*;
 import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
 import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Entities.Modelo;
+import com.bamboobyte.APIAutoGyn.Entities.Propriedade;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 import com.bamboobyte.APIAutoGyn.Repositories.AcessorioRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.ClienteRepository;
@@ -11,6 +12,7 @@ import com.bamboobyte.APIAutoGyn.Repositories.ModeloRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,11 +63,17 @@ public class VeiculoService {
             veiculo.setModelo(modelo);
         }
 
-        // if (novoVeiculoDTO.getIdCliente() != null) {
-        //     Cliente cliente = clienteRepository.findById(novoVeiculoDTO.getIdCliente())
-        //             .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + novoVeiculoDTO.getIdCliente()));
-        //     veiculo.setCliente(cliente);
-        // }
+        if (novoVeiculoDTO.getIdCliente() != null) {
+            Cliente cliente = clienteRepository.findById(novoVeiculoDTO.getIdCliente())
+                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + novoVeiculoDTO.getIdCliente()));
+
+            Propriedade propriedade = new Propriedade();
+            propriedade.setCliente(cliente);
+            propriedade.setVeiculo(veiculo);
+            propriedade.setDataInicio(new Date());
+
+            veiculo.setPropriedades(List.of(propriedade));
+        }
 
         if (novoVeiculoDTO.getAcessorios() != null && !novoVeiculoDTO.getAcessorios().isEmpty()) {
             List<Acessorio> acessorios = acessorioRepository.findAllById(novoVeiculoDTO.getAcessorios());
@@ -80,7 +88,6 @@ public class VeiculoService {
         veiculoRepository.save(veiculo);
         return "Veículo cadastrado com sucesso!";
     }
-
 
 
     public String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculoDTO) {

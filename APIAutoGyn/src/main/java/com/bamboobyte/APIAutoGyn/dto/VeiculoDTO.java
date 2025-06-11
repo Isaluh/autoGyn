@@ -1,29 +1,39 @@
 package com.bamboobyte.APIAutoGyn.DTO;
 
-import java.util.List;
-
+import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 
 public class VeiculoDTO {
-
     private String placa;
-    private int km;
-    private int anoFabricacao;
-    private String numPatrimonio;
-    private String numChassi;
-    private int anoModelo;
-    private ModeloDTO modelo;
-    private List<AcessorioDTO> acessorios;
+    private String proprietario;
+    private String marca;
+    private String modelo;
+    private Integer anoModelo;
+    private Integer anoFabricacao;
 
-    public VeiculoDTO(Veiculo veiculo) {
-        this.placa = veiculo.getPlaca();
-        this.km = veiculo.getKm();
-        this.anoFabricacao = veiculo.getAnoFabricacao();
-        this.numPatrimonio = veiculo.getNumPatrimonio();
-        this.numChassi = veiculo.getNumChassi();
-        this.anoModelo = veiculo.getAnoModelo();
-        this.modelo = new ModeloDTO(veiculo.getModelo());
-        this.acessorios = AcessorioDTO.convertAcessorios(veiculo.getAcessorios());
+    public VeiculoDTO(Veiculo v) {
+        this.placa = v.getPlaca();
+
+        Cliente atual = v.getProprietarioAtual();
+
+        String cpf = "";
+        String nome = "";
+        if (atual != null) {
+            if (atual.getPessoaFisica() != null) {
+                cpf = atual.getPessoaFisica().getCpf();
+            }
+            nome = atual.getNome();
+        }
+
+        this.proprietario = !cpf.isEmpty() ? cpf + " | " + nome : "Desconhecido";
+
+        this.modelo = v.getModelo() != null ? v.getModelo().getNome() : "";
+        this.marca = (v.getModelo() != null && v.getModelo().getMarca() != null)
+            ? v.getModelo().getMarca().getNome()
+            : "";
+
+        this.anoModelo = v.getAnoModelo();
+        this.anoFabricacao = v.getAnoFabricacao();
     }
 
     public String getPlaca() {
@@ -34,59 +44,44 @@ public class VeiculoDTO {
         this.placa = placa;
     }
 
-    public int getKm() {
-        return km;
+    public String getProprietario() {
+        return proprietario;
     }
 
-    public void setKm(int km) {
-        this.km = km;
+    public void setProprietario(String proprietario) {
+        this.proprietario = proprietario;
     }
 
-    public int getAnoFabricacao() {
-        return anoFabricacao;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setAnoFabricacao(int anoFabricacao) {
-        this.anoFabricacao = anoFabricacao;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
-    public String getNumPatrimonio() {
-        return numPatrimonio;
-    }
-
-    public void setNumPatrimonio(String numPatrimonio) {
-        this.numPatrimonio = numPatrimonio;
-    }
-
-    public String getNumChassi() {
-        return numChassi;
-    }
-
-    public void setNumChassi(String numChassi) {
-        this.numChassi = numChassi;
-    }
-
-    public int getAnoModelo() {
-        return anoModelo;
-    }
-
-    public void setAnoModelo(int anoModelo) {
-        this.anoModelo = anoModelo;
-    }
-
-    public ModeloDTO getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
-    public void setModelo(ModeloDTO modelo) {
+    public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
-    public List<AcessorioDTO> getAcessorios() {
-        return acessorios;
+    public Integer getAnoModelo() {
+        return anoModelo;
     }
 
-    public void setAcessorios(List<AcessorioDTO> acessorios) {
-        this.acessorios = acessorios;
+    public void setAnoModelo(Integer anoModelo) {
+        this.anoModelo = anoModelo;
     }
+
+    public Integer getAnoFabricacao() {
+        return anoFabricacao;
+    }
+
+    public void setAnoFabricacao(Integer anoFabricacao) {
+        this.anoFabricacao = anoFabricacao;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Entities;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -123,22 +124,14 @@ public class Veiculo {
         this.propriedades = propriedades;
     }
 
-    public Cliente getProprietarioMaisRecente() {
-        Cliente proprietarioMaisRecente = null;
-        Date dataMaisRecente = null;
-        if (this.propriedades == null) {
-            return null;
-        }
-        for (Propriedade propriedade : this.propriedades) {
-            Date dataInicio = propriedade.getDataInicio();
-            if (dataInicio == null) {
-                continue;
-            }
-            if (dataMaisRecente == null || dataInicio.after(dataMaisRecente)) {
-                dataMaisRecente = dataInicio;
-                proprietarioMaisRecente = propriedade.getCliente();
-            }
-        }
-        return proprietarioMaisRecente;
-    }
+    public Cliente getProprietarioAtual() {
+    return propriedades == null || propriedades.isEmpty() 
+        ? null 
+        : propriedades.stream()
+            .filter(p -> p.getDataFim() == null)
+            .max(Comparator.comparing(Propriedade::getDataInicio))
+            .map(Propriedade::getCliente)
+            .orElse(null);
+}
+
 }
