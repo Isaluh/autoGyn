@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { VeiculoCadAtComponent } from './Views/veiculoCadAt/veiculoCadAt.component';
 import { VeiculoMarMoComponent } from './Views/veiculo-mar-mo/veiculo-mar-mo.component';
-import { AcessoriosComponent } from './Views/acessorios/acessorios.component';
 import { CadastroSerPeComponent } from './Views/cadastro-ser-pe/cadastro-ser-pe.component';
 import { CadastroColabComponent } from './Views/cadastro-colab/cadastro-colab.component';
 import { GerencOsComponent } from './Views/gerenc-os/gerenc-os.component';
@@ -10,10 +8,8 @@ import { VeiculosComponent } from './Views/veiculos/veiculos.component';
 import { EstoqueComponent } from './Views/estoque/estoque.component';
 
 export const routes: Routes = [
-    {path: '', component: VeiculoCadAtComponent},
-    {path: 'veiculoCadAt', component: VeiculoCadAtComponent},
+    {path: '', component: VeiculosComponent},
     {path: 'veiculoMarMo', component: VeiculoMarMoComponent},
-    {path: 'acessorios', component: AcessoriosComponent},
     {path: 'veiculos', component: VeiculosComponent},
     {path: 'clientes', component: ClientesComponent},
     {path: 'cadastroSerPe', component: CadastroSerPeComponent},

@@ -2,19 +2,37 @@ import { Component } from '@angular/core';
 import { BaseComponent } from '../../Layouts/base/base.component';
 import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-categoria/listagem-sem-categoria.component';
 import { VeiculosService } from '../../Services/veiculos.service';
-import { Veiculos } from '../../Models/models';
+import { Clientes, Marcas, Modelos, Veiculos } from '../../Models/models';
+import { PessoasService } from '../../Services/pessoas.service';
+import { BlocoComponent } from '../../Components/bloco/bloco.component';
+import { SelectsComponent } from '../../Components/selects/selects.component';
+import { InputsComponent } from '../../Components/inputs/inputs.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-veiculos',
   standalone: true,
-  imports: [BaseComponent, ListagemSemCategoriaComponent],
+  imports: [BaseComponent, ListagemSemCategoriaComponent, BlocoComponent, SelectsComponent, InputsComponent, FormsModule],
   templateUrl: './veiculos.component.html',
   styleUrl: './veiculos.component.css'
 })
 export class VeiculosComponent {
+  addVeiculo: Veiculos = {
+    id: null,
+    placa: '',
+    idCliente: null,
+    anoFabricacao: null,
+    anoModelo: null,
+    idModelo: null,
+    km: null
+  }
+
+  clientes : Clientes[] = []
+  marcas : Marcas[] = []
+  modelos : Modelos[] = []
   campos : string[] = ['Placas', 'Marca', 'Modelo', 'Ano do Modelo', 'Ano da Fabricação']
 
-  constructor(private veiculosService : VeiculosService){}
+  constructor(private veiculosService : VeiculosService, private clienteService: PessoasService){}
 
   veiculosListagem: {
     descricao: string;
@@ -24,6 +42,12 @@ export class VeiculosComponent {
 
   ngOnInit(){
     this.pegarVeiculos()
+    this.pegarInfos()
+  }
+
+  pegarInfos(){
+    this.clienteService.getClientes().subscribe((cli) => this.clientes = cli)
+    this.veiculosService.getMarcas().subscribe((m) => this.marcas = m)
   }
 
   pegarVeiculos() {
@@ -43,6 +67,48 @@ export class VeiculosComponent {
     });
   }
 
+  procurarModelos(idMarca: number) {
+    this.veiculosService.getModelos().subscribe(todosModelos => {
+    this.veiculosService.getMarcasEModelos().subscribe(todasMarcas => {
+      const marca = todasMarcas.find(m => m.id == idMarca);
+      if (!marca) {
+        this.modelos = [];
+        return;
+      }
 
+      this.modelos = marca.nomeModelos.map(nomeModelo => {
+        const modeloEncontrado = todosModelos.find(m => m.nome === nomeModelo);
+        return modeloEncontrado
+          ? { 
+              id: modeloEncontrado.id, 
+              nome: modeloEncontrado.nome,
+              marca: {}
+            }
+          : null;
+      }).filter(m => m !== null) as Modelos[];
+    });
+  });
+  }
 
+  cadastrarVeiculo() {
+    this.veiculosService.postVeiculo(this.addVeiculo).subscribe({
+      next: res => {
+        alert('Veículo cadastrado com sucesso!');
+        this.addVeiculo = {
+          id: null,
+          placa: '',
+          idCliente: null,
+          anoFabricacao: null,
+          anoModelo: null,
+          idModelo: null,
+          km: null
+        };
+        this.pegarVeiculos()
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar veículo.';
+        alert(mensagem);
+      }
+    });
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { Component, model, ViewChild } from '@angular/core';
 import { BaseComponent } from "../../Layouts/base/base.component";
 import { BlocoComponent } from "../../Components/bloco/bloco.component";
 import { InputsComponent } from "../../Components/inputs/inputs.component";
@@ -30,7 +30,7 @@ export class VeiculoMarMoComponent {
   }
   marcas : Marcas[] = []
   listagemMarcaModelo: MarcaComModelos[] = []
-  valorSelect: any = "";
+  @ViewChild(SelectsComponent) selectsComponent!: SelectsComponent;
 
   constructor(private veiculosService: VeiculosService) {}
 
@@ -83,7 +83,9 @@ export class VeiculoMarMoComponent {
           },
           nome: ''
         }
-        this.valorSelect = "";
+        if (this.selectsComponent) {
+          this.selectsComponent.limparSelecao();
+        }
         this.pegarMarcasEModeLos();
       },
       error: err => {

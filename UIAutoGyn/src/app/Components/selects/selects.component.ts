@@ -10,16 +10,18 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './selects.component.css'
 })
 export class SelectsComponent {
-  @Input() idSelect = ''
-  @Input() placeholder = ''
-  @Input() opcoes : any = []
-  @Input() valorSelecionado: any = this.placeholder;
+  @Input() idSelect = '';
+  @Input() placeholder = '';
+  @Input() opcoes: any[] = [];
+  @Input() valorSelecionado: any = '';
   @Output() valorSelecionadoChange = new EventEmitter<any>();
 
-
   onChange(value: any) {
-  this.valorSelecionado = value;
-  this.valorSelecionadoChange.emit(value);
-}
+    this.valorSelecionadoChange.emit(value);
+  }
 
+  limparSelecao() {
+    this.valorSelecionado = '';
+    this.valorSelecionadoChange.emit(this.valorSelecionado);
+  }
 }

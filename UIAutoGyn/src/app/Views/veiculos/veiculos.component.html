@@ -1,5 +1,25 @@
 <BaseLayout [opcoesVeiculo]="true">
     <div class="pai">
+        <BlocoComponent titulo="Cadastro de veiculo" descricao="Preencha os dados do veículo para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarVeiculo()">
+            <div class="emDois">
+                <div class="conteudo">
+                    <SelectsComponent idSelect="proprietario" placeholder="Selecione o proprietário" [opcoes]="clientes" (valorSelecionadoChange)="addVeiculo.idCliente = $event" />
+                    <InputsComponent text="Placa" tipoInput="text" idInput="placa" placeholder="ABCD1234" [(ngModel)]="addVeiculo.placa" />
+                    <div class="juntos">
+                        <InputsComponent text="Ano de fabricação" tipoInput="number" idInput="anoFabricado" placeholder="2023" [(ngModel)]="addVeiculo.anoFabricacao" />
+                        <InputsComponent text="Ano do modelo" tipoInput="number" idInput="anoModelo" placeholder="2023" [(ngModel)]="addVeiculo.anoModelo" />
+                    </div>
+                    
+                </div>
+                <span class="linha"></span>
+                <div class="conteudo">
+                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" (valorSelecionadoChange)="procurarModelos($event)"/>
+                    <SelectsComponent idSelect="modelo" placeholder="Selecione o modelo" [opcoes]="modelos" (valorSelecionadoChange)="addVeiculo.idModelo = $event"/>
+                    <InputsComponent text="Quilometragem" tipoInput="number" idInput="km" placeholder="50000" [(ngModel)]="addVeiculo.km" />
+                </div>
+            </div>
+        </BlocoComponent>
+        <span class="linhaDois"></span>
         <ListagemSemCategoriaComponent titulo="Veiculos Cadastrados" descricao="Sem veículos cadastrados." [campos]="campos" />
     </div>
 </BaseLayout>

@@ -6,9 +6,6 @@ export interface Veiculos{
     anoModelo: number | null;
     idModelo: number | null;
     km: number | null;
-    numeroChassi: string;
-    numeroPatrimonio: string;
-    acessorios: Acessorios[]
 }
 
 export interface Marcas{
@@ -26,12 +23,6 @@ export interface MarcaComModelos {
   id: number;
   nomeMarca: string;
   nomeModelos: string[];
-}
-
-
-export interface Acessorios{
-    id: number | null,
-    descricao: string
 }
 
 export interface Servicos{
