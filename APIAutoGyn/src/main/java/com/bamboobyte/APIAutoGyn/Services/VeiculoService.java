@@ -40,9 +40,6 @@ public class VeiculoService {
                        .collect(Collectors.toList());
     }
 
-    public List<AcessorioDTO> listarAcessorios() {
-        return null;
-    }
 
     public String criarVeiculo(CadastrarVeiculoDTO novoVeiculoDTO) {
         if (novoVeiculoDTO == null || novoVeiculoDTO.getPlaca() == null || novoVeiculoDTO.getPlaca().isEmpty()) {
@@ -53,53 +50,9 @@ public class VeiculoService {
         veiculo.setPlaca(novoVeiculoDTO.getPlaca());
         veiculo.setKm(novoVeiculoDTO.getkm());
         veiculo.setAnoFabricacao(novoVeiculoDTO.getAnoFabricacao());
-        veiculo.setNumPatrimonio(novoVeiculoDTO.getNumeroPatrimonio());
-        veiculo.setNumChassi(novoVeiculoDTO.getNumeroChassi());
-        veiculo.setAnoModelo(novoVeiculoDTO.getAnoModelo());
-
-        if (novoVeiculoDTO.getIdModelo() != null) {
-            Modelo modelo = modeloRepository.findById(novoVeiculoDTO.getIdModelo())
-                    .orElseThrow(() -> new RuntimeException("Modelo não encontrado com id: " + novoVeiculoDTO.getIdModelo()));
-            veiculo.setModelo(modelo);
-        }
-
-        if (novoVeiculoDTO.getIdCliente() != null) {
-            Cliente cliente = clienteRepository.findById(novoVeiculoDTO.getIdCliente())
-                    .orElseThrow(() -> new RuntimeException("Cliente não encontrado com id: " + novoVeiculoDTO.getIdCliente()));
-
-            Propriedade propriedade = new Propriedade();
-            propriedade.setCliente(cliente);
-            propriedade.setVeiculo(veiculo);
-            propriedade.setDataInicio(new Date());
-
-            veiculo.setPropriedades(List.of(propriedade));
-        }
-
-        if (novoVeiculoDTO.getAcessorios() != null && !novoVeiculoDTO.getAcessorios().isEmpty()) {
-            List<Acessorio> acessorios = acessorioRepository.findAllById(novoVeiculoDTO.getAcessorios());
-
-            for (Acessorio acessorio : acessorios) {
-                acessorio.setVeiculo(veiculo);
-            }
-
-            veiculo.setAcessorios(acessorios);
-        }
 
         veiculoRepository.save(veiculo);
         return "Veículo cadastrado com sucesso!";
-    }
-
-
-    public String atualizarVeiculo(String placa, AtualizarVeiculoDTO atualizarVeiculoDTO) {
-        Veiculo veiculo = veiculoRepository.findById(placa)
-            .orElseThrow(() -> new RuntimeException("Veículo não encontrado com placa: " + placa));
-
-        veiculo.setKm(atualizarVeiculoDTO.getKm());
-        veiculo.setAnoFabricacao(atualizarVeiculoDTO.getAnoFabricacao());
-        veiculo.setAnoModelo(atualizarVeiculoDTO.getAnoModelo());
-
-        veiculoRepository.save(veiculo);
-        return "Veículo atualizado com sucesso!";
     }
 
     public VeiculoDTO encontrarPorPlaca(String placa) {

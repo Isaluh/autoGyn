@@ -5,35 +5,15 @@ import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 
 public class VeiculoDTO {
     private String placa;
-    private String proprietario;
-    private String marca;
-    private String modelo;
-    private Integer anoModelo;
-    private Integer anoFabricacao;
+    private int km;
+    private int anoFabricacao;
+    private ModeloDTO modelo;
 
-    public VeiculoDTO(Veiculo v) {
-        this.placa = v.getPlaca();
-
-        Cliente atual = v.getProprietarioAtual();
-
-        String cpf = "";
-        String nome = "";
-        if (atual != null) {
-            if (atual.getPessoaFisica() != null) {
-                cpf = atual.getPessoaFisica().getCpf();
-            }
-            nome = atual.getNome();
-        }
-
-        this.proprietario = !cpf.isEmpty() ? cpf + " | " + nome : "Desconhecido";
-
-        this.modelo = v.getModelo() != null ? v.getModelo().getNome() : "";
-        this.marca = (v.getModelo() != null && v.getModelo().getMarca() != null)
-            ? v.getModelo().getMarca().getNome()
-            : "";
-
-        this.anoModelo = v.getAnoModelo();
-        this.anoFabricacao = v.getAnoFabricacao();
+    public VeiculoDTO(Veiculo veiculo) {
+        this.placa = veiculo.getPlaca();
+        this.km = veiculo.getKm();
+        this.anoFabricacao = veiculo.getAnoFabricacao();
+        this.modelo = new ModeloDTO(veiculo.getModelo());
     }
 
     public String getPlaca() {
@@ -44,44 +24,28 @@ public class VeiculoDTO {
         this.placa = placa;
     }
 
-    public String getProprietario() {
-        return proprietario;
-    }
+    // public String getProprietario() {
+    //     return proprietario;
+    // }
 
-    public void setProprietario(String proprietario) {
-        this.proprietario = proprietario;
-    }
+    // public void setProprietario(String proprietario) {
+    //     this.proprietario = proprietario;
+    // }
 
-    public String getMarca() {
-        return marca;
-    }
+    // public String getMarca() {
+    //     return marca;
+    // }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
+    // public void setMarca(String marca) {
+    //     this.marca = marca;
+    // }
 
-    public String getModelo() {
-        return modelo;
-    }
+    // public ModeloDTO getModelo() {
+    //     return modelo;
+    // }
 
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public Integer getAnoModelo() {
-        return anoModelo;
-    }
-
-    public void setAnoModelo(Integer anoModelo) {
-        this.anoModelo = anoModelo;
-    }
-
-    public Integer getAnoFabricacao() {
-        return anoFabricacao;
-    }
-
-    public void setAnoFabricacao(Integer anoFabricacao) {
-        this.anoFabricacao = anoFabricacao;
-    }
+    // public void setModelo(String modelo) {
+    //     this.modelo = modelo;
+    // }
 
 }

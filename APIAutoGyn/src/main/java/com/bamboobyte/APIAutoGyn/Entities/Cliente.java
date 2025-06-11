@@ -49,8 +49,6 @@ public class Cliente {
     @Embedded
     private PF pessoaFisica;
 
-    @OneToMany(mappedBy = "cliente")
-    private List<Propriedade> propriedades;
     
     public Cliente(CadastrarClienteDTO dto) {
         this.nome = dto.getNome();
@@ -160,14 +158,6 @@ public class Cliente {
 
     public void setPessoaFisica(PF pessoaFisica) {
         this.pessoaFisica = pessoaFisica;
-    }
-
-    public List<Propriedade> getPropriedades() {
-        return propriedades;
-    }
-
-    public void setPropriedades(List<Propriedade> propriedades) {
-        this.propriedades = propriedades;
     }
 
 }

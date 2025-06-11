@@ -1,7 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarColaboradorDTO;
-import com.bamboobyte.APIAutoGyn.DTO.ColaboradorDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaClienteDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaColaboradorDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Colaborador;
 import com.bamboobyte.APIAutoGyn.Repositories.ColaboradorRepository;
 
@@ -20,22 +20,22 @@ public class ColaboradorService {
         this.colaboradorRepository = colaboradorRepository;
     }
 
-    public List<ColaboradorDTO> listarTodos() {
-        List<Colaborador> colaboradores = colaboradorRepository.findAll();
-        return colaboradores.stream()
-                .map(colaborador -> new ColaboradorDTO(colaborador))
-                .collect(Collectors.toList());
+    public List<ListaColaboradorDTO> listarTodos() {
+        return colaboradorRepository.findAll().stream()
+            .map(colaborador -> {
+              
+                return new ListaColaboradorDTO("[" + colaborador.getCpf(), "] | " + colaborador.getNome());
+            })
+            .collect(Collectors.toList());
     }
 
-    public Colaborador incluirColaborador(CadastrarColaboradorDTO novoColaboradorDTO) {
-        if (novoColaboradorDTO.getCpf() == null || novoColaboradorDTO.getCpf().isEmpty()) {
+
+    public Colaborador incluirColaborador(Colaborador novoColaborador) {
+        if (novoColaborador.getCpf() == null || novoColaborador.getCpf().isEmpty()) {
             throw new RuntimeException("O CPF do colaborador é obrigatório.");
         }
 
-        Colaborador colaborador = new Colaborador();
-        colaborador.setCpf(novoColaboradorDTO.getCpf());
-        colaborador.setNome(novoColaboradorDTO.getNome());
-
+        Colaborador colaborador = new Colaborador(novoColaborador);
         return colaboradorRepository.save(colaborador);
     }
 
@@ -48,11 +48,11 @@ public class ColaboradorService {
         }
     }
 
-    public Colaborador atualizarColaborador(Long id, CadastrarColaboradorDTO colaboradorDTO) {
+    public Colaborador atualizarColaborador(Long id, Colaborador Colaborador) {
         Colaborador colaboradorExistente = buscarPorId(id);
 
-        colaboradorExistente.setNome(colaboradorDTO.getNome());
-        colaboradorExistente.setCpf(colaboradorDTO.getCpf());
+        colaboradorExistente.setNome(Colaborador.getNome());
+        colaboradorExistente.setCpf(Colaborador.getCpf());
 
         return colaboradorRepository.save(colaboradorExistente);
     }

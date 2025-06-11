@@ -1,6 +1,5 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
-import com.bamboobyte.APIAutoGyn.DTO.AtualizarPecaDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarPecaDTO;
 import com.bamboobyte.APIAutoGyn.DTO.PecaListaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
@@ -48,15 +47,4 @@ public class PecaService {
         return true;
     }
 
-    public String atualizarPeca(Long idPeca, AtualizarPecaDTO atualizarPeca) {
-        Peca peca = pecaRepository.findById(idPeca)
-                .orElseThrow(() -> new RuntimeException("Peça não encontrada com ID: " + idPeca));
-
-        peca.setDescricao(atualizarPeca.getDescricao());
-        peca.setValorUnitario(atualizarPeca.getValorUnitario());
-        peca.setQuantidadeEstoque(atualizarPeca.getQuantidadeEstoque());
-        
-        pecaRepository.save(peca);
-        return "Peça atualizada com sucesso.";
-    }
 }

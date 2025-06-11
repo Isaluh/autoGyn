@@ -40,13 +40,6 @@ public class VeiculoController {
         return ResponseEntity.ok("");
     }
 
-    @PutMapping("/{placa}")
-    public ResponseEntity<String> atualizarVeiculo(@PathVariable String placa,
-            @RequestBody AtualizarVeiculoDTO atualizarVeiculo) {
-        String resposta = veiculoService.atualizarVeiculo(placa, atualizarVeiculo);
-        return ResponseEntity.ok(resposta);
-    }
-
     @GetMapping("/{placa}")
     public ResponseEntity<?> encontrarPorPlaca(@PathVariable String placa) {
         try {
