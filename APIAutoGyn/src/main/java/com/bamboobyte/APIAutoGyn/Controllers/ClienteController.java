@@ -18,7 +18,7 @@ import com.bamboobyte.APIAutoGyn.DTO.ListaClienteDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Services.ClienteService;
 import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
-import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErro;
+import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErroFactory;
 import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 
 @RestController
@@ -38,11 +38,12 @@ public class ClienteController {
     public ResponseEntity<?> salvarCliente(@RequestBody CadastrarClienteDTO dto) {
         List<StatusValidacao> erros = validador.validar(dto);
         if (erros.size() > 0) {
-            return ResponseEntity.badRequest().body(new MensagemErro(erros));
+            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
+
         }
         Cliente idCliente = clienteService.salvar(dto);
         if (idCliente == null) {
-            return ResponseEntity.badRequest().body(new MensagemErro("Cliente não criado."));
+            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem("Cliente não criado.")); // utilizando a factory para criar a mensagem de erro
         }
         return ResponseEntity.ok("Criado Cliente " + idCliente);
     }

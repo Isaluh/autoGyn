@@ -14,7 +14,7 @@ import com.bamboobyte.APIAutoGyn.DTO.CadastrarVeiculoDTO;
 import com.bamboobyte.APIAutoGyn.DTO.VeiculoDTO;
 import com.bamboobyte.APIAutoGyn.Services.VeiculoService;
 import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
-import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErro;
+import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErroFactory;
 import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 
 @RestController
@@ -40,12 +40,14 @@ public class VeiculoController {
     public ResponseEntity<?> criarVeiculo(@RequestBody CadastrarVeiculoDTO novoVeiculo) {
         List<StatusValidacao> erros = validador.validar(novoVeiculo);
         if (!erros.isEmpty()) {
-            return ResponseEntity.badRequest().body(new MensagemErro(erros));
+            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
+
         }
 
         String resposta = veiculoService.criarVeiculo(novoVeiculo);
         if (resposta != null) {
-            return ResponseEntity.badRequest().body(new MensagemErro(resposta));
+            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(resposta)); // utilizando a factory para criar a mensagem de erro 
+
         }
 
         return ResponseEntity.ok("Veículo criado com sucesso.");

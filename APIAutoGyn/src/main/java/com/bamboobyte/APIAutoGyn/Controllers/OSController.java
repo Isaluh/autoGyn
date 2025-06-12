@@ -18,7 +18,8 @@ import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.OrdemServicoListaDTO;
 import com.bamboobyte.APIAutoGyn.Services.OSService;
 import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
-import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErro;
+
+import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErroFactory;
 import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 
 @RestController
@@ -50,7 +51,8 @@ public class OSController {
     public ResponseEntity<?> criarOS(@RequestBody CadastrarOSDTO novaOS) {
         List<StatusValidacao> erros = validador.validar(novaOS);
         if (erros.size() > 0) {
-            return ResponseEntity.badRequest().body(new MensagemErro(erros));
+            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
+
         }
         Long idOs = osService.criarOS(novaOS);
         return ResponseEntity.ok(idOs);

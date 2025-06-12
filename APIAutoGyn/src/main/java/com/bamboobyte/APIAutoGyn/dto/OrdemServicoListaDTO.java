@@ -18,41 +18,41 @@ public class OrdemServicoListaDTO {
 
     public OrdemServicoListaDTO(OS os) {
         this.id = os.getId();
-        
+
         this.veiculo = String.format(
-                "%s (%s) %d", 
-                os.getVeiculo().getModelo().getNome(), 
+                "%s (%s) %d",
+                os.getVeiculo().getModelo().getNome(),
                 os.getVeiculo().getModelo().getMarca().getNome());
-        
+
         Date data = os.getData();
         Calendar cal = Calendar.getInstance();
         cal.setTime(data);
-        this.data = String.format("%02d/%02d/%d", 
-                cal.get(Calendar.DAY_OF_MONTH), 
-                cal.get(Calendar.MONTH) + 1, 
+        this.data = String.format("%02d/%02d/%d",
+                cal.get(Calendar.DAY_OF_MONTH),
+                cal.get(Calendar.MONTH) + 1,
                 cal.get(Calendar.YEAR));
-        
+
         NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
         this.valor = formatador.format(os.getValorTotal());
-        
+
         this.status = os.getEtapa().getDescricao();
 
         if (os.getCliente().getPessoaFisica() != null) {
             this.cliente = String.format(
-                    "[%s] %s", 
-                    os.getCliente().getPessoaFisica().getCpf(), 
+                    "[%s] %s",
+                    os.getCliente().getPessoaFisica().getCpf(),
                     os.getCliente().getNome());
         } else if (os.getCliente().getPessoaJuridica() != null) {
             this.cliente = String.format(
-                    "[%s] %s", 
-                    os.getCliente().getPessoaJuridica().getCnpj(), 
+                    "[%s] %s",
+                    os.getCliente().getPessoaJuridica().getCnpj(),
                     os.getCliente().getNome());
         } else if (os.getCliente() != null) {
             this.cliente = os.getCliente().getNome();
         } else {
             this.cliente = "[Cliente não encontrado]";
         }
-        
+
         this.cliente = String.format("(%d) %s", os.getId(), this.cliente);
     }
 
