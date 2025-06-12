@@ -1,15 +1,13 @@
 package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
-
 public class VeiculoDTO {
     private String placa;
     private int km;
     private int anoFabricacao;
     private ModeloDTO modelo;
     private MinimalMarcaDTO marca;
-
+    
     public VeiculoDTO(Veiculo veiculo) {
         this.placa = veiculo.getPlaca();
         this.km = veiculo.getKm();

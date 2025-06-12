@@ -36,20 +36,24 @@ export class ClientesComponent {
     isPJ: false,
     isPF: false
   }
+  tipoPessoa = ''
 
   constructor(private clienteService: PessoasService) { }
 
   trocarSecao(){
-    this.addCliente.isPF = !this.addCliente.isPF; 
-    this.addCliente.isPJ = !this.addCliente.isPF;
-
-    if(this.addCliente.isPF){
-      this.addCliente.cnpj = ''
-      this.addCliente.inscricaoEstadual = ''
-      this.addCliente.nomeContato = ''
-    }
-    else{
-      this.addCliente.cpf = ''
+    if (this.tipoPessoa === 'PF') {
+      this.addCliente.cnpj = '';
+      this.addCliente.inscricaoEstadual = '';
+      this.addCliente.nomeContato = '';
+      this.addCliente.isPF = true
+      this.addCliente.isPJ = false
+    } else if (this.tipoPessoa === 'PJ') {
+      this.addCliente.cpf = '';
+      this.addCliente.isPF = false
+      this.addCliente.isPJ = true
+    } else{
+      this.addCliente.isPF = false
+      this.addCliente.isPJ = false
     }
   }
 
@@ -77,6 +81,8 @@ export class ClientesComponent {
           isPJ: false,
           isPF: false
         }
+        this.tipoPessoa = ''
+        this.trocarSecao()
       },
       error: err => {
         const mensagem = err.error?.message || 'Erro inesperado ao cadastrar cliente.';

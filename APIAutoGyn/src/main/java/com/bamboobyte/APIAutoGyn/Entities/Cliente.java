@@ -38,10 +38,11 @@ public class Cliente {
 
     @Embedded
     @AttributeOverrides({
-        @AttributeOverride(name = "ddd", column = @Column(name = "ddd_telefone_secundario")),
-        @AttributeOverride(name = "telefone", column = @Column(name = "numero_telefone_secundario"))
+        @AttributeOverride(name = "ddd", column = @Column(name = "ddd_telefone_secundario", nullable = true)),
+        @AttributeOverride(name = "telefone", column = @Column(name = "numero_telefone_secundario", nullable = true))
     })
     private Telefone telefoneSecundario;
+
 
     @Embedded
     private PJ pessoaJuridica;
@@ -68,10 +69,12 @@ public class Cliente {
             dto.getTelefone()
         );
 
-        this.telefoneSecundario = new Telefone(
-            dto.getDdd2(),
-            dto.getTelefone2()
-        );
+        if(dto.getDdd2() != null && dto.getTelefone2() != null){
+            this.telefoneSecundario = new Telefone(
+                dto.getDdd2(),
+                dto.getTelefone2()
+            );
+        }
 
         if (dto.isPJ() && dto.isPF()) {
             throw new IllegalArgumentException("Cliente não pode ser PF e PJ ao mesmo tempo.");

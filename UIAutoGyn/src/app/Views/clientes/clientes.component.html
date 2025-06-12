@@ -7,11 +7,11 @@
                     <InputsComponent text="E-mail" tipoInput="mail" idInput="email" placeholder="cliente@gmail.com" [(ngModel)]="addCliente.email"/>
                     <div>
                         <label for="pessoaCpf">
-                            <input type="radio" name="tipoPessoa" id="pessoaCpf" (change)="trocarSecao()">
+                            <input type="radio" name="tipoPessoa" id="pessoaCpf" value="PF" [(ngModel)]="tipoPessoa" (ngModelChange)="trocarSecao()">
                             <span>Pessoa Física</span>
                         </label>
                         <label for="pessoaCnpj">
-                            <input type="radio" name="tipoPessoa" id="pessoaCnpj" (change)="trocarSecao()">
+                            <input type="radio" name="tipoPessoa" id="pessoaCnpj" value="PJ" [(ngModel)]="tipoPessoa" (ngModelChange)="trocarSecao()">
                             <span>Pessoa Jurídica</span>
                         </label>
                     </div>

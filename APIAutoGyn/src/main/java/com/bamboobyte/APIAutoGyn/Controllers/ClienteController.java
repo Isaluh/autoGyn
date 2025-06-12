@@ -39,12 +39,13 @@ public class ClienteController {
         List<StatusValidacao> erros = validador.validar(dto);
         if (erros.size() > 0) {
             return ResponseEntity.badRequest().body(new MensagemErro(erros));
+            // fazer isso aparecer no front ([CEP_INVALIDO, UF_INVALIDA, TELEFONE_INVALIDO, TELEFONE_INVALIDO])
         }
         Cliente idCliente = clienteService.salvar(dto);
         if (idCliente == null) {
             return ResponseEntity.badRequest().body(new MensagemErro("Cliente não criado."));
         }
-        return ResponseEntity.ok("Criado Cliente " + idCliente);
+        return ResponseEntity.ok("");
     }
 
     @GetMapping
@@ -55,33 +56,33 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarClientePorId(@PathVariable Long id) {
-    try {
-    Cliente cliente = clienteService.buscarClientePorId(id);
-    return ResponseEntity.ok(cliente);
-    } catch (RuntimeException e) {
-    return ResponseEntity.status(404).body(null);
-    }
+        try {
+            Cliente cliente = clienteService.buscarClientePorId(id);
+            return ResponseEntity.ok(cliente);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirCliente(@PathVariable Long id) {
-    try {
-    clienteService.excluirCliente(id);
-    return ResponseEntity.noContent().build();
-    } catch (RuntimeException e) {
-    return ResponseEntity.status(404).body(null);
-    }
+        try {
+            clienteService.excluirCliente(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> atualizarCliente(@PathVariable Long id,
-    @RequestBody CadastrarClienteDTO clienteAtualizadoDTO) {
-    try {
-    Cliente clienteAtualizado = clienteService.atualizarCliente(id,
-    clienteAtualizadoDTO);
-    return ResponseEntity.ok(clienteAtualizado);
-    } catch (RuntimeException e) {
-    return ResponseEntity.status(404).body(null);
-    }
+            @RequestBody CadastrarClienteDTO clienteAtualizadoDTO) {
+        try {
+            Cliente clienteAtualizado = clienteService.atualizarCliente(id,
+                    clienteAtualizadoDTO);
+            return ResponseEntity.ok(clienteAtualizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(null);
+        }
     }
 }
