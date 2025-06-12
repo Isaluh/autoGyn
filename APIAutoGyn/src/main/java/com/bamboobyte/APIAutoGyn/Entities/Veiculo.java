@@ -1,17 +1,11 @@
 package com.bamboobyte.APIAutoGyn.Entities;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,14 +26,19 @@ public class Veiculo {
     @JoinColumn(name = "id_modelo")
     private Modelo modelo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+
     public Veiculo() {
     }
 
-    public Veiculo(String placa, int km, int anoFabricacao, Modelo modelo) {
+    public Veiculo(String placa, int km, int anoFabricacao, Modelo modelo, Cliente cliente) {
         this.placa = placa;
         this.km = km;
         this.anoFabricacao = anoFabricacao;
         this.modelo = modelo;
+        this.cliente = cliente;
     }
 
     public int getKm() {
@@ -72,6 +71,14 @@ public class Veiculo {
 
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
 }
