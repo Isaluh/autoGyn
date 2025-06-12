@@ -1,12 +1,8 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
 import com.bamboobyte.APIAutoGyn.DTO.*;
-import com.bamboobyte.APIAutoGyn.Entities.Acessorio;
-import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Entities.Modelo;
-import com.bamboobyte.APIAutoGyn.Entities.Propriedade;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
-import com.bamboobyte.APIAutoGyn.Repositories.AcessorioRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.ClienteRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.ModeloRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
@@ -21,15 +17,12 @@ public class VeiculoService {
 
     private final VeiculoRepository veiculoRepository;
     private final ModeloRepository modeloRepository;
-    private final AcessorioRepository acessorioRepository;
     private final ClienteRepository clienteRepository;
 
     public VeiculoService(VeiculoRepository veiculoRepository,
-                      ModeloRepository modeloRepository,
-                      AcessorioRepository acessorioRepository, ClienteRepository clienteRepository) {
+                      ModeloRepository modeloRepository, ClienteRepository clienteRepository) {
         this.veiculoRepository = veiculoRepository;
         this.modeloRepository = modeloRepository;
-        this.acessorioRepository = acessorioRepository;
         this.clienteRepository = clienteRepository;
     }
 
@@ -41,17 +34,24 @@ public class VeiculoService {
     }
 
 
-    public String criarVeiculo(CadastrarVeiculoDTO novoVeiculoDTO) {
-        if (novoVeiculoDTO == null || novoVeiculoDTO.getPlaca() == null || novoVeiculoDTO.getPlaca().isEmpty()) {
+    public String criarVeiculo(CadastrarVeiculoDTO cadastrarVeiculoDTO) {
+        if (cadastrarVeiculoDTO == null || cadastrarVeiculoDTO.getPlaca() == null || cadastrarVeiculoDTO.getPlaca().isEmpty()) {
             throw new RuntimeException("Dados do veículo inválidos.");
         }
 
-        Veiculo veiculo = new Veiculo();
-        veiculo.setPlaca(novoVeiculoDTO.getPlaca());
-        veiculo.setKm(novoVeiculoDTO.getkm());
-        veiculo.setAnoFabricacao(novoVeiculoDTO.getAnoFabricacao());
+        Modelo modelo = modeloRepository.findById(cadastrarVeiculoDTO.getIdModelo())
+            .orElseThrow(() -> new RuntimeException("Modelo não encontrado com ID: " + cadastrarVeiculoDTO.getIdModelo()));
 
-        veiculoRepository.save(veiculo);
+        // Veiculo veiculo = new Veiculo();
+        // veiculo.setPlaca(cadastrarVeiculoDTO.getPlaca());
+        // veiculo.setIdCliente(cadastrarVeiculoDTO.getIdCliente()); 
+        // veiculo.setAnoFabricacao(cadastrarVeiculoDTO.getAnoFabricacao());
+        // veiculo.setModelo(modelo);  
+        // veiculo.setKm(cadastrarVeiculoDTO.getkm());
+
+      
+        // veiculoRepository.save(veiculo);
+
         return "Veículo cadastrado com sucesso!";
     }
 

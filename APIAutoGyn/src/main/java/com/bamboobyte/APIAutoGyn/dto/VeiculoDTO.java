@@ -8,12 +8,14 @@ public class VeiculoDTO {
     private int km;
     private int anoFabricacao;
     private ModeloDTO modelo;
+    private MinimalMarcaDTO marca;
 
     public VeiculoDTO(Veiculo veiculo) {
         this.placa = veiculo.getPlaca();
         this.km = veiculo.getKm();
         this.anoFabricacao = veiculo.getAnoFabricacao();
         this.modelo = new ModeloDTO(veiculo.getModelo());
+        this.marca = new MinimalMarcaDTO(veiculo.getModelo().getMarca());
     }
 
     public String getPlaca() {
@@ -47,5 +49,13 @@ public class VeiculoDTO {
     // public void setModelo(String modelo) {
     //     this.modelo = modelo;
     // }
+
+    public MinimalMarcaDTO getMarca() {
+        return marca;
+    }
+
+    public void setMarca(MinimalMarcaDTO marca) {
+        this.marca = marca;
+    }
 
 }
