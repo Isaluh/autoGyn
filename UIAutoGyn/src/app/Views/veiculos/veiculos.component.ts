@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BaseComponent } from '../../Layouts/base/base.component';
 import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-categoria/listagem-sem-categoria.component';
 import { VeiculosService } from '../../Services/veiculos.service';
@@ -31,6 +31,7 @@ export class VeiculosComponent {
   marcas : Marcas[] = []
   modelos : Modelos[] = []
   campos : string[] = ['Placas', 'Marca', 'Modelo', 'Ano do Modelo', 'Ano da Fabricação']
+  @ViewChild(SelectsComponent) selectsComponent!: SelectsComponent;
 
   constructor(private veiculosService : VeiculosService, private clienteService: PessoasService){}
 
@@ -103,6 +104,9 @@ export class VeiculosComponent {
           idModelo: null,
           km: null
         };
+        if (this.selectsComponent) {
+          this.selectsComponent.limparSelecao();
+        }
         this.pegarVeiculos()
       },
       error: err => {
