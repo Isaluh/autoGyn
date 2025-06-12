@@ -32,8 +32,14 @@ public class Veiculo {
     @JoinColumn(name = "id_modelo")
     private Modelo modelo;
 
-
     public Veiculo() {
+    }
+
+    public Veiculo(String placa, int km, int anoFabricacao, Modelo modelo) {
+        this.placa = placa;
+        this.km = km;
+        this.anoFabricacao = anoFabricacao;
+        this.modelo = modelo;
     }
 
     public int getKm() {

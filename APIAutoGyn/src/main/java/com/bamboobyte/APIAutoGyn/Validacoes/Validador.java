@@ -147,10 +147,6 @@ class Validador {
         return (inscricao != null && inscricao.matches("^\\d{9,14}$")) ? null : StatusValidacao.IE_INVALIDA;
     }
 
-    public StatusValidacao validaChassi(String chassi) {
-        return (chassi != null && chassi.matches("^[A-HJ-NPR-Z0-9]{17}$")) ? null : StatusValidacao.NC_INVALIDO;
-    }
-
     public StatusValidacao validaPlaca(String placa) {
         if (placa == null)
             return StatusValidacao.PLACA_INVALIDA;

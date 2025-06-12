@@ -71,7 +71,6 @@ public class GatewayValidacao {
         List<StatusValidacao> erros = new LinkedList<>();
 
         erros.add(validador.validaPlaca(novoVeiculo.getPlaca()));
-        erros.add(validador.validaChassi(novoVeiculo.getNumeroChassi()));
 
         removerNulos(erros);
         return erros;

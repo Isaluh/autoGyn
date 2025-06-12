@@ -1,6 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
 import com.bamboobyte.APIAutoGyn.DTO.*;
+import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 import com.bamboobyte.APIAutoGyn.Entities.Veiculo;
 import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
 import org.springframework.stereotype.Service;
@@ -26,18 +27,24 @@ public class VeiculoService {
     }
 
 
-    @Transactional
-    public String criarVeiculo(CadastrarVeiculoDTO novoVeiculoDTO) {
-        if (novoVeiculoDTO == null || novoVeiculoDTO.getPlaca() == null || novoVeiculoDTO.getPlaca().isEmpty()) {
+    public String criarVeiculo(CadastrarVeiculoDTO cadastrarVeiculoDTO) {
+        if (cadastrarVeiculoDTO == null || cadastrarVeiculoDTO.getPlaca() == null || cadastrarVeiculoDTO.getPlaca().isEmpty()) {
             throw new RuntimeException("Dados do veículo inválidos.");
         }
 
-        Veiculo veiculo = new Veiculo();
-        veiculo.setPlaca(novoVeiculoDTO.getPlaca());
-        veiculo.setKm(novoVeiculoDTO.getkm());
-        veiculo.setAnoFabricacao(novoVeiculoDTO.getAnoFabricacao());
+        Modelo modelo = modeloRepository.findById(cadastrarVeiculoDTO.getIdModelo())
+            .orElseThrow(() -> new RuntimeException("Modelo não encontrado com ID: " + cadastrarVeiculoDTO.getIdModelo()));
 
+        Veiculo veiculo = new Veiculo();
+        veiculo.setPlaca(cadastrarVeiculoDTO.getPlaca());
+        veiculo.setIdCliente(cadastrarVeiculoDTO.getIdCliente()); 
+        veiculo.setAnoFabricacao(cadastrarVeiculoDTO.getAnoFabricacao());
+        veiculo.setModelo(modelo);  
+        veiculo.setKm(cadastrarVeiculoDTO.getkm());
+
+      
         veiculoRepository.save(veiculo);
+
         return "Veículo cadastrado com sucesso!";
     }
 
