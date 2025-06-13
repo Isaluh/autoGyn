@@ -23,7 +23,7 @@ public class ColaboradorService {
         return colaboradorRepository.findAll().stream()
             .map(colaborador -> {
               
-                return new ListaColaboradorDTO("[" + colaborador.getCpf(), "] | " + colaborador.getNome());
+                return new ListaColaboradorDTO(colaborador.getCpf(), "[" + colaborador.getCpf() +"] | " + colaborador.getNome());
             })
             .collect(Collectors.toList());
     }

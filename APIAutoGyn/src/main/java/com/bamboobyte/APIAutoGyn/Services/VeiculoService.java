@@ -49,6 +49,7 @@ public class VeiculoService {
         Veiculo veiculo = new Veiculo();
         veiculo.setPlaca(dto.getPlaca());
         veiculo.setAnoFabricacao(dto.getAnoFabricacao());
+        veiculo.setAnoModelo(dto.getAnoModelo());
         veiculo.setKm(dto.getkm());
         veiculo.setModelo(modelo);
         veiculo.setCliente(cliente);

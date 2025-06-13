@@ -22,6 +22,9 @@ public class Veiculo {
     @Column(name = "ano_fabricacao")
     private int anoFabricacao;
 
+    @Column(name = "ano_modelo")
+    private int anoModelo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_modelo")
     private Modelo modelo;
@@ -33,10 +36,11 @@ public class Veiculo {
     public Veiculo() {
     }
 
-    public Veiculo(String placa, int km, int anoFabricacao, Modelo modelo, Cliente cliente) {
+    public Veiculo(String placa, int km, int anoFabricacao, int anoModelo, Modelo modelo, Cliente cliente) {
         this.placa = placa;
         this.km = km;
         this.anoFabricacao = anoFabricacao;
+        this.anoModelo = anoModelo;
         this.modelo = modelo;
         this.cliente = cliente;
     }
@@ -79,6 +83,14 @@ public class Veiculo {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public int getAnoModelo() {
+        return anoModelo;
+    }
+
+    public void setAnoModelo(int anoModelo) {
+        this.anoModelo = anoModelo;
     }
 
 }

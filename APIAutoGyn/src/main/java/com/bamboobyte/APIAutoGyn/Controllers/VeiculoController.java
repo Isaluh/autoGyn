@@ -41,11 +41,16 @@ public class VeiculoController {
     @PostMapping("")
     public ResponseEntity<?> criarVeiculo(@RequestBody CadastrarVeiculoDTO novoVeiculo) {
         List<StatusValidacao> erros = validador.validar(novoVeiculo);
+
         if (!erros.isEmpty()) {
             return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
-
+            
         }
-        veiculoService.criarVeiculo(novoVeiculo);
+        
+        String resposta = veiculoService.criarVeiculo(novoVeiculo);
+        if (resposta == null) {
+            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(resposta)); // utilizando a factory para criar a mensagem de erro 
+        }
         return ResponseEntity.ok("");
     }
 

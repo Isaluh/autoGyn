@@ -4,6 +4,7 @@ public class CadastrarVeiculoDTO {
     private String placa;
     private Long idCliente;
     private Integer anoFabricacao;
+    private Integer anoModelo;
     private Long idModelo;
     private Integer km;
 
@@ -11,7 +12,8 @@ public class CadastrarVeiculoDTO {
     @Override
     public String toString() {
         return "CadastrarVeiculoDTO [placa=" + placa + ", idCliente=" + idCliente + ", anoFabricacao="
-                + anoFabricacao + ", idModelo=" + idModelo + "]";
+                + anoFabricacao + ", anoModelo="
+                + anoModelo + ", idModelo=" + idModelo + "]";
     }
 
     public String getPlaca() {
@@ -54,5 +56,12 @@ public class CadastrarVeiculoDTO {
         this.km = km;
     }
 
+    public Integer getAnoModelo() {
+        return anoModelo;
+    }
+
+    public void setAnoModelo(Integer anoModelo) {
+        this.anoModelo = anoModelo;
+    }
 
 }

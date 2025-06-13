@@ -28,13 +28,15 @@ public class Colaborador {
     @OneToMany(mappedBy = "colaborador", fetch = FetchType.LAZY)
     private List<ItemServico> itensServico;
 
-    public Colaborador(Colaborador colaborador) {}
+    public Colaborador() {
+    }
 
-    public Colaborador(Long id, String cpf, String nome, List<ItemServico> itensServico) {
-        this.id = id;
-        this.cpf = cpf;
-        this.nome = nome;
-        this.itensServico = itensServico;
+    public Colaborador(Colaborador colaborador) {
+        System.out.println(colaborador.getNome());
+        this.id = colaborador.getId(); 
+        this.cpf = colaborador.getCpf();
+        this.nome = colaborador.getNome();
+        this.itensServico = colaborador.getItensServico();
     }
 
     public Long getId() {

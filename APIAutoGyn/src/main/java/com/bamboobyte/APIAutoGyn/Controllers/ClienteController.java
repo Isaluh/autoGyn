@@ -39,7 +39,7 @@ public class ClienteController {
         List<StatusValidacao> erros = validador.validar(dto);
         if (erros.size() > 0) {
             return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
-
+            // fazer isso aparecer no front ([CEP_INVALIDO, UF_INVALIDA, TELEFONE_INVALIDO, TELEFONE_INVALIDO])
         }
         Cliente idCliente = clienteService.salvar(dto);
         if (idCliente == null) {

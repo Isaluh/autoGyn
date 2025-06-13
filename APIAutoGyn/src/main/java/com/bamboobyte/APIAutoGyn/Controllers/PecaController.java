@@ -22,8 +22,8 @@ public class PecaController {
 
     @PostMapping
     public ResponseEntity<String> cadastrarPeca(@RequestBody CadastrarPecaDTO novaPeca) {
-        String response = pecaService.cadastrarPeca(novaPeca);
-        return ResponseEntity.ok(response);
+        pecaService.cadastrarPeca(novaPeca);
+        return ResponseEntity.ok("");
     }
 
     @GetMapping
