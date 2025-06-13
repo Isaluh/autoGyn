@@ -41,7 +41,7 @@ export class GerencOsComponent {
   pecas: Pecas[] = [];
   servicos : Servicos[] = []
   colaboradores : any[] = []
-  os : OrdensServico[] = []
+  ordensListagem : OrdensServico[] = []
 
   servicosSelected : any = []
 
@@ -59,7 +59,7 @@ export class GerencOsComponent {
   
   pegarInfos() {
     this.pecasService.getPecas().subscribe((peca) => this.pecas = peca)
-    this.servicosService.getServicos().subscribe((ser) => {this.servicos = ser; console.log(this.servicos)})
+    this.servicosService.getServicos().subscribe((ser) => this.servicos = ser)
     this.veiculosService.getVeiculos().subscribe((res) => {
       this.veiculosListagem = res.map(v => ({
         id: v.placa,
@@ -70,21 +70,18 @@ export class GerencOsComponent {
   }
 
   pegarOS(){
-    this.osService.getOS().subscribe((ordens) => {this.os = ordens; console.log(this.os)})
+    this.osService.getOS().subscribe((res) => {
+    this.ordensListagem = res.map((os : any) => ({
+      descricao: os.cliente,
+      dados: {
+        'Veículo': os.veiculo,
+        'Data': os.data,
+        'Valor Total': os.valor,
+        'Status': os.status
+      }
+    }))})
   }
-
-  //   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {
-//   this.ordensListagem = res.map(o => ({
-//     descricao: `Ordem ${o.id}`,
-//     dados: {
-//       'Veículo': `${o.veiculo?.modelo?.nome ?? 'Modelo'} - ${o.veiculo?.placa ?? 'Placa'}`,
-//       'Data': this.formatarData(o.data ?? new Date()), // se tiver campo `data`
-//       'Valor Total': o.orcamento != null ? `R$ ${o.orcamento.toFixed(2)}` : '',
-//       'Status': this.definirStatus(o) // se tiver lógica pra status
-//     }
-//   }));
-// });
-
+  
   adicionarServico() {
     const novoServico = { servico: null, colaborador: null };
     this.addOS.servicosColaboradores.push(novoServico)

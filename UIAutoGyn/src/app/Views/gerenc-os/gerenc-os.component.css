@@ -1,7 +1,7 @@
 .pai{
     width: 100%;
     display: grid;
-    grid-template-rows: auto 0.1fr auto;
+    grid-template-rows: 0fr 0.1fr 0fr;
     gap: 30px;
 
     &>div{

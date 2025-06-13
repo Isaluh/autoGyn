@@ -2,22 +2,39 @@
   <h1>{{ titulo }}</h1>
   <ng-container *ngIf="itens.length > 0; else vazio">
     <div class="conteudo">
-      <div *ngFor="let item of itens" class="item">
-        <div class="head">
-          <h2>{{ item.descricao }}</h2>
-          <span class="linhaDois"></span>
-        </div>
+      <ng-container *ngIf="!itemSelecionado">
+        <div *ngFor="let item of itens" class="item" [class]="variant" (click)="selecionarItem(item)">
+          <div class="head">
+            <h2>{{ item.descricao }}</h2>
+            <span class="linhaDois"></span>
+          </div>
 
-        <div class="infos" [ngStyle]="{
-          'display': 'grid',
-          'grid-template-columns': 'repeat(' + campos.length + ', 1fr)'
-        }">
-          <div *ngFor="let c of campos">
-            <p>{{ c }}</p>
-            <h3>{{ item.dados?.[c] }}</h3>
+          <div class="infos" [ngStyle]="{
+            'display': 'grid',
+            'grid-template-columns': 'repeat(' + campos.length + ', 1fr)'
+          }">
+            <div *ngFor="let c of campos">
+              <p>{{ c }}</p>
+              <h3>{{ item.dados?.[c] }}</h3>
+            </div>
           </div>
         </div>
+      </ng-container>
+
+      <div *ngIf="itemSelecionado">
+        <img src="" alt="" (click)="itemSelecionado = null">
+        <ng-container *ngIf="itemSelecionado.dados?.['Status'] == 'Orçamento'">
+          <ButtonsComponent text="Aprovar" />
+          <ButtonsComponent text="Cancelar OS" variant="vermelho" />
+        </ng-container>
+        <ng-container *ngIf="itemSelecionado.dados?.['Status'] == 'Em execução'">
+          <InputsComponent text="Valor do Pagamento" tipoInput="number" idInput="valor" placeholder="200" />
+          <p style="font-size: 14px;">Valor total: {{ itemSelecionado.dados?.['Valor Total'] }}</p>
+          <ButtonsComponent text="Pagar" />
+          <ButtonsComponent text="Cancelar OS" variant="vermelho" />
+        </ng-container>
       </div>
+
     </div>
   </ng-container>
 

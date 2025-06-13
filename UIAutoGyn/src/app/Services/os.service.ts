@@ -11,7 +11,7 @@ export class OsService {
   constructor(private httpClient : HttpClient) {}
 
   getOS(){
-    return this.httpClient.get<OrdensServico[]>(OsService.API_url)
+    return this.httpClient.get<any>(OsService.API_url)
   }
 
   postOS(os : any){

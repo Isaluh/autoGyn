@@ -29,6 +29,16 @@
     padding-right: 10px;
 }
 
+.item{
+    padding: 8px;
+    
+    &.os:hover{
+        cursor: pointer;
+        border-radius: 8px;
+        background-color: var(--meioBranco);
+    }
+}
+
 .head {
     display: grid;
     grid-template-columns: auto 1fr;
