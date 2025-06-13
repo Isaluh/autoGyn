@@ -5,7 +5,7 @@ import java.util.List;
 public class CadastrarOSDTO {
 	private String placa;
 	private List<ColaboradorServicoDTO> servicos;
-	private List<PecaQuantidadeDTO> pecas;
+	private List<PecaDTO> pecas;
 
 	public List<ColaboradorServicoDTO> getServicos() {
 		return servicos;
@@ -15,11 +15,11 @@ public class CadastrarOSDTO {
 		this.servicos = servicos;
 	}
 
-	public List<PecaQuantidadeDTO> getPecas() {
+	public List<PecaDTO> getPecas() {
 		return pecas;
 	}
 
-	public void setPecas(List<PecaQuantidadeDTO> pecas) {
+	public void setPecas(List<PecaDTO> pecas) {
 		this.pecas = pecas;
 	}
 

@@ -1,33 +1,44 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
-import com.bamboobyte.APIAutoGyn.Entities.OS;
-import com.bamboobyte.APIAutoGyn.Repositories.OSRepository;
-import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
-import com.bamboobyte.APIAutoGyn.Entities.ItemPeca;
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
-import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
-import com.bamboobyte.APIAutoGyn.DTO.OrdemServicoListaDTO;
-import com.bamboobyte.APIAutoGyn.Entities.Etapa;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaOSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
+import com.bamboobyte.APIAutoGyn.Entities.Etapa;
+import com.bamboobyte.APIAutoGyn.Entities.ItemPeca;
+import com.bamboobyte.APIAutoGyn.Entities.OS;
+import com.bamboobyte.APIAutoGyn.Repositories.ColaboradorRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.OSRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.ServicoRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
 
 @Service
 public class OSService {
 
     private final OSRepository osRepository;
     private final PecaRepository pecaRepository;
+    private final VeiculoRepository veiculoRepository;
+    private final ServicoRepository servicoRepository;
+    private final ColaboradorRepository colaboradorRepository;
 
-    public OSService(OSRepository osRepository, PecaRepository pecaRepository) {
+    public OSService(OSRepository osRepository, PecaRepository pecaRepository, VeiculoRepository veiculoRepository,
+            ServicoRepository servicoRepository, ColaboradorRepository colaboradorRepository) {
         this.osRepository = osRepository;
         this.pecaRepository = pecaRepository;
+        this.veiculoRepository = veiculoRepository;
+        this.servicoRepository = servicoRepository;
+        this.colaboradorRepository = colaboradorRepository;
     }
 
-    public List<OrdemServicoListaDTO> listarOSCadastradas() {
+    public List<ListaOSDTO> listarOSCadastradas() {
         List<OS> osList = osRepository.findAll();
         return osList.stream()
-                .map(os -> new OrdemServicoListaDTO(os))
+                .map(os -> new ListaOSDTO(os))
                 .collect(Collectors.toList());
     }
 
@@ -38,7 +49,12 @@ public class OSService {
     }
 
     public Long criarOS(CadastrarOSDTO novaOS) {
-        OS os = new OS(novaOS);
+        OS os = new OS(
+                novaOS,
+                veiculoRepository,
+                servicoRepository,
+                colaboradorRepository,
+                pecaRepository);
 
         OS osSalvo = osRepository.save(os);
 

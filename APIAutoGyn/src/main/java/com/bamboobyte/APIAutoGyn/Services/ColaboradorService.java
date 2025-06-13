@@ -62,4 +62,9 @@ public class ColaboradorService {
         }
         colaboradorRepository.deleteById(id);
     }
+
+    public Colaborador buscarPorCpf(String cpf) {
+    return colaboradorRepository.findByCpf(cpf)
+        .orElseThrow(() -> new RuntimeException("Colaborador não encontrado com CPF: " + cpf));
+}
 }

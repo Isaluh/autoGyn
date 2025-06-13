@@ -57,4 +57,19 @@ public class VeiculoService {
 
         return "Veículo cadastrado com sucesso!";
     }
+
+    public VeiculoDTO encontrarPorPlaca(String placa) {
+        Veiculo veiculo = veiculoRepository.findById(placa)
+            .orElseThrow(() -> new RuntimeException("Veículo não encontrado com placa: " + placa));
+
+        return new VeiculoDTO(veiculo);
+    }
+
+    public String deletarVeiculoPorId(String placa) {
+        Veiculo veiculo = veiculoRepository.findById(placa)
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado com id: " + placa));
+
+        veiculoRepository.delete(veiculo);
+        return "Veículo deletado com sucesso!";
+    }
 }

@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaOSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.OSDTO;
-import com.bamboobyte.APIAutoGyn.DTO.OrdemServicoListaDTO;
 import com.bamboobyte.APIAutoGyn.Services.OSService;
-import com.bamboobyte.APIAutoGyn.Validacoes.GatewayValidacao;
-
-import com.bamboobyte.APIAutoGyn.Validacoes.MensagemErroFactory;
-import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 
 @RestController
 @RequestMapping("/OS")
@@ -28,16 +24,14 @@ import com.bamboobyte.APIAutoGyn.Validacoes.StatusValidacao;
 public class OSController {
 
     private final OSService osService;
-    private final GatewayValidacao validador;
 
-    public OSController(OSService osService, GatewayValidacao validador) {
+    public OSController(OSService osService) {
         this.osService = osService;
-        this.validador = validador;
     }
 
     @GetMapping
-    public ResponseEntity<List<OrdemServicoListaDTO>> listarOSCadastradas() {
-        List<OrdemServicoListaDTO> osList = osService.listarOSCadastradas();
+    public ResponseEntity<List<ListaOSDTO>> listarOSCadastradas() {
+        List<ListaOSDTO> osList = osService.listarOSCadastradas();
         return ResponseEntity.ok(osList);
     }
 
@@ -49,11 +43,6 @@ public class OSController {
 
     @PostMapping
     public ResponseEntity<?> criarOS(@RequestBody CadastrarOSDTO novaOS) {
-        List<StatusValidacao> erros = validador.validar(novaOS);
-        if (erros.size() > 0) {
-            return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
-
-        }
         Long idOs = osService.criarOS(novaOS);
         return ResponseEntity.ok(idOs);
     }

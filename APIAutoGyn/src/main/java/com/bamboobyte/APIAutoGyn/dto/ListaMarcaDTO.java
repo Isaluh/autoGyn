@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import com.bamboobyte.APIAutoGyn.Entities.Marca;
 import com.bamboobyte.APIAutoGyn.Entities.Modelo;
 
-public class MarcaListaCadastroDTO {
+public class ListaMarcaDTO {
     public Long id;
     public String nomeMarca;
     public List<String> nomeModelos;
 
-    public MarcaListaCadastroDTO(Marca marca) {
+    public ListaMarcaDTO(Marca marca) {
         this.id = marca.getId(); 
         this.nomeMarca = marca.getNome();
         this.nomeModelos = marca.getModelos()

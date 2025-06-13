@@ -2,7 +2,7 @@ package com.bamboobyte.APIAutoGyn.DTO;
 
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
 
-public class PecaListaDTO {
+public class ListaPecaDTO {
     private Long id;
     private String codigo;
     private String descricao;
@@ -10,11 +10,11 @@ public class PecaListaDTO {
     private int quantidadeEstoque;
     private double valorUnitario;
 
-    public PecaListaDTO() {
+    public ListaPecaDTO() {
 
     }
 
-    public PecaListaDTO(Peca peca) {
+    public ListaPecaDTO(Peca peca) {
         this.id = peca.getId();
         this.codigo = peca.getCodigo();
         this.descricao = peca.getDescricao();

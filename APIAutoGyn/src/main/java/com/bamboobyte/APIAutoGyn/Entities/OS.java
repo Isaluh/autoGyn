@@ -4,6 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ColaboradorServicoDTO;
+import com.bamboobyte.APIAutoGyn.DTO.PecaDTO;
+import com.bamboobyte.APIAutoGyn.Repositories.ColaboradorRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.ServicoRepository;
+import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,7 +51,7 @@ public class OS {
     private Etapa etapa;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "placa") 
+    @JoinColumn(name = "placa")
     private Veiculo veiculo;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -58,7 +64,64 @@ public class OS {
     @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ItemServico> itensServico;
 
-    public OS(CadastrarOSDTO novaOS) {}
+    public OS() {
+    }
+
+    public OS(CadastrarOSDTO dto,
+            VeiculoRepository veiculoRepo,
+            ServicoRepository servicoRepo,
+            ColaboradorRepository colaboradorRepo,
+            PecaRepository pecaRepo) {
+
+        this.veiculo = veiculoRepo.findById(dto.getPlaca())
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado PLACA: " + dto.getPlaca()));
+
+        this.data = new Date();
+        this.etapa = Etapa.ORCAMENTO;
+        this.valorTotal = 0.0;
+
+        for (ColaboradorServicoDTO sDto : dto.getServicos()) {
+            Servico servico = servicoRepo.findById(sDto.getId_servico())
+                    .orElseThrow(() -> new RuntimeException("Serviço não encontrado ID: " + sDto.getId_servico()));
+
+            Colaborador colaborador = colaboradorRepo.findByCpf(sDto.getCpf_colaborador())
+                    .orElseThrow(
+                            () -> new RuntimeException("Colaborador não encontrado CPF: " + sDto.getCpf_colaborador()));
+
+            int qtd = sDto.getQuantidade() != null ? sDto.getQuantidade() : 1;
+
+            ItemServico item = new ItemServico();
+            item.setOs(this);
+            item.setServico(servico);
+            item.setColaborador(colaborador);
+            item.setQuantidade(qtd);
+            item.setValorUnitario(servico.getValor());
+            item.setValorTotal(servico.getValor() * qtd);
+
+            this.itensServico.add(item);
+            this.valorTotal += item.getValorTotal();
+        }
+
+        // Construção das peças
+        for (PecaDTO pDto : dto.getPecas()) {
+            Peca peca = pecaRepo.findById(pDto.getId_peca())
+                    .orElseThrow(() -> new RuntimeException("Peça não encontrada ID: " + pDto.getId_peca()));
+
+            if (peca.getQuantidadeEstoque() < pDto.getQuantidade()) {
+                throw new RuntimeException("Estoque insuficiente para peça ID: " + pDto.getId_peca());
+            }
+
+            ItemPeca item = new ItemPeca();
+            item.setOs(this);
+            item.setPeca(peca);
+            item.setQuantidade(pDto.getQuantidade());
+            item.setValorUnitario(peca.getValorUnitario());
+            item.setValorTotal(peca.getValorUnitario() * pDto.getQuantidade());
+
+            this.itensPeca.add(item);
+            this.valorTotal += item.getValorTotal();
+        }
+    }
 
     public Long getId() {
         return id;
@@ -134,7 +197,9 @@ public class OS {
 
     @Override
     public String toString() {
-        return "OS [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", valorPago=" + valorPago + ", etapa=" + etapa
-                + ", veiculo=" + (veiculo != null ? veiculo.getPlaca() : null) + ", cliente=" + (cliente != null ? cliente.getId() : null) + "]";
+        return "OS [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", valorPago=" + valorPago
+                + ", etapa=" + etapa
+                + ", veiculo=" + (veiculo != null ? veiculo.getPlaca() : null) + ", cliente="
+                + (cliente != null ? cliente.getId() : null) + "]";
     }
 }

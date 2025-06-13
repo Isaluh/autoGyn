@@ -7,7 +7,7 @@ import java.util.Locale;
 
 import com.bamboobyte.APIAutoGyn.Entities.OS;
 
-public class OrdemServicoListaDTO {
+public class ListaOSDTO {
 
     private Long id;
     private String veiculo;
@@ -16,7 +16,7 @@ public class OrdemServicoListaDTO {
     private String status;
     private String cliente;
 
-    public OrdemServicoListaDTO(OS os) {
+    public ListaOSDTO(OS os) {
         this.id = os.getId();
 
         this.veiculo = String.format(

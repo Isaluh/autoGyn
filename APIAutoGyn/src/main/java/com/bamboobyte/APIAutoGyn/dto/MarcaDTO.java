@@ -1,17 +1,17 @@
 package com.bamboobyte.APIAutoGyn.DTO;
 
-import com.bamboobyte.APIAutoGyn.Entities.*;
+import com.bamboobyte.APIAutoGyn.Entities.Marca;
 
-public class MinimalMarcaDTO {
+public class MarcaDTO {
 	private Long id;
 	private String nome;
 
-	public MinimalMarcaDTO(Marca marca) {
+	public MarcaDTO(Marca marca) {
 		this.id = marca.getId();
 		this.nome = marca.getNome();
 	}
 
-	public MinimalMarcaDTO() {
+	public MarcaDTO() {
 
 	}
 

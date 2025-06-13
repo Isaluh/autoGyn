@@ -1,14 +1,14 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarPecaDTO;
-import com.bamboobyte.APIAutoGyn.DTO.PecaListaDTO;
-import com.bamboobyte.APIAutoGyn.Entities.Peca;
-import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import com.bamboobyte.APIAutoGyn.DTO.CadastrarPecaDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaPecaDTO;
+import com.bamboobyte.APIAutoGyn.Entities.Peca;
+import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
 
 @Service
 public class PecaService {
@@ -25,10 +25,10 @@ public class PecaService {
         return "Peça cadastrada com sucesso.";
     }
 
-    public List<PecaListaDTO> listarPecas() {
+    public List<ListaPecaDTO> listarPecas() {
         List<Peca> pecas = pecaRepository.findAll();
         return pecas.stream()
-                .map(PecaListaDTO::new)
+                .map(ListaPecaDTO::new)
                 .collect(Collectors.toList());
     }
 
