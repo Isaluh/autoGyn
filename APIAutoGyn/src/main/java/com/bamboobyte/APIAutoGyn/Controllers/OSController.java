@@ -49,14 +49,8 @@ public class OSController {
     }
 
     @PostMapping("/{id}/aprovar")
-    public ResponseEntity<String> aprovarOS(@PathVariable Long id) {
-        String response = osService.aprovarOS(id);
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/{id}/iniciar-execucao")
-    public ResponseEntity<String> iniciarExecucaoOS(@PathVariable Long id) {
-        String response = osService.iniciarExecucaoOS(id);
+    public ResponseEntity<String> aprovarExecucaoOS(@PathVariable Long id) {
+        String response = osService.aprovarExecucaoOS(id);
         return ResponseEntity.ok(response);
     }
 
