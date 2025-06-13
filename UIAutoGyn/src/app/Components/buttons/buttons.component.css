@@ -12,4 +12,24 @@ button{
     &:hover{
         background-color: var(--pretoHover);
     }
+
+    &.vermelho{
+        background-color: var(--vermelho);
+    }
+
+    &.vermelho:hover{
+        background-color: var(--borda);
+    }
+
+    &.branco{
+        width: fit-content;
+        background-color: var(--branco);
+        border: 1px solid var(--borda);
+        color: var(--preto);
+    }
+
+    &.branco:hover{
+        background-color: var(--meioBranco);
+    }
 }
+

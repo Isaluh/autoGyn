@@ -8,11 +8,13 @@ import { BlocoComponent } from '../../Components/bloco/bloco.component';
 import { SelectsComponent } from '../../Components/selects/selects.component';
 import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
+import { ButtonsComponent } from "../../Components/buttons/buttons.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-veiculos',
   standalone: true,
-  imports: [BaseComponent, ListagemSemCategoriaComponent, BlocoComponent, SelectsComponent, InputsComponent, FormsModule],
+  imports: [BaseComponent, ListagemSemCategoriaComponent, BlocoComponent, SelectsComponent, InputsComponent, FormsModule, ButtonsComponent, CommonModule],
   templateUrl: './veiculos.component.html',
   styleUrl: './veiculos.component.css'
 })
@@ -31,6 +33,8 @@ export class VeiculosComponent {
   marcas : Marcas[] = []
   modelos : Modelos[] = []
   campos : string[] = ['Placa', 'Marca', 'Modelo', 'Ano do Modelo', 'Ano da Fabricação']
+  saiu = false;
+  mostrarTelaInicial = true;
   @ViewChild(SelectsComponent) selectsComponent!: SelectsComponent;
 
   constructor(private veiculosService : VeiculosService, private clienteService: PessoasService){}
@@ -43,6 +47,17 @@ export class VeiculosComponent {
   ngOnInit(){
     this.pegarVeiculos()
     this.pegarInfos()
+    const jaViu = localStorage.getItem('jaViuIntro');
+    this.mostrarTelaInicial = !jaViu;
+  }
+
+  iniciar() {
+    this.saiu = true;
+    localStorage.setItem('jaViuIntro', 'true');
+
+    setTimeout(() => {
+      this.mostrarTelaInicial = false;
+    }, 1000); 
   }
 
   pegarInfos(){

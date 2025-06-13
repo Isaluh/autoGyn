@@ -1,3 +1,45 @@
+.inicial{
+    position: absolute;
+    background-color: black;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & div{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    animation: iniciar 0.5s ease-out forwards;
+}
+
+@keyframes iniciar {
+    0% {
+        transform: translateY(-400px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.inicial.saida {
+  animation: sair 0.5s ease-out forwards;
+}
+
+@keyframes sair {
+    0% {
+    }
+    100% {
+        transform: translateX(-100vw);
+    }
+}
+
 .pai{
     width: 100%;
     display: grid;

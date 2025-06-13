@@ -48,12 +48,17 @@ export interface Colaboradores{
     cpf: number | null
 }
 
-export interface OrdensServico{
-    id: number | null,
-    veiculo: {},
-    servico: Servicos[],
-    peca: Pecas[]
-    orcamento: number | null
+interface ServicoColaborador {
+    servico: Servicos | null;
+    colaborador: Colaboradores | null;
+}
+
+export interface OrdensServico {
+    id: number | null;
+    veiculo: Veiculos;
+    servicosColaboradores: ServicoColaborador[];
+    peca: Pecas[];
+    orcamento: number | null;
 }
 
 export interface Clientes {

@@ -5,9 +5,16 @@
                 <div>
                     <!-- passar os valores -->
                     <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" [opcoes]="veiculosListagem" />
+                    <ButtonsComponent text="Adicionar Serviço" variant="branco" (click)="adicionarServico()"/>
                     <!-- LISTAGEM DE SERVICOS -->
-                    <!-- servicosSelected = $event -->
-                    <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" [opcoes]="servicos" (opcoesSelectedChange)="teste($event)" />
+                    <div class="juntos" *ngFor="let item of addOS.servicosColaboradores let i = index">
+                        <SelectsComponent idSelect="servico" placeholder="Selecione o servico" [opcoes]="servicos" (valorSelecionadoChange)="addOS.servicosColaboradores[i].servico = $event"/>
+                        <!-- verificar se o cpf ta indo -->
+                        <SelectsComponent idSelect="colaborador" placeholder="Selecione o colaborador" [opcoes]="colaboradores" (valorSelecionadoChange)="addOS.servicosColaboradores[i].colaborador = $event"/>
+                        <span class="icon-close" (click)="removerServico(i)">
+                            <img src="fechar.svg" alt="">
+                        </span>
+                    </div>
                 </div>
                 <span class="linha"></span>
                 <div>

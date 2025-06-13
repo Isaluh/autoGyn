@@ -1,3 +1,11 @@
+<div *ngIf="mostrarTelaInicial" class="inicial" [ngClass]="{ 'saida': saiu }">
+  <div>
+    <img src="logo.png" alt="" width="280px" />
+    <ButtonsComponent text="Começar ➜" variant="vermelho" (click)="iniciar()" />
+  </div>
+</div>
+
+
 <BaseLayout [opcoesVeiculo]="true">
     <div class="pai">
         <BlocoComponent titulo="Cadastro de veiculo" descricao="Preencha os dados do veículo para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarVeiculo()">
