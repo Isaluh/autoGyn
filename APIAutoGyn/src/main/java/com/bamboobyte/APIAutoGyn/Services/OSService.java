@@ -127,7 +127,7 @@ public class OSService {
             throw new RuntimeException("Valor pago deve ser maior que zero.");
         }
 
-        os.setValorPago(valorPago);
+        
         os.setEtapa(Etapa.PAGO);
         osRepository.save(os);
         return "Ordem de Serviço paga com sucesso!";

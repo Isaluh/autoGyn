@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import com.bamboobyte.APIAutoGyn.Entities.Cliente;
 import com.bamboobyte.APIAutoGyn.Entities.OS;
 
 public class ListaOSDTO {
@@ -20,9 +21,10 @@ public class ListaOSDTO {
         this.id = os.getId();
 
         this.veiculo = String.format(
-                "%s (%s) %d",
+                "%s (%s)",
                 os.getVeiculo().getModelo().getNome(),
-                os.getVeiculo().getModelo().getMarca().getNome());
+                os.getVeiculo().getModelo().getMarca().getNome()
+        );
 
         Date data = os.getData();
         Calendar cal = Calendar.getInstance();
@@ -32,25 +34,27 @@ public class ListaOSDTO {
                 cal.get(Calendar.MONTH) + 1,
                 cal.get(Calendar.YEAR));
 
-        NumberFormat formatador = NumberFormat.getCurrencyInstance(Locale.of("pt", "BR"));
+        NumberFormat formatador = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         this.valor = formatador.format(os.getValorTotal());
 
-        this.status = os.getEtapa().getDescricao();
+        this.status = os.getEtapa() != null ? os.getEtapa().getDescricao() : "[Etapa indefinida]";
 
-        if (os.getCliente().getPessoaFisica() != null) {
-            this.cliente = String.format(
-                    "[%s] %s",
-                    os.getCliente().getPessoaFisica().getCpf(),
-                    os.getCliente().getNome());
-        } else if (os.getCliente().getPessoaJuridica() != null) {
-            this.cliente = String.format(
-                    "[%s] %s",
-                    os.getCliente().getPessoaJuridica().getCnpj(),
-                    os.getCliente().getNome());
-        } else if (os.getCliente() != null) {
-            this.cliente = os.getCliente().getNome();
+        if (os.getVeiculo() != null && os.getVeiculo().getCliente() != null) {
+            Cliente cliente = os.getVeiculo().getCliente();
+
+            if (cliente.getPessoaFisica() != null) {
+                var pf = cliente.getPessoaFisica();
+                this.cliente = String.format("[%s] %s", pf.getCpf(), cliente.getNome());
+
+            } else if (cliente.getPessoaJuridica() != null) {
+                var pj = cliente.getPessoaJuridica();
+                this.cliente = String.format("[%s] %s", pj.getCnpj(), cliente.getNome());
+
+            } else {
+                this.cliente = cliente.getNome();
+            }
         } else {
-            this.cliente = "[Cliente não encontrado]";
+            this.cliente = "[Cliente não vinculado ao veículo]";
         }
 
         this.cliente = String.format("(%d) %s", os.getId(), this.cliente);

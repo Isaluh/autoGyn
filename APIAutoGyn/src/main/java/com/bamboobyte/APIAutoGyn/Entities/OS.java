@@ -1,11 +1,11 @@
 package com.bamboobyte.APIAutoGyn.Entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.ColaboradorServicoDTO;
-import com.bamboobyte.APIAutoGyn.DTO.PecaDTO;
 import com.bamboobyte.APIAutoGyn.Repositories.ColaboradorRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.ServicoRepository;
@@ -43,9 +43,6 @@ public class OS {
     @Column(name = "valor_total")
     private double valorTotal;
 
-    @Column(name = "valor_pago")
-    private double valorPago;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "etapa")
     private Etapa etapa;
@@ -54,15 +51,11 @@ public class OS {
     @JoinColumn(name = "placa")
     private Veiculo veiculo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
+    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemPeca> itensPeca = new ArrayList<>();
 
-    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ItemPeca> itensPeca;
-
-    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<ItemServico> itensServico;
+    @OneToMany(mappedBy = "os", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemServico> itensServico = new ArrayList<>();
 
     public OS() {
     }
@@ -73,50 +66,46 @@ public class OS {
             ColaboradorRepository colaboradorRepo,
             PecaRepository pecaRepo) {
 
-        this.veiculo = veiculoRepo.findById(dto.getPlaca())
-                .orElseThrow(() -> new RuntimeException("Veículo não encontrado PLACA: " + dto.getPlaca()));
-
         this.data = new Date();
         this.etapa = Etapa.ORCAMENTO;
         this.valorTotal = 0.0;
 
-        for (ColaboradorServicoDTO sDto : dto.getServicos()) {
-            Servico servico = servicoRepo.findById(sDto.getId_servico())
-                    .orElseThrow(() -> new RuntimeException("Serviço não encontrado ID: " + sDto.getId_servico()));
+        this.veiculo = veiculoRepo.findById(dto.getVeiculo())
+                .orElseThrow(() -> new RuntimeException("Veículo não encontrado: " + dto.getVeiculo()));
 
-            Colaborador colaborador = colaboradorRepo.findByCpf(sDto.getCpf_colaborador())
-                    .orElseThrow(
-                            () -> new RuntimeException("Colaborador não encontrado CPF: " + sDto.getCpf_colaborador()));
+        for (ColaboradorServicoDTO sDto : dto.getServicosColaboradores()) {
+            var servico = servicoRepo.findById(sDto.getServico())
+                    .orElseThrow(() -> new RuntimeException("Serviço não encontrado: " + sDto.getServico()));
 
-            int qtd = sDto.getQuantidade() != null ? sDto.getQuantidade() : 1;
+            var colaborador = colaboradorRepo.findByCpf(sDto.getColaborador())
+                    .orElseThrow(() -> new RuntimeException("Colaborador não encontrado: " + sDto.getColaborador()));
 
-            ItemServico item = new ItemServico();
+            var item = new ItemServico();
             item.setOs(this);
             item.setServico(servico);
             item.setColaborador(colaborador);
-            item.setQuantidade(qtd);
+            item.setQuantidade(1);
             item.setValorUnitario(servico.getValor());
-            item.setValorTotal(servico.getValor() * qtd);
+            item.setValorTotal(servico.getValor());
 
             this.itensServico.add(item);
             this.valorTotal += item.getValorTotal();
         }
 
-        // Construção das peças
-        for (PecaDTO pDto : dto.getPecas()) {
-            Peca peca = pecaRepo.findById(pDto.getId_peca())
-                    .orElseThrow(() -> new RuntimeException("Peça não encontrada ID: " + pDto.getId_peca()));
+        for (Long idPeca : dto.getPeca()) {
+            var peca = pecaRepo.findById(idPeca)
+                    .orElseThrow(() -> new RuntimeException("Peça não encontrada ID: " + idPeca));
 
-            if (peca.getQuantidadeEstoque() < pDto.getQuantidade()) {
-                throw new RuntimeException("Estoque insuficiente para peça ID: " + pDto.getId_peca());
+            if (peca.getQuantidadeEstoque() <= 0) {
+                throw new RuntimeException("Estoque insuficiente para peça ID: " + idPeca);
             }
 
-            ItemPeca item = new ItemPeca();
+            var item = new ItemPeca();
             item.setOs(this);
             item.setPeca(peca);
-            item.setQuantidade(pDto.getQuantidade());
+            item.setQuantidade(1);
             item.setValorUnitario(peca.getValorUnitario());
-            item.setValorTotal(peca.getValorUnitario() * pDto.getQuantidade());
+            item.setValorTotal(peca.getValorUnitario());
 
             this.itensPeca.add(item);
             this.valorTotal += item.getValorTotal();
@@ -127,79 +116,55 @@ public class OS {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Date getData() {
         return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
     }
 
     public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public double getValorPago() {
-        return valorPago;
-    }
-
-    public void setValorPago(double valorPago) {
-        this.valorPago = valorPago;
-    }
-
     public Etapa getEtapa() {
         return etapa;
-    }
-
-    public void setEtapa(Etapa etapa) {
-        this.etapa = etapa;
     }
 
     public Veiculo getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
     public List<ItemPeca> getItensPeca() {
         return itensPeca;
-    }
-
-    public void setItensPeca(List<ItemPeca> itensPeca) {
-        this.itensPeca = itensPeca;
     }
 
     public List<ItemServico> getItensServico() {
         return itensServico;
     }
 
-    public void setItensServico(List<ItemServico> itensServico) {
-        this.itensServico = itensServico;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "OS [id=" + id + ", data=" + data + ", valorTotal=" + valorTotal + ", valorPago=" + valorPago
-                + ", etapa=" + etapa
-                + ", veiculo=" + (veiculo != null ? veiculo.getPlaca() : null) + ", cliente="
-                + (cliente != null ? cliente.getId() : null) + "]";
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public void setEtapa(Etapa etapa) {
+        this.etapa = etapa;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    public void setItensPeca(List<ItemPeca> itensPeca) {
+        this.itensPeca = itensPeca;
+    }
+
+    public void setItensServico(List<ItemServico> itensServico) {
+        this.itensServico = itensServico;
     }
 }

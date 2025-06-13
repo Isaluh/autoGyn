@@ -22,12 +22,12 @@ public class ItemPeca {
     @Column(name = "quantidade", nullable = false)
     private int quantidade;
 
-    @Column(name = "valor_total")
+    @Column(name = "valor_unitario", nullable = false)
+    private double valorUnitario;
+
+    @Column(name = "valor_total", nullable = false)
     private double valorTotal;
 
-    @Column(name = "valor_unitario")
-    private double valorUnitario;
-	
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_os", nullable = false)
     private OS os;
@@ -54,20 +54,20 @@ public class ItemPeca {
         this.quantidade = quantidade;
     }
 
-    public double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
     public double getValorUnitario() {
         return valorUnitario;
     }
 
     public void setValorUnitario(double valorUnitario) {
         this.valorUnitario = valorUnitario;
+    }
+
+    public double getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public OS getOs() {
@@ -88,7 +88,11 @@ public class ItemPeca {
 
     @Override
     public String toString() {
-        return "ItemPeca [id=" + id + ", quantidade=" + quantidade + ", valorTotal=" + valorTotal + ", valorUnitario=" + valorUnitario
-                + ", os=" + (os != null ? os.getId() : null) + ", peca=" + (peca != null ? peca.getId() : null) + "]";
+        return "ItemPeca [id=" + id +
+               ", quantidade=" + quantidade +
+               ", valorUnitario=" + valorUnitario +
+               ", valorTotal=" + valorTotal +
+               ", os=" + (os != null ? os.getId() : null) +
+               ", peca=" + (peca != null ? peca.getId() : null) + "]";
     }
 }

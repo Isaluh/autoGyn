@@ -9,6 +9,7 @@ import com.bamboobyte.APIAutoGyn.Entities.ItemServico;
 import com.bamboobyte.APIAutoGyn.Entities.Servico;
 
 public class ServicoOSDTO {
+
     private Long id;
     private String nome;
     private Boolean terminado;
@@ -16,21 +17,30 @@ public class ServicoOSDTO {
     private String fim;
     private String responsavel;
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
     public ServicoOSDTO() {}
 
     public ServicoOSDTO(ItemServico itemServico) {
         Servico servico = itemServico.getServico();
+
         this.id = servico.getId();
         this.nome = servico.getDescricao();
         this.terminado = itemServico.getDataFim() != null;
-        this.inicio = itemServico.getDataInicio() != null ? convertDateToLocalDate(itemServico.getDataInicio()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : null;
-        this.fim = itemServico.getDataFim() != null ? convertDateToLocalDate(itemServico.getDataFim()).format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) : null;
-        this.responsavel = itemServico.getColaborador() != null ? itemServico.getColaborador().getNome() : "Responsável não informado";
+        this.inicio = formatDate(itemServico.getDataInicio());
+        this.fim = formatDate(itemServico.getDataFim());
+
+        this.responsavel = itemServico.getColaborador() != null
+                ? itemServico.getColaborador().getNome()
+                : "Responsável não informado";
     }
 
-    private LocalDate convertDateToLocalDate(java.util.Date date) {
-        Instant instant = date.toInstant();
-        return instant.atZone(ZoneId.systemDefault()).toLocalDate();
+    private String formatDate(java.util.Date date) {
+        if (date == null) return null;
+        LocalDate localDate = Instant.ofEpochMilli(date.getTime())
+                                     .atZone(ZoneId.systemDefault())
+                                     .toLocalDate();
+        return FORMATTER.format(localDate);
     }
 
     public Long getId() {
@@ -83,7 +93,13 @@ public class ServicoOSDTO {
 
     @Override
     public String toString() {
-        return "ServicoOSDTO [id=" + id + ", nome=" + nome + ", terminado=" + terminado + ", inicio=" + inicio
-                + ", fim=" + fim + ", responsavel=" + responsavel + "]";
+        return "ServicoOSDTO{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", terminado=" + terminado +
+                ", inicio='" + inicio + '\'' +
+                ", fim='" + fim + '\'' +
+                ", responsavel='" + responsavel + '\'' +
+                '}';
     }
 }

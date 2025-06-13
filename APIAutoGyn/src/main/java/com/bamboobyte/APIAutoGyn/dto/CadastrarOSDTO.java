@@ -3,32 +3,40 @@ package com.bamboobyte.APIAutoGyn.DTO;
 import java.util.List;
 
 public class CadastrarOSDTO {
-	private String placa;
-	private List<ColaboradorServicoDTO> servicos;
-	private List<PecaDTO> pecas;
+    private String veiculo;
+    private String orcamento;
+    private List<Long> peca;
+    private List<ColaboradorServicoDTO> servicosColaboradores;
 
-	public List<ColaboradorServicoDTO> getServicos() {
-		return servicos;
-	}
+    public String getVeiculo() {
+        return veiculo;
+    }
 
-	public void setServicos(List<ColaboradorServicoDTO> servicos) {
-		this.servicos = servicos;
-	}
+    public void setVeiculo(String veiculo) {
+        this.veiculo = veiculo;
+    }
 
-	public List<PecaDTO> getPecas() {
-		return pecas;
-	}
+    public String getOrcamento() {
+        return orcamento;
+    }
 
-	public void setPecas(List<PecaDTO> pecas) {
-		this.pecas = pecas;
-	}
+    public void setOrcamento(String orcamento) {
+        this.orcamento = orcamento;
+    }
 
-	public String getPlaca() {
-		return placa;
-	}
+    public List<Long> getPeca() {
+        return peca;
+    }
 
-	public void setPlaca(String placa) {
-		this.placa = placa;
-	}
+    public void setPeca(List<Long> peca) {
+        this.peca = peca;
+    }
 
+    public List<ColaboradorServicoDTO> getServicosColaboradores() {
+        return servicosColaboradores;
+    }
+
+    public void setServicosColaboradores(List<ColaboradorServicoDTO> servicosColaboradores) {
+        this.servicosColaboradores = servicosColaboradores;
+    }
 }
