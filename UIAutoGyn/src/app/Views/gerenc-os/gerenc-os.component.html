@@ -3,13 +3,10 @@
         <BlocoComponent titulo="Cadastrar ordem de serviço" descricao="Preencha os dados da OS para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarOS()">
             <div class="conteudo">
                 <div>
-                    <!-- passar os valores -->
-                    <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" [opcoes]="veiculosListagem" />
+                    <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" [opcoes]="veiculosListagem" (valorSelecionadoChange)="addOS.veiculo = $event" />
                     <ButtonsComponent text="Adicionar Serviço" variant="branco" (click)="adicionarServico()"/>
-                    <!-- LISTAGEM DE SERVICOS -->
                     <div class="juntos" *ngFor="let item of addOS.servicosColaboradores let i = index">
                         <SelectsComponent idSelect="servico" placeholder="Selecione o servico" [opcoes]="servicos" (valorSelecionadoChange)="addOS.servicosColaboradores[i].servico = $event"/>
-                        <!-- verificar se o cpf ta indo -->
                         <SelectsComponent idSelect="colaborador" placeholder="Selecione o colaborador" [opcoes]="colaboradores" (valorSelecionadoChange)="addOS.servicosColaboradores[i].colaborador = $event"/>
                         <span class="icon-close" (click)="removerServico(i)">
                             <img src="fechar.svg" alt="">
@@ -18,8 +15,7 @@
                 </div>
                 <span class="linha"></span>
                 <div>
-                    <!-- LISTAGEM DE PECAS -->
-                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" [opcoes]="pecas" />
+                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" [opcoes]="pecas" (opcoesSelectedChange)="addOS.peca = $event" />
                     <InputsComponent text="Valor do Orçamento" tipoInput="number" idInput="valor" placeholder="1200" [(ngModel)]="addOS.orcamento" />            
                 </div>
             </div>

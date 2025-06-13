@@ -7,10 +7,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarVeiculoDTO;
-import com.bamboobyte.APIAutoGyn.DTO.ColaboradorServicoDTO;
-import com.bamboobyte.APIAutoGyn.DTO.PecaQuantidadeDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Colaborador;
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
 import com.bamboobyte.APIAutoGyn.Entities.Servico;
@@ -75,62 +72,62 @@ public class GatewayValidacao {
         return erros;
     }
 
-    public List<StatusValidacao> validar(CadastrarOSDTO novaOS) {
-        List<StatusValidacao> erros = new LinkedList<>();
+    // // public List<StatusValidacao> validar(CadastrarOSDTO novaOS) {
+    // //     List<StatusValidacao> erros = new LinkedList<>();
 
-        Veiculo veiculo = findVeiculoByPlaca(novaOS.getPlaca());
-        if (veiculo == null) {
-            erros.add(StatusValidacao.VEICULO_NAO_ENCONTRADO);
-        }
+    // //     Veiculo veiculo = findVeiculoByPlaca(novaOS.getPlaca());
+    // //     if (veiculo == null) {
+    // //         erros.add(StatusValidacao.VEICULO_NAO_ENCONTRADO);
+    // //     }
 
-        for (ColaboradorServicoDTO colaboradorServico : novaOS.getServicos()) {
-            if (colaboradorServico.getQuantidade() == null) {
-                erros.add(StatusValidacao.QUANTIDADE_SERVICO_NULA);
-            } else if (colaboradorServico.getQuantidade() <= 0) {
-                erros.add(StatusValidacao.QUANTIDADE_SERVICO_NEGATIVA);
-            }
+    // //     for (ColaboradorServicoDTO colaboradorServico : novaOS.getServicos()) {
+    // //         if (colaboradorServico.getQuantidade() == null) {
+    // //             erros.add(StatusValidacao.QUANTIDADE_SERVICO_NULA);
+    // //         } else if (colaboradorServico.getQuantidade() <= 0) {
+    // //             erros.add(StatusValidacao.QUANTIDADE_SERVICO_NEGATIVA);
+    // //         }
 
-            if (colaboradorServico.getCpf_colaborador() == null) {
-                erros.add(StatusValidacao.SEM_CPF_COLABORADOR);
-            } else {
-                Colaborador colaborador = findColaboradorByCpf(colaboradorServico.getCpf_colaborador());
-                if (colaborador == null) {
-                    erros.add(StatusValidacao.COLABORADOR_NAO_ENCONTRADO);
-                }
-            }
+    // //         if (colaboradorServico.getCpf_colaborador() == null) {
+    // //             erros.add(StatusValidacao.SEM_CPF_COLABORADOR);
+    // //         } else {
+    // //             Colaborador colaborador = findColaboradorByCpf(colaboradorServico.getCpf_colaborador());
+    // //             if (colaborador == null) {
+    // //                 erros.add(StatusValidacao.COLABORADOR_NAO_ENCONTRADO);
+    // //             }
+    // //         }
 
-            if (colaboradorServico.getId_servico() == null) {
-                erros.add(StatusValidacao.SEM_ID_SERVICO);
-            } else {
-                Servico servico = findServicoById(colaboradorServico.getId_servico());
-                if (servico == null) {
-                    erros.add(StatusValidacao.SERVICO_NAO_ENCONTRADO);
-                }
-            }
-        }
+    // //         if (colaboradorServico.getId_servico() == null) {
+    // //             erros.add(StatusValidacao.SEM_ID_SERVICO);
+    // //         } else {
+    // //             Servico servico = findServicoById(colaboradorServico.getId_servico());
+    // //             if (servico == null) {
+    // //                 erros.add(StatusValidacao.SERVICO_NAO_ENCONTRADO);
+    // //             }
+    // //         }
+    // //     }
 
-        for (PecaQuantidadeDTO pecaQuantidade : novaOS.getPecas()) {
-            if (pecaQuantidade.getQuantidade() == null) {
-                erros.add(StatusValidacao.QUANTIDADE_PECAS_NULA);
-            } else if (pecaQuantidade.getQuantidade() <= 0) {
-                erros.add(StatusValidacao.QUANTIDADE_PECAS_NEGATIVA);
-            }
+    //     for (PecaQuantidadeDTO pecaQuantidade : novaOS.getPecas()) {
+    //         if (pecaQuantidade.getQuantidade() == null) {
+    //             erros.add(StatusValidacao.QUANTIDADE_PECAS_NULA);
+    //         } else if (pecaQuantidade.getQuantidade() <= 0) {
+    //             erros.add(StatusValidacao.QUANTIDADE_PECAS_NEGATIVA);
+    //         }
 
-            if (pecaQuantidade.getId_peca() == null) {
-                erros.add(StatusValidacao.SEM_ID_PECA);
-            } else {
-                Peca peca = findPecaById(pecaQuantidade.getId_peca());
-                if (peca == null) {
-                    erros.add(StatusValidacao.PECA_NAO_ENCONTRADA);
-                } else if (peca.getQuantidadeEstoque() < pecaQuantidade.getQuantidade()) {
-                    erros.add(StatusValidacao.SEM_ESTOQUE);
-                }
-            }
-        }
+    //         if (pecaQuantidade.getId_peca() == null) {
+    //             erros.add(StatusValidacao.SEM_ID_PECA);
+    //         } else {
+    //             Peca peca = findPecaById(pecaQuantidade.getId_peca());
+    //             if (peca == null) {
+    //                 erros.add(StatusValidacao.PECA_NAO_ENCONTRADA);
+    //             } else if (peca.getQuantidadeEstoque() < pecaQuantidade.getQuantidade()) {
+    //                 erros.add(StatusValidacao.SEM_ESTOQUE);
+    //             }
+    //         }
+    //     }
 
-        removerNulos(erros);
-        return erros;
-    }
+    //     removerNulos(erros);
+    //     return erros;
+    // }
 
     private Veiculo findVeiculoByPlaca(String placa) {
         return veiculos.stream().filter(v -> v.getPlaca().equals(placa)).findFirst().orElse(null);

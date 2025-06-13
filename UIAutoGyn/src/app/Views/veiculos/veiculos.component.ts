@@ -47,6 +47,7 @@ export class VeiculosComponent {
   ngOnInit(){
     this.pegarVeiculos()
     this.pegarInfos()
+    // localStorage is not defined
     const jaViu = localStorage.getItem('jaViuIntro');
     this.mostrarTelaInicial = !jaViu;
   }

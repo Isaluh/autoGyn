@@ -1,19 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { OrdensServico } from '../Models/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OsService {
-  public static API_url: string = "http://localhost:8080/";
+  public static API_url: string = "http://localhost:8080/OS";
   
   constructor(private httpClient : HttpClient) {}
 
-  // getMarcas(){
-  //   return this.httpClient.get<Marcas[]>(VeiculosService.API_url + 'marcas')
-  // }
+  getOS(){
+    return this.httpClient.get<OrdensServico[]>(OsService.API_url)
+  }
 
-  // postMarca(marca : Marcas){
-  //   return this.httpClient.post<Marcas>(VeiculosService.API_url + 'marcas', marca)
-  // }
+  postOS(os : any){
+    return this.httpClient.post<OrdensServico>(OsService.API_url, os)
+  }
 }

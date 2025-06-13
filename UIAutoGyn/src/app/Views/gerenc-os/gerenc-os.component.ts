@@ -13,6 +13,7 @@ import { VeiculosService } from '../../Services/veiculos.service';
 import { ButtonsComponent } from "../../Components/buttons/buttons.component";
 import { PessoasService } from '../../Services/pessoas.service';
 import { NgFor } from '@angular/common';
+import { OsService } from '../../Services/os.service';
 
 @Component({
   selector: 'app-gerenc-os',
@@ -40,6 +41,7 @@ export class GerencOsComponent {
   pecas: Pecas[] = [];
   servicos : Servicos[] = []
   colaboradores : any[] = []
+  os : OrdensServico[] = []
 
   servicosSelected : any = []
 
@@ -48,10 +50,11 @@ export class GerencOsComponent {
   veiculosListagem : any = [];
 
 
-  constructor(private pecasService: PecasService, private servicosService : ServicosService, private veiculosService : VeiculosService, private pessoasServico : PessoasService) {}
+  constructor(private pecasService: PecasService, private servicosService : ServicosService, private veiculosService : VeiculosService, private pessoasServico : PessoasService, private osService : OsService) {}
     
   ngOnInit() {
     this.pegarInfos();
+    this.pegarOS()
   }
   
   pegarInfos() {
@@ -66,17 +69,11 @@ export class GerencOsComponent {
     this.pessoasServico.getColaboradores().subscribe((colab) => this.colaboradores = colab)
   }
 
-  adicionarServico() {
-    const novoServico = { servico: null, colaborador: null };
-    this.addOS.servicosColaboradores.push(novoServico)
-    console.log(this.addOS)
+  pegarOS(){
+    this.osService.getOS().subscribe((ordens) => {this.os = ordens; console.log(this.os)})
   }
 
-  removerServico(index: number) {
-    this.addOS.servicosColaboradores.splice(index, 1);
-  }
-
-//   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {
+  //   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {
 //   this.ordensListagem = res.map(o => ({
 //     descricao: `Ordem ${o.id}`,
 //     dados: {
@@ -88,12 +85,46 @@ export class GerencOsComponent {
 //   }));
 // });
 
-  cadastrarOS(){
-    // add OS
+  adicionarServico() {
+    const novoServico = { servico: null, colaborador: null };
+    this.addOS.servicosColaboradores.push(novoServico)
   }
 
-  teste(sv : any){
-    this.servicosSelected = sv
-    console.log(this.servicosSelected)
+  removerServico(index: number) {
+    this.addOS.servicosColaboradores.splice(index, 1);
+  }
+
+  cadastrarOS() {
+    const osParaEnviar = {
+      ...this.addOS,
+      peca: this.addOS.peca.map(p => p.id)
+    };
+
+    this.osService.postOS(osParaEnviar).subscribe({
+      next: res => {
+        alert('OS cadastrada com sucesso!');
+        this.addOS = {
+          id: null,
+          veiculo: {
+            id: null,
+            placa: '',
+            idCliente: null,
+            anoFabricacao: null,
+            anoModelo: null,
+            idModelo: null,
+            km: null
+          },
+          servicosColaboradores: [],
+          peca: [],
+          orcamento: null
+        };
+
+        this.pegarOS();
+      },
+      error: err => {
+        const mensagem = err.error?.message || 'Erro inesperado ao cadastrar OS.';
+        alert(mensagem);
+      }
+    });
   }
 }

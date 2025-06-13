@@ -1,7 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Controllers;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarPecaDTO;
-import com.bamboobyte.APIAutoGyn.DTO.PecaListaDTO;
+import com.bamboobyte.APIAutoGyn.DTO.ListaPecaDTO;
 import com.bamboobyte.APIAutoGyn.Entities.Peca;
 import com.bamboobyte.APIAutoGyn.Services.PecaService;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,8 @@ public class PecaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PecaListaDTO>> listarPecas() {
-        List<PecaListaDTO> pecas = pecaService.listarPecas();
+    public ResponseEntity<List<ListaPecaDTO>> listarPecas() {
+        List<ListaPecaDTO> pecas = pecaService.listarPecas();
         return ResponseEntity.ok(pecas);
     }
 

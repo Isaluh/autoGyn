@@ -25,6 +25,7 @@ export class SelectsMultiploComponent {
     } else {
       this.opcoesSelected.splice(index, 1);
     }
+    console.log(this.opcoesSelected)
     this.opcoesSelectedChange.emit(this.opcoesSelected);
   }
 }

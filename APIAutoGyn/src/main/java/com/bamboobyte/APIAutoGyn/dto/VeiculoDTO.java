@@ -9,7 +9,7 @@ public class VeiculoDTO {
     private int anoModelo;
 
     private ModeloDTO modelo;
-    private MinimalMarcaDTO marca;
+    private MarcaDTO marca;
     private ListaClienteDTO proprietario;
 
     public VeiculoDTO(Veiculo veiculo) {
@@ -19,7 +19,7 @@ public class VeiculoDTO {
         this.anoModelo = veiculo.getAnoModelo();
 
         this.modelo = new ModeloDTO(veiculo.getModelo());
-        this.marca = new MinimalMarcaDTO(veiculo.getModelo().getMarca());
+        this.marca = new MarcaDTO(veiculo.getModelo().getMarca());
 
         Cliente cliente = veiculo.getCliente();
         if (cliente != null) {
@@ -77,11 +77,11 @@ public class VeiculoDTO {
         this.modelo = modelo;
     }
 
-    public MinimalMarcaDTO getMarca() {
+    public MarcaDTO getMarca() {
         return marca;
     }
 
-    public void setMarca(MinimalMarcaDTO marca) {
+    public void setMarca(MarcaDTO marca) {
         this.marca = marca;
     }
 

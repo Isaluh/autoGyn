@@ -1,6 +1,6 @@
 package com.bamboobyte.APIAutoGyn.DTO;
 
-public class PecaQuantidadeDTO {
+public class PecaDTO {
     private Long id_peca;
     private Integer quantidade;
 
