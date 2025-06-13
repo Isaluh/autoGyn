@@ -9,6 +9,7 @@ import { SelectsMultiploComponent } from '../../Components/selects-multiplo/sele
 import { ListagemSemCategoriaComponent } from '../../Components/listagem-sem-categoria/listagem-sem-categoria.component';
 import { PecasService } from '../../Services/pecas.service';
 import { ServicosService } from '../../Services/servicos.service';
+import { VeiculosService } from '../../Services/veiculos.service';
 
 @Component({
   selector: 'app-gerenc-os',
@@ -20,7 +21,7 @@ import { ServicosService } from '../../Services/servicos.service';
 export class GerencOsComponent {
   addOS : OrdensServico = {
     id: null,
-    veiculo: {},
+    veiculo: '',
     servico: [],
     peca: [],
     orcamento: null
@@ -28,9 +29,14 @@ export class GerencOsComponent {
   pecas: Pecas[] = [];
   servicos : Servicos[] = []
 
+  servicosSelected : any = []
+
   campos : string[] = ['Veículo', 'Data', 'Valor Total', 'Status']
 
-  constructor(private pecasService: PecasService, private servicosService : ServicosService) {}
+  veiculosListagem : any = [];
+
+
+  constructor(private pecasService: PecasService, private servicosService : ServicosService, private veiculosService : VeiculosService) {}
     
   ngOnInit() {
     this.pegarInfos();
@@ -39,6 +45,13 @@ export class GerencOsComponent {
   pegarInfos() {
     this.pecasService.getPecas().subscribe((peca) => this.pecas = peca)
     this.servicosService.getServicos().subscribe((ser) => this.servicos = ser)
+    this.veiculosService.getVeiculos().subscribe((res) => {
+      this.veiculosListagem = res.map(v => ({
+        id: v.placa,
+        nomeFormatado: `${v.proprietario?.nomeFormatado ?? 'Desconhecido'} - ${v.placa}`
+      }
+    ));
+    });
   }
 
 //   this.ordemService.getTodas().subscribe((res: OrdensServico[]) => {
@@ -55,5 +68,10 @@ export class GerencOsComponent {
 
   cadastrarOS(){
     // add OS
+  }
+
+  teste(sv : any){
+    this.servicosSelected = sv
+    console.log(this.servicosSelected)
   }
 }

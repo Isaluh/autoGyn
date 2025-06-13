@@ -4,9 +4,10 @@
             <div class="conteudo">
                 <div>
                     <!-- passar os valores -->
-                    <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" />
+                    <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" [opcoes]="veiculosListagem" />
                     <!-- LISTAGEM DE SERVICOS -->
-                    <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" [opcoes]="servicos" />
+                    <!-- servicosSelected = $event -->
+                    <SelectsMultiploComponent idSelect="servicos" placeholder="Selecione os serviços" tipo="Serviços" [opcoes]="servicos" (opcoesSelectedChange)="teste($event)" />
                 </div>
                 <span class="linha"></span>
                 <div>

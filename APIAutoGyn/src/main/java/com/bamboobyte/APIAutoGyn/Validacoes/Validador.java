@@ -5,6 +5,7 @@ import java.text.StringCharacterIterator;
 import java.util.regex.Pattern;
 
 //Singleton que centraliza validações de entrada de dados.
+// 1.1 - Linguagens Formais e Autômatos e Compiladores
 
 class Validador {
 
@@ -114,7 +115,6 @@ class Validador {
         return null;
     }
 
-    // 1.1 - Linguagens Formais e Autômatos e Compiladores
     public StatusValidacao validaEmail(String email) {
         if (email == null)
             return StatusValidacao.EMAIL_INVALIDO;

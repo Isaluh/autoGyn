@@ -30,16 +30,15 @@ export class VeiculosComponent {
   clientes : Clientes[] = []
   marcas : Marcas[] = []
   modelos : Modelos[] = []
-  campos : string[] = ['Placas', 'Marca', 'Modelo', 'Ano do Modelo', 'Ano da Fabricação']
+  campos : string[] = ['Placa', 'Marca', 'Modelo', 'Ano do Modelo', 'Ano da Fabricação']
   @ViewChild(SelectsComponent) selectsComponent!: SelectsComponent;
 
   constructor(private veiculosService : VeiculosService, private clienteService: PessoasService){}
 
   veiculosListagem: {
     descricao: string;
-    dados: { [key: string]: string | number }
+    dados: { [key: string]: string | number | null }
   }[] = [];
-
 
   ngOnInit(){
     this.pegarVeiculos()
@@ -53,18 +52,17 @@ export class VeiculosComponent {
 
   pegarVeiculos() {
     this.veiculosService.getVeiculos().subscribe((res) => {
-      console.log(res)
-      // tenho q pegar o cliente e a marca pelo modelo (falta passar pelo DTO)
-      // this.veiculosListagem = res.map(v => ({
-      //   descricao: v.proprietario?.nomeFormatado ?? 'Desconhecido',
-      //   dados: {
-      //     'Placa': v.placa,
-      //     'Marca': v.marca?.nome ?? '',
-      //     'Modelo': v.modelo?.nome ?? '',
-      //     'Ano do Modelo': v.anoModelo,
-      //     'Ano da Fabricação': v.anoFabricacao
-      //   }
-      // }));
+      this.veiculosListagem = res.map(v => ({
+        descricao: v.proprietario?.nomeFormatado ?? 'Desconhecido',
+        dados: {
+          'Placa': v.placa,
+          'Marca': v.marca?.nome ?? '',
+          'Modelo': v.modelo?.nome ?? '',
+          'Ano do Modelo': v.anoModelo,
+          'Ano da Fabricação': v.anoFabricacao
+        }
+      }));
+      console.log(this.veiculosListagem)
     });
   }
 

@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.springframework.stereotype.Component;
 
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarClienteDTO;
-import com.bamboobyte.APIAutoGyn.DTO.CadastrarColaboradorDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarOSDTO;
 import com.bamboobyte.APIAutoGyn.DTO.CadastrarVeiculoDTO;
 import com.bamboobyte.APIAutoGyn.DTO.ColaboradorServicoDTO;

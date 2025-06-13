@@ -35,6 +35,6 @@ export class VeiculosService {
   }
 
   getVeiculos(){
-    return this.httpClient.get<Veiculos[]>(VeiculosService.API_url + 'veiculos')
+    return this.httpClient.get<any[]>(VeiculosService.API_url + 'veiculos')
   }
 }
