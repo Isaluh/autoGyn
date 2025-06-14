@@ -38,7 +38,7 @@ public class OSService {
     public List<ListaOSDTO> listarOSCadastradas() {
         List<OS> osList = osRepository.findAll();
         return osList.stream()
-                .map(os -> new ListaOSDTO(os))
+                .map(ListaOSDTO::new)
                 .collect(Collectors.toList());
     }
 
@@ -55,8 +55,15 @@ public class OSService {
                 servicoRepository,
                 colaboradorRepository,
                 pecaRepository);
-
+        System.out.println(os.getVeiculo());
+        System.out.println(os.getValorTotal());
+        System.out.println(os.getId());
+        System.out.println(os.getData());
+        System.out.println(os.getEtapa());
+        System.out.println(os.getItensPeca());
+        System.out.println(os.getItensServico());
         OS osSalvo = osRepository.save(os);
+        System.out.println(osSalvo.toString());
 
         if (osSalvo != null) {
             retirarEstoque(osSalvo);
@@ -79,30 +86,12 @@ public class OSService {
         }
     }
 
-    public String aprovarOS(Long id) {
+    public String aprovarExecucaoOS(Long id) {
         OS os = osRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada com ID: " + id));
 
-        if (os.getEtapa() != Etapa.ORCAMENTO) {
-            return "ETAPA deve ser Orçamento para poder ser aprovada. Etapa atual: " + os.getEtapa();
-        }
-
-        if (os.getItensServico() == null || os.getItensServico().isEmpty()) {
-            os.setEtapa(Etapa.FINALIZADO);
-        } else {
-            os.setEtapa(Etapa.APROVADO);
-        }
-
-        osRepository.save(os);
-        return "Ordem de Serviço aprovada com sucesso!";
-    }
-
-    public String iniciarExecucaoOS(Long id) {
-        OS os = osRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada com ID: " + id));
-
-        if (os.getEtapa() != Etapa.APROVADO) {
-            return "ETAPA deve ser 'Aprovada' para poder entrar em execução. Etapa atual: " + os.getEtapa();
+        if (!os.getEtapa().equals(Etapa.ORCAMENTO)) {
+            throw new RuntimeException("Somente OS em 'Orçamento' podem ser aprovadas.");
         }
 
         os.setEtapa(Etapa.EXECUCAO);
@@ -123,13 +112,30 @@ public class OSService {
         OS os = osRepository.findById(idOs)
                 .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada com ID: " + idOs));
 
+        if (!os.getEtapa().equals(Etapa.EXECUCAO)) {
+            throw new RuntimeException("Só é possível pagar OS em execução.");
+        }
+
         if (valorPago == null || valorPago <= 0) {
             throw new RuntimeException("Valor pago deve ser maior que zero.");
         }
 
-        
-        os.setEtapa(Etapa.PAGO);
+        double valorRestante = os.getValorTotal() - os.getValorPago();
+
+        if (valorPago > valorRestante) {
+            throw new RuntimeException("Valor pago excede o valor restante da OS.");
+        }
+
+        os.setValorPago(os.getValorPago() + valorPago);
+
+        if (os.getValorPago() >= os.getValorTotal()) {
+            os.setEtapa(Etapa.FINALIZADO);
+        }
+
         osRepository.save(os);
-        return "Ordem de Serviço paga com sucesso!";
+
+        return os.getEtapa().equals(Etapa.FINALIZADO)
+                ? "Pagamento concluído e OS finalizada!"
+                : "Pagamento parcial registrado com sucesso!";
     }
 }

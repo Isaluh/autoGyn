@@ -21,9 +21,10 @@ public class ListaOSDTO {
         this.id = os.getId();
 
         this.veiculo = String.format(
-                "%s (%s)",
+                "%s (%s) - %s",
                 os.getVeiculo().getModelo().getNome(),
-                os.getVeiculo().getModelo().getMarca().getNome()
+                os.getVeiculo().getModelo().getMarca().getNome(),
+                os.getVeiculo().getPlaca()
         );
 
         Date data = os.getData();
