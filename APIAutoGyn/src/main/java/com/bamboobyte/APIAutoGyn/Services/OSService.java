@@ -95,9 +95,10 @@ public class OSService {
     public String cancelarOS(Long idOs) {
         OS os = osRepository.findById(idOs)
                 .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada com ID: " + idOs));
-
+        os.setEtapa(Etapa.CANCELADO);
         devolverEstoque(os);
-        osRepository.deleteById(idOs);
+        osRepository.save(os);
+
         return "Ordem de Serviço cancelada com sucesso!";
     }
 
@@ -138,14 +139,8 @@ public class OSService {
     }
 
 
-    // public String deletarOS(Long idOs) {
-    //     OS os = osRepository.findById(idOs)
-    //             .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada com ID: " + idOs));
-
-    //     devolverEstoque(os); 
-    //     osRepository.delete(os);
-
-    //     return "Ordem de Serviço deletada com sucesso!";
-    // }
-
+    public OS buscarEntidadeOSPorId(Long id) {
+        return osRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("OS não encontrada com ID: " + id));
+    }
 }

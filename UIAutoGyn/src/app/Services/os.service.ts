@@ -27,6 +27,6 @@ export class OsService {
   }
 
   cancelar(id : number){
-    return this.httpClient.delete<OrdensServico>(OsService.API_url+`/${id}`)
+    return this.httpClient.post<OrdensServico>(OsService.API_url+`/${id}/cancelar`, null)
   }
 }
