@@ -23,4 +23,7 @@
         <span class="linhaDois"></span>
         <ListagemSemCategoriaComponent variant="os" titulo="Ordens de Serviço" descricao="Sem OS cadastradas." [campos]="campos" [itens]="ordensListagem" (atualizarOS)="pegarOS()"/>
     </div>
+    <div class="relatorio">
+        <ButtonsComponent variant="relatorio" (click)="puxarRelatorios()"/>
+    </div>
 </BaseLayout>

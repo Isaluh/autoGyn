@@ -127,4 +127,19 @@ export class GerencOsComponent {
       }
     });
   }
+
+  puxarRelatorios() {
+    this.osService.getRelatorios().subscribe((pdfBlob: Blob) => {
+      const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      window.open(url);
+
+      window.URL.revokeObjectURL(url);
+    }, error => {
+      console.error('Erro ao baixar o relatório', error);
+    });
+  }
 }

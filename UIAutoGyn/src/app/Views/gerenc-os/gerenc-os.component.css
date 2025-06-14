@@ -66,3 +66,9 @@
 .icon-close:hover {
   background-color: #fcd5d5;
 }
+
+.relatorio{
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}

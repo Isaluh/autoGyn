@@ -1,1 +1,4 @@
-<button [class]="variant" type="button">{{text}}</button>
+<button [class]="variant" type="button">
+    <img *ngIf="variant == 'relatorio'" src="relatorio.svg" alt="">
+    {{text}}
+</button>

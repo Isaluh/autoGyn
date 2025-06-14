@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OrdensServico } from '../Models/models';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,11 @@ export class OsService {
 
   cancelar(id : number){
     return this.httpClient.post<OrdensServico>(OsService.API_url+`/${id}/cancelar`, null)
+  }
+
+  getRelatorios(): Observable<Blob> {
+    return this.httpClient.get(OsService.API_url + `/relatorios`, {
+      responseType: 'blob' 
+    });
   }
 }

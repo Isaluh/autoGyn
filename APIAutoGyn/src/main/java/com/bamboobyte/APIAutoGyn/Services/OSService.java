@@ -138,9 +138,8 @@ public class OSService {
                 : "Pagamento parcial registrado com sucesso!";
     }
 
-
-    public OS buscarEntidadeOSPorId(Long id) {
-        return osRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("OS não encontrada com ID: " + id));
+    public List<OS> buscarEntidadesOS() {
+        return osRepository.findAll();
     }
+
 }
