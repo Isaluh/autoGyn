@@ -10,7 +10,7 @@ O sistema permite o cadastro de clientes, veículos, controle de estoque de peç
   <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-como-executar-localmente">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-estrutura-do-projeto">Estrutura</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-guia-de-contribuicaot">Guia de Contribuição</a>
+  <a href="#-guia-de-contribuicao">Guia de Contribuição</a>
 </p>
 
 <br>
