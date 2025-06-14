@@ -43,6 +43,9 @@ public class OS {
     @Column(name = "valor_total")
     private double valorTotal;
 
+    @Column(name = "valor_pago")
+    private double valorPago = 0.0;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "etapa")
     private Etapa etapa;
@@ -150,6 +153,14 @@ public class OS {
 
     public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public double getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(double valorPago) {
+        this.valorPago = valorPago;
     }
 
     public void setEtapa(Etapa etapa) {

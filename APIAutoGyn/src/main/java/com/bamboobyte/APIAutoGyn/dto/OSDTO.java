@@ -12,14 +12,17 @@ public class OSDTO {
     private Long id;
     private String cliente;
     private Double valorTotal;
+    private Double valorPago;
     private String etapa;
     private List<ServicoOSDTO> servicos = new LinkedList<>();
 
-    public OSDTO() {}
+    public OSDTO() {
+    }
 
     public OSDTO(OS os) {
         this.id = os.getId();
         this.valorTotal = os.getValorTotal();
+        this.valorPago = os.getValorPago();
         this.etapa = os.getEtapa() != null ? os.getEtapa().getDescricao() : "[Sem etapa]";
 
         if (os.getVeiculo() != null && os.getVeiculo().getCliente() != null) {
@@ -70,6 +73,14 @@ public class OSDTO {
 
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public Double getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(Double valorPago) {
+        this.valorPago = valorPago;
     }
 
     public String getEtapa() {
