@@ -1,6 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -55,15 +56,7 @@ public class OSService {
                 servicoRepository,
                 colaboradorRepository,
                 pecaRepository);
-        System.out.println(os.getVeiculo());
-        System.out.println(os.getValorTotal());
-        System.out.println(os.getId());
-        System.out.println(os.getData());
-        System.out.println(os.getEtapa());
-        System.out.println(os.getItensPeca());
-        System.out.println(os.getItensServico());
         OS osSalvo = osRepository.save(os);
-        System.out.println(osSalvo.toString());
 
         if (osSalvo != null) {
             retirarEstoque(osSalvo);
@@ -120,13 +113,18 @@ public class OSService {
             throw new RuntimeException("Valor pago deve ser maior que zero.");
         }
 
-        double valorRestante = os.getValorTotal() - os.getValorPago();
+        Double valorPagoAtual = os.getValorPago();
+        if (valorPagoAtual == null) {
+            valorPagoAtual = 0.0;
+        }
+
+        double valorRestante = os.getValorTotal() - valorPagoAtual;
 
         if (valorPago > valorRestante) {
             throw new RuntimeException("Valor pago excede o valor restante da OS.");
         }
 
-        os.setValorPago(os.getValorPago() + valorPago);
+        os.setValorPago(valorPagoAtual + valorPago);
 
         if (os.getValorPago() >= os.getValorTotal()) {
             os.setEtapa(Etapa.FINALIZADO);
@@ -138,4 +136,16 @@ public class OSService {
                 ? "Pagamento concluído e OS finalizada!"
                 : "Pagamento parcial registrado com sucesso!";
     }
+
+
+    // public String deletarOS(Long idOs) {
+    //     OS os = osRepository.findById(idOs)
+    //             .orElseThrow(() -> new RuntimeException("Ordem de serviço não encontrada com ID: " + idOs));
+
+    //     devolverEstoque(os); 
+    //     osRepository.delete(os);
+
+    //     return "Ordem de Serviço deletada com sucesso!";
+    // }
+
 }

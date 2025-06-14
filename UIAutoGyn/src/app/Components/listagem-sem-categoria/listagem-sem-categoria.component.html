@@ -22,16 +22,20 @@
       </ng-container>
 
       <div *ngIf="itemSelecionado">
-        <img src="" alt="" (click)="itemSelecionado = null">
+        <img style="cursor: pointer; margin-bottom: 30px;" src="voltar.svg" alt="" (click)="itemSelecionado = null" width="20">
         <ng-container *ngIf="itemSelecionado.dados?.['Status'] == 'Orçamento'">
-          <ButtonsComponent text="Aprovar" />
-          <ButtonsComponent text="Cancelar OS" variant="vermelho" />
+          <div class="juntos">
+            <ButtonsComponent text="Aprovar" (click)="mudarStatus('aprovar')"/>
+            <ButtonsComponent text="Cancelar OS" variant="vermelho" (click)="mudarStatus('cancelar')"/>
+          </div>
         </ng-container>
-        <ng-container *ngIf="itemSelecionado.dados?.['Status'] == 'Em execução'">
-          <InputsComponent text="Valor do Pagamento" tipoInput="number" idInput="valor" placeholder="200" />
+        <ng-container *ngIf="itemSelecionado.dados?.['Status'] == 'Execução'">
+          <InputsComponent text="Valor do Pagamento" tipoInput="number" idInput="valor" placeholder="200" [(ngModel)]="valorPago" />
           <p style="font-size: 14px;">Valor total: {{ itemSelecionado.dados?.['Valor Total'] }}</p>
-          <ButtonsComponent text="Pagar" />
-          <ButtonsComponent text="Cancelar OS" variant="vermelho" />
+          <div class="juntos">
+            <ButtonsComponent text="Pagar" (click)="mudarStatus('pagar')"/>
+            <ButtonsComponent text="Cancelar OS" variant="vermelho" (click)="mudarStatus('cancelar')"/>
+          </div>
         </ng-container>
       </div>
 

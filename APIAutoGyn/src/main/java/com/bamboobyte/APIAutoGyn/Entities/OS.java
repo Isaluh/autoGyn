@@ -30,7 +30,6 @@ import jakarta.persistence.TemporalType;
 @Entity
 @Table(name = "os")
 public class OS {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_os")
@@ -44,7 +43,7 @@ public class OS {
     private double valorTotal;
 
     @Column(name = "valor_pago")
-    private double valorPago = 0.0;
+    private Double valorPago = 0.0;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "etapa")
@@ -72,6 +71,7 @@ public class OS {
         this.data = new Date();
         this.etapa = Etapa.ORCAMENTO;
         this.valorTotal = 0.0;
+        this.valorPago = 0.0;
 
         this.veiculo = veiculoRepo.findById(dto.getVeiculo())
                 .orElseThrow(() -> new RuntimeException("Veículo não encontrado: " + dto.getVeiculo()));

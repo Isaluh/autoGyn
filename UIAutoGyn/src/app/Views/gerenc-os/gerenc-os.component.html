@@ -21,6 +21,6 @@
             </div>
         </BlocoComponent>
         <span class="linhaDois"></span>
-        <ListagemSemCategoriaComponent variant="os" titulo="Ordens de Serviço" descricao="Sem OS cadastradas." [campos]="campos" [itens]="ordensListagem" />
+        <ListagemSemCategoriaComponent variant="os" titulo="Ordens de Serviço" descricao="Sem OS cadastradas." [campos]="campos" [itens]="ordensListagem" (atualizarOS)="pegarOS()"/>
     </div>
 </BaseLayout>

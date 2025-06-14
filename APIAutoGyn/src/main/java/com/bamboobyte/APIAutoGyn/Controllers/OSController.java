@@ -50,19 +50,19 @@ public class OSController {
 
     @PostMapping("/{id}/aprovar")
     public ResponseEntity<String> aprovarExecucaoOS(@PathVariable Long id) {
-        String response = osService.aprovarExecucaoOS(id);
-        return ResponseEntity.ok(response);
+        osService.aprovarExecucaoOS(id);
+        return ResponseEntity.ok("");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> cancelarOS(@PathVariable Long id) {
         String response = osService.cancelarOS(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("");
     }
 
     @PostMapping("/{id}/pagar")
     public ResponseEntity<String> pagarOS(@PathVariable Long id, @RequestParam Double valorPago) {
         String response = osService.pagarOS(id, valorPago);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok("");
     }
 }

@@ -17,4 +17,16 @@ export class OsService {
   postOS(os : any){
     return this.httpClient.post<OrdensServico>(OsService.API_url, os)
   }
+
+  aprovar(id : number){
+    return this.httpClient.post<OrdensServico>(OsService.API_url+`/${id}/aprovar`, null)
+  }
+
+  pagar(id : number, valorPago : number){
+    return this.httpClient.post<OrdensServico>(OsService.API_url+`/${id}/pagar?valorPago=${valorPago}`, null)
+  }
+
+  cancelar(id : number){
+    return this.httpClient.delete<OrdensServico>(OsService.API_url+`/${id}`)
+  }
 }

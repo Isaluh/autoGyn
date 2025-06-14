@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BlocoComponent } from '../../Components/bloco/bloco.component';
 import { BaseComponent } from '../../Layouts/base/base.component';
 import { InputsComponent } from '../../Components/inputs/inputs.component';
@@ -46,6 +46,7 @@ export class GerencOsComponent {
   servicosSelected : any = []
 
   campos : string[] = ['Veículo', 'Data', 'Valor Total', 'Status']
+  @ViewChild(SelectsComponent) selectsComponent!: SelectsComponent;
 
   veiculosListagem : any = [];
 
@@ -115,7 +116,9 @@ export class GerencOsComponent {
           peca: [],
           orcamento: null
         };
-
+        if (this.selectsComponent) {
+          this.selectsComponent.limparSelecao();
+        }
         this.pegarOS();
       },
       error: err => {
