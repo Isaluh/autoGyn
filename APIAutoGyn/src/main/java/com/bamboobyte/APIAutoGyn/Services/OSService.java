@@ -55,8 +55,15 @@ public class OSService {
                 servicoRepository,
                 colaboradorRepository,
                 pecaRepository);
-
+        System.out.println(os.getVeiculo());
+        System.out.println(os.getValorTotal());
+        System.out.println(os.getId());
+        System.out.println(os.getData());
+        System.out.println(os.getEtapa());
+        System.out.println(os.getItensPeca());
+        System.out.println(os.getItensServico());
         OS osSalvo = osRepository.save(os);
+        System.out.println(osSalvo.toString());
 
         if (osSalvo != null) {
             retirarEstoque(osSalvo);
