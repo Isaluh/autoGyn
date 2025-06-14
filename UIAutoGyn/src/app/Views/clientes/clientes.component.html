@@ -1,0 +1,53 @@
+<BaseLayout>
+    <div class="pai">
+        <BlocoComponent titulo="Cadastrar cliente" descricao="Preencha os dados do cliente para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarCliente()">
+            <div class="emDois">
+                <div class="conteudo">
+                    <InputsComponent text="Nome" tipoInput="text" idInput="nome" placeholder="Cliente" [(ngModel)]="addCliente.nome"/>
+                    <InputsComponent text="E-mail" tipoInput="mail" idInput="email" placeholder="cliente@gmail.com" [(ngModel)]="addCliente.email"/>
+                    <div>
+                        <label for="pessoaCpf">
+                            <input type="radio" name="tipoPessoa" id="pessoaCpf" value="PF" [(ngModel)]="tipoPessoa" (ngModelChange)="trocarSecao()">
+                            <span>Pessoa Física</span>
+                        </label>
+                        <label for="pessoaCnpj">
+                            <input type="radio" name="tipoPessoa" id="pessoaCnpj" value="PJ" [(ngModel)]="tipoPessoa" (ngModelChange)="trocarSecao()">
+                            <span>Pessoa Jurídica</span>
+                        </label>
+                    </div>
+                    <ng-container *ngIf="addCliente.isPF">
+                        <InputsComponent text="CPF" tipoInput="number" idInput="cpf" placeholder="564.777.657-32" [(ngModel)]="addCliente.cpf"/>
+                    </ng-container>
+                    <ng-container *ngIf="addCliente.isPJ">
+                        <InputsComponent text="Cnpj" tipoInput="number" idInput="cnpj" placeholder="00.000.000/0001-00" [(ngModel)]="addCliente.cnpj"/>
+                        <InputsComponent text="Inscrição estadual" tipoInput="number" idInput="inscricao" placeholder="123456789101" [(ngModel)]="addCliente.inscricaoEstadual"/>
+                        <InputsComponent text="Nome do contato" tipoInput="text" idInput="nomeContato" placeholder="Responsável" [(ngModel)]="addCliente.nomeContato"/>
+                    </ng-container>
+                </div>
+                <span class="linha"></span>
+                <div class="conteudo">
+                    <div>
+                        <div class="juntos">
+                            <InputsComponent text="Telefone" tipoInput="number" idInput="dddUm" placeholder="(62)" [(ngModel)]="addCliente.ddd"/>
+                            <InputsComponent text="" tipoInput="number" idInput="telefoneUm" placeholder="940028922" [(ngModel)]="addCliente.telefone"/>
+                        </div>
+                        <div class="juntos">
+                            <InputsComponent text="" tipoInput="number" idInput="dddDois" placeholder="(62)" [(ngModel)]="addCliente.ddd2"/>
+                            <InputsComponent text="" tipoInput="number" idInput="telefoneDois" placeholder="940028922" [(ngModel)]="addCliente.telefone2"/>
+                        </div>
+                    </div>
+                    <div>
+                        <InputsComponent text="Endereço" tipoInput="number" idInput="cep" placeholder="CEP"  [(ngModel)]="addCliente.cep"/>
+                        <div class="juntos em3">
+                            <InputsComponent text="" tipoInput="text" idInput="cep" placeholder="Cidade"  [(ngModel)]="addCliente.cidade"/>
+                            <InputsComponent text="" tipoInput="text" idInput="cep" placeholder="UF"  [(ngModel)]="addCliente.uf"/>
+                            <InputsComponent text="" tipoInput="number" idInput="cep" placeholder="Nº"  [(ngModel)]="addCliente.numero"/>
+                        </div>
+                        <InputsComponent text="" tipoInput="text" idInput="cep" placeholder="Logradouro"  [(ngModel)]="addCliente.logradouro"/>
+                        <InputsComponent text="" tipoInput="text" idInput="cep" placeholder="Complemento"  [(ngModel)]="addCliente.complemento"/>
+                    </div>
+                </div>
+            </div>
+        </BlocoComponent>
+    </div>
+</BaseLayout>

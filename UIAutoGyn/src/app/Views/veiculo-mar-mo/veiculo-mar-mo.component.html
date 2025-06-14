@@ -3,16 +3,17 @@
         <div>
             <BlocoComponent titulo="Cadastro de marca" descricao="Preencha os dados da marca para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarMarca()">
                 <div class="conteudo">
-                    <InputsComponent text="Nome da marca" tipoInput="text" idInput="marca" placeholder="Fiat" />
+                    <InputsComponent text="Nome da marca" tipoInput="text" idInput="marca" placeholder="Fiat" [(ngModel)]="addMarca.nome" />
                 </div>
             </BlocoComponent>
             <BlocoComponent titulo="Cadastro de modelo" descricao="Preencha os dados do modelo para cadastro" textButton="Atualizar" (foiClicado)="cadastrarModelo()">
                 <div class="conteudo">
-                    <!-- SELECT MARCA ANTES -->
-                    <InputsComponent text="Nome do modelo" tipoInput="text" idInput="modelo" placeholder="Fiat Argo" />
+                    <SelectsComponent idSelect="marca" placeholder="Selecione a marca" [opcoes]="marcas" (valorSelecionadoChange)="addModelo.marca.id = $event" />
+                    <InputsComponent text="Nome do modelo" tipoInput="text" idInput="modelo" placeholder="Fiat Argo" [(ngModel)]="addModelo.nome" />
                 </div>
             </BlocoComponent>
         </div>
         <span class="linha"></span>
+        <ListagemComCategoriaComponent titulo="Modelos e Marcas Cadastrados" descricao="Sem modelos e marcas cadastradas." [itens]="listagemMarcaModelo" />
     </div>
 </BaseLayout>

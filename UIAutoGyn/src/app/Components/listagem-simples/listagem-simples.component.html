@@ -1,0 +1,8 @@
+<div class="listagem">
+  <h1>{{ titulo }}</h1>
+  <div *ngIf="itens.length != 0" class="simples"
+       [ngStyle]="{'display': 'grid', 'grid-template-columns': 'repeat(' + (numGap || 1) + ', 1fr)'}">
+    <h3 *ngFor="let item of itens">{{ item }}</h3>
+  </div>
+  <p *ngIf="itens.length == 0">{{ descricao }}</p>
+</div>

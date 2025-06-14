@@ -1,0 +1,29 @@
+<BaseLayout [opcoesOS]="true">
+    <div class="pai">
+        <BlocoComponent titulo="Cadastrar ordem de serviço" descricao="Preencha os dados da OS para cadastro" textButton="Cadastrar" (foiClicado)="cadastrarOS()">
+            <div class="conteudo">
+                <div>
+                    <SelectsComponent idSelect="veiculo" placeholder="Selecione o veículo" [opcoes]="veiculosListagem" (valorSelecionadoChange)="addOS.veiculo = $event" />
+                    <ButtonsComponent text="Adicionar Serviço" variant="branco" (click)="adicionarServico()"/>
+                    <div class="juntos" *ngFor="let item of addOS.servicosColaboradores let i = index">
+                        <SelectsComponent idSelect="servico" placeholder="Selecione o servico" [opcoes]="servicos" (valorSelecionadoChange)="addOS.servicosColaboradores[i].servico = $event"/>
+                        <SelectsComponent idSelect="colaborador" placeholder="Selecione o colaborador" [opcoes]="colaboradores" (valorSelecionadoChange)="addOS.servicosColaboradores[i].colaborador = $event"/>
+                        <span class="icon-close" (click)="removerServico(i)">
+                            <img src="fechar.svg" alt="">
+                        </span>
+                    </div>
+                </div>
+                <span class="linha"></span>
+                <div>
+                    <SelectsMultiploComponent idSelect="pecas" placeholder="Selecione as peças" tipo="Peças" [opcoes]="pecas" (opcoesSelectedChange)="addOS.peca = $event" />
+                    <InputsComponent text="Valor do Orçamento" tipoInput="number" idInput="valor" placeholder="1200" [(ngModel)]="addOS.orcamento" />            
+                </div>
+            </div>
+        </BlocoComponent>
+        <span class="linhaDois"></span>
+        <ListagemSemCategoriaComponent variant="os" titulo="Ordens de Serviço" descricao="Sem OS cadastradas." [campos]="campos" [itens]="ordensListagem" (atualizarOS)="pegarOS()"/>
+    </div>
+    <div class="relatorio">
+        <ButtonsComponent variant="relatorio" (click)="puxarRelatorios()"/>
+    </div>
+</BaseLayout>
