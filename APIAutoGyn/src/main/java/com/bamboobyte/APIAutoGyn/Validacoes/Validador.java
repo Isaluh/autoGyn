@@ -144,7 +144,6 @@ class Validador {
     }
 
     public StatusValidacao validaInscricaoEstadual(String inscricao) {
-        System.out.println(inscricao);
         if (inscricao == null || inscricao.trim().isEmpty()) {
             return StatusValidacao.IE_INVALIDA;
         }

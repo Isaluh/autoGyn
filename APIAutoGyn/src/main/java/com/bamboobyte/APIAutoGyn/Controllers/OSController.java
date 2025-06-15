@@ -42,7 +42,6 @@ public class OSController {
 
     @PostMapping
     public ResponseEntity<?> criarOS(@RequestBody CadastrarOSDTO novaOS) {
-        System.out.println(novaOS);
         Long idOs = osService.criarOS(novaOS);
         return ResponseEntity.ok(idOs);
     }

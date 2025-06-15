@@ -32,7 +32,6 @@ public class Colaborador {
     }
 
     public Colaborador(Colaborador colaborador) {
-        System.out.println(colaborador.getNome());
         this.id = colaborador.getId(); 
         this.cpf = colaborador.getCpf();
         this.nome = colaborador.getNome();
