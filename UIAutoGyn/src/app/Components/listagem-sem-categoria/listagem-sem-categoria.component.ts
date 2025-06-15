@@ -26,8 +26,10 @@ export class ListagemSemCategoriaComponent {
   constructor(private osService : OsService){}
 
   selecionarItem(item: any) {
-    if(item.dados?.['Status'] != 'Finalizado'){
-      this.itemSelecionado = item;
+    if(this.variant == 'os'){
+      if(item.dados?.['Status'] != 'Finalizado'){
+        this.itemSelecionado = item;
+      }
     }
   }
 

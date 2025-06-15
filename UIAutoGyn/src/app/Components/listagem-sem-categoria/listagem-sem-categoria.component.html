@@ -21,7 +21,7 @@
         </div>
       </ng-container>
 
-      <div *ngIf="itemSelecionado">
+      <div *ngIf="itemSelecionado && variant == 'os'">
         <img style="cursor: pointer; margin-bottom: 30px;" src="voltar.svg" alt="" (click)="itemSelecionado = null" width="20">
         <ng-container *ngIf="itemSelecionado.dados?.['Status'] == 'Orçamento'">
           <div class="juntos">
