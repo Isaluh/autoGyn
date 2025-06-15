@@ -35,6 +35,7 @@ public class GatewayValidacao {
         List<StatusValidacao> erros = new LinkedList<>();
 
         if (novoCliente.isPJ()) {
+            System.out.println(novoCliente.getInscricao_estadual());
             erros.add(this.validador.validaCNPJ(novoCliente.getCnpj()));
             erros.add(this.validador.validaInscricaoEstadual(novoCliente.getInscricao_estadual()));
         }
