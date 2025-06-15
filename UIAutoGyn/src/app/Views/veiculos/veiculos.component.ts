@@ -10,6 +10,7 @@ import { InputsComponent } from '../../Components/inputs/inputs.component';
 import { FormsModule } from '@angular/forms';
 import { ButtonsComponent } from "../../Components/buttons/buttons.component";
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-veiculos',
@@ -37,7 +38,7 @@ export class VeiculosComponent {
   mostrarTelaInicial = true;
   @ViewChild(SelectsComponent) selectsComponent!: SelectsComponent;
 
-  constructor(private veiculosService : VeiculosService, private clienteService: PessoasService){}
+  constructor(private veiculosService : VeiculosService, private clienteService: PessoasService, private router: Router){}
 
   veiculosListagem: {
     descricao: string;
@@ -47,14 +48,17 @@ export class VeiculosComponent {
   ngOnInit(){
     this.pegarVeiculos()
     this.pegarInfos()
-    // localStorage is not defined
-    const jaViu = localStorage.getItem('jaViuIntro');
-    this.mostrarTelaInicial = !jaViu;
+
+    const caminhoAtual = this.router.url;
+    if (caminhoAtual === '/') {
+      this.mostrarTelaInicial = true;
+    } else {
+      this.mostrarTelaInicial = false;
+    }
   }
 
   iniciar() {
     this.saiu = true;
-    localStorage.setItem('jaViuIntro', 'true');
 
     setTimeout(() => {
       this.mostrarTelaInicial = false;
