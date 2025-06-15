@@ -144,7 +144,15 @@ class Validador {
     }
 
     public StatusValidacao validaInscricaoEstadual(String inscricao) {
-        return (inscricao != null && inscricao.matches("^\\d{9,14}$")) ? null : StatusValidacao.IE_INVALIDA;
+        System.out.println(inscricao);
+        if (inscricao == null || inscricao.trim().isEmpty()) {
+            return StatusValidacao.IE_INVALIDA;
+        }
+
+        String regex = "^\\d{9,14}$";
+        boolean formatoValido = Pattern.matches(regex, inscricao);
+
+        return formatoValido ? null : StatusValidacao.IE_INVALIDA;
     }
 
     public StatusValidacao validaPlaca(String placa) {

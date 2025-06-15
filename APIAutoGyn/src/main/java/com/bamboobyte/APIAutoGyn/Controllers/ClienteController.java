@@ -36,7 +36,10 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody CadastrarClienteDTO dto) {
+        System.out.println(dto.getInscricao_estadual());
+        System.out.println("====");
         List<StatusValidacao> erros = validador.validar(dto);
+        System.out.println(erros);
         if (erros.size() > 0) {
             return ResponseEntity.badRequest().body(MensagemErroFactory.criarMensagem(erros)); // utilizando a factory para criar a mensagem de erro
             // fazer isso aparecer no front ([CEP_INVALIDO, UF_INVALIDA, TELEFONE_INVALIDO, TELEFONE_INVALIDO])

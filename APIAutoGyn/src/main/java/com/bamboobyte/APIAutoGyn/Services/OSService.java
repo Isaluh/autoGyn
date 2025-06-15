@@ -1,7 +1,7 @@
 package com.bamboobyte.APIAutoGyn.Services;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -17,15 +17,22 @@ import com.bamboobyte.APIAutoGyn.Repositories.OSRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.PecaRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.ServicoRepository;
 import com.bamboobyte.APIAutoGyn.Repositories.VeiculoRepository;
+import com.bamboobyte.APIAutoGyn.Validacoes.Observer.OSNotificador;
+import com.bamboobyte.APIAutoGyn.Validacoes.Observer.OSObserver;
+import com.bamboobyte.APIAutoGyn.Validacoes.Observer.OSSujeito;
+
+import jakarta.annotation.PostConstruct;
 
 @Service
-public class OSService {
+public class OSService implements OSSujeito {
 
     private final OSRepository osRepository;
     private final PecaRepository pecaRepository;
     private final VeiculoRepository veiculoRepository;
     private final ServicoRepository servicoRepository;
     private final ColaboradorRepository colaboradorRepository;
+
+    private final List<OSObserver> observers = new ArrayList<>();
 
     public OSService(OSRepository osRepository, PecaRepository pecaRepository, VeiculoRepository veiculoRepository,
             ServicoRepository servicoRepository, ColaboradorRepository colaboradorRepository) {
@@ -34,6 +41,29 @@ public class OSService {
         this.veiculoRepository = veiculoRepository;
         this.servicoRepository = servicoRepository;
         this.colaboradorRepository = colaboradorRepository;
+    }
+
+    // Adiciona o OSNotificador como observer quando o serviço é inicializado
+    @PostConstruct
+    public void initObservers() {
+        adicionarObserver(new OSNotificador());
+    }
+
+    @Override
+    public void adicionarObserver(OSObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removerObserver(OSObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notificarObservers(OS os) {
+        for (OSObserver observer : observers) {
+            observer.atualizar(os);
+        }
     }
 
     public List<ListaOSDTO> listarOSCadastradas() {
@@ -60,6 +90,7 @@ public class OSService {
 
         if (osSalvo != null) {
             retirarEstoque(osSalvo);
+            notificarObservers(osSalvo);
         }
 
         return osSalvo.getId();
@@ -89,6 +120,7 @@ public class OSService {
 
         os.setEtapa(Etapa.EXECUCAO);
         osRepository.save(os);
+        notificarObservers(os);
         return "Execução da Ordem de Serviço iniciada!";
     }
 
@@ -98,7 +130,7 @@ public class OSService {
         os.setEtapa(Etapa.CANCELADO);
         devolverEstoque(os);
         osRepository.save(os);
-
+        notificarObservers(os);
         return "Ordem de Serviço cancelada com sucesso!";
     }
 
@@ -132,6 +164,7 @@ public class OSService {
         }
 
         osRepository.save(os);
+        notificarObservers(os);
 
         return os.getEtapa().equals(Etapa.FINALIZADO)
                 ? "Pagamento concluído e OS finalizada!"

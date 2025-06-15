@@ -30,7 +30,7 @@ export class ClientesComponent {
     ddd2: null,
     telefone2: null,
     cnpj: '',
-    inscricaoEstadual: '',
+    inscricao_estadual: '',
     nomeContato: '',
     cpf: '',
     isPJ: false,
@@ -43,7 +43,7 @@ export class ClientesComponent {
   trocarSecao(){
     if (this.tipoPessoa === 'PF') {
       this.addCliente.cnpj = '';
-      this.addCliente.inscricaoEstadual = '';
+      this.addCliente.inscricao_estadual = '';
       this.addCliente.nomeContato = '';
       this.addCliente.isPF = true
       this.addCliente.isPJ = false
@@ -75,7 +75,7 @@ export class ClientesComponent {
           ddd2: null,
           telefone2: null,
           cnpj: '',
-          inscricaoEstadual: '',
+          inscricao_estadual: '',
           nomeContato: '',
           cpf: '',
           isPJ: false,

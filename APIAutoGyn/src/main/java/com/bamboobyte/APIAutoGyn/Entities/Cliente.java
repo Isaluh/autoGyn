@@ -79,11 +79,15 @@ public class Cliente {
             throw new IllegalArgumentException("Cliente deve ser PF ou PJ.");
         } else {
             if (dto.isPJ()) {
+                System.out.println("É PJ");
                 this.pessoaJuridica = new PJ(
                     dto.getCnpj(),
                     dto.getInscricao_estadual(),
                     dto.getNomeContato()
                 );
+                System.out.println(dto.getCnpj());
+                System.out.println(dto.getInscricao_estadual());
+                System.out.println(dto.getNomeContato());
                 this.pessoaFisica = null;
             } 
             else if (dto.isPF()) {

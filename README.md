@@ -52,13 +52,14 @@ O sistema desenvolvido visa atender as demandas da AutoGyn para controle de orde
 - Implementação de um **autômato finito** para validação de entradas
 - **Simulação de análise léxica** para filtros personalizados:
   - Exemplo: `cliente.status = "em aberto" AND veiculo.tipo = "carro"`
+  - Documento: [link](https://docs.google.com/document/d/1Mo_d8RNDEF54VijwUJw1lj3kc9oHqGpnI6es0511kx4/edit?tab=t.0)
 
 ### Padrões de Projeto Aplicados:
-- **Singleton**: aplicado na configuração da conexão com o banco de dados H2
--
--
--
--
+- **Singleton**: aplicado nas classes Validador e FormatacoesComuns, garantindo instância única para centralizar validações e formatação de dados
+- **Factory Method**: utilizado na classe MensagemErroFactory para centralizar e padronizar a criação de mensagens de erro.
+- **Iterator**: implementado na classe MensagemErro para permitir a iteração simplificada sobre mensagens de erro.
+- **Adapter**: aplicado via a interface FormatadorAdapter, implementada por FormatacoesComuns para adaptar a formatação monetária para o padrão brasileiro.
+- **Observer**: utilizado no serviço OSService, com os padrões OSSujeito e OSObserver, permitindo a notificação reativa de eventos como mudança de status da OS.
 
 ## 🚀 Como executar localmente
 

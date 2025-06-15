@@ -75,7 +75,7 @@ export interface Clientes {
   ddd2: number | null;
   telefone2: number | null;
   cnpj: string;
-  inscricaoEstadual: string;
+  inscricao_estadual: string;
   nomeContato: string;
   cpf: string;
   isPJ: boolean;
